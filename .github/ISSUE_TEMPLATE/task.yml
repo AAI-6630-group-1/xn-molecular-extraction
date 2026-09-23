@@ -1,0 +1,39 @@
+name: Task
+description: A piece of work for the XN project
+type: Task
+projects: ["AAI-6630-group-1/1"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What needs to be done
+      description: Enough detail that a teammate could pick this up.
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      value: |
+        - [ ] 
+  - type: dropdown
+    id: deliverable
+    attributes:
+      label: Related deliverable
+      description: If this belongs to a deliverable, also add it as a sub-issue of that deliverable's issue after you create it.
+      options:
+        - "None"
+        - "1.1 Setup Proposal"
+        - "1.2 Benchmarking Code"
+        - "1.3 Individual Benchmark Report"
+        - "1.4 Group Check-in: Sponsor"
+        - "1.5 Combined Report & Benchmark Aggregation"
+        - "2.1 Literature Review & Pipeline Design"
+        - "2.2 Pipeline Module Implementation"
+        - "2.3 Module Documentation & Tests"
+        - "2.4 Pipeline Integration & Report"
+        - "3.1 Individual Final Report"
+        - "3.2 Project Presentation"
+        - "3.3 Individual Reflection"
+    validations:
+      required: false

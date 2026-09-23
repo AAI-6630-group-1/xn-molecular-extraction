@@ -1,0 +1,30 @@
+name: Meeting notes
+description: Agenda, notes, decisions, and action items for a team or sponsor meeting
+title: "Meeting notes: YYYY-MM-DD"
+type: Task
+labels: ["meeting"]
+projects: ["AAI-6630-group-1/1"]
+body:
+  - type: input
+    id: attendees
+    attributes:
+      label: Attendees
+  - type: textarea
+    id: agenda
+    attributes:
+      label: Agenda
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+  - type: textarea
+    id: decisions
+    attributes:
+      label: Decisions
+  - type: textarea
+    id: actions
+    attributes:
+      label: Action items
+      description: Turn each action item into its own issue and link it here.
+      value: |
+        - [ ] 

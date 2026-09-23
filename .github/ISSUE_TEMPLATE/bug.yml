@@ -1,0 +1,26 @@
+name: Bug
+description: Something in our code is broken
+type: Bug
+projects: ["AAI-6630-group-1/1"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1. 
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, and the branch or commit
