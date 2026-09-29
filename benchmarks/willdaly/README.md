@@ -4,14 +4,7 @@ Pipeline: PyMuPDF renders each page, MolDetV2 boxes the molecules, MolScribe rea
 
 ## Environment
 
-Tested on an M1 Pro Mac (macOS 26.5, CPU only) with Python 3.11.14 managed by [uv](https://docs.astral.sh/uv/). The same environment runs `benchmarks/score.py` and its tests, so it is a candidate for the shared environment in [#15](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/15).
-
-```bash
-uv venv .venv-track3 --python 3.11 --managed-python
-uv pip sync --python .venv-track3/bin/python benchmarks/willdaly/requirements-track3.lock.txt
-```
-
-`requirements-track3.lock.txt` pins all 166 packages. `requirements-track3.txt` lists only the direct pins, with the reason for each; use it with `uv pip install -r` if you need to change a version.
+Track 3 uses the shared environment (`uv sync`; see [Getting started](../../README.md#getting-started)). It was tested on an M1 Pro Mac (macOS 26.5, CPU only) with Python 3.11.14.
 
 Why Python 3.11: MolScribe needs `numpy<2`, and its OpenNMT-py 2.2.0 tokenizer (`pyonmttok`) only has Apple Silicon wheels for Python 3.10 and 3.11. MolScribe is installed from GitHub because the PyPI release (1.1.1) pins `torch<2.0`, which has no Python 3.11 build for Apple Silicon.
 
@@ -32,7 +25,7 @@ Ultralytics and PyMuPDF are AGPL-3.0. Importing Ultralytics writes a settings fi
 Needs the internal dataset in `data/internal/` (see [data/README.md](../../data/README.md)) and `benchmarks/score.py` from [#65](https://github.com/AAI-6630-group-1/xn-molecular-extraction/pull/65).
 
 ```bash
-.venv-track3/bin/python benchmarks/willdaly/smoke_test_track3.py --paper 16 --device cpu
+uv run python benchmarks/willdaly/smoke_test_track3.py --paper 16 --device cpu
 ```
 
 It writes crops, `detections.csv`, and `summary.json` to `data/smoke_track3/` (gitignored, because the crops come from the papers).

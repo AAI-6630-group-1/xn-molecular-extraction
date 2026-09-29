@@ -21,7 +21,7 @@ Due dates and progress live on the project board: see the [Roadmap](https://gith
 
 ## Repository layout
 
-This is a starting point; change it if the team agrees on something better ([#15](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/15)).
+Propose changes to the layout in a pull request.
 
 | Path | Contents |
 |---|---|
@@ -37,7 +37,23 @@ git clone https://github.com/AAI-6630-group-1/xn-molecular-extraction.git
 cd xn-molecular-extraction
 ```
 
-The Python environment is being decided in [#15](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/15); setup steps go here once it is. See [CONTRIBUTING.md](CONTRIBUTING.md) for how we use issues, branches, and the project board.
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then create the pinned environment. uv downloads Python 3.11 if you don't have it and installs exactly the versions in `uv.lock` into `.venv/`:
+
+```bash
+uv sync
+```
+
+`pyproject.toml` lists the direct dependencies and why each is pinned; `uv.lock` pins everything else, with entries for macOS, Linux, and Windows (tested on macOS so far). To change a version, edit `pyproject.toml`, run `uv lock`, and commit both files. The environment covers PDF parsing (PyMuPDF, Docling), molecule detection (MolDetV2 through Ultralytics), recognition (MolScribe), RDKit 2026.3.2 for scoring, and pytest. It runs on a CPU; a GPU is optional. Model weights download from Hugging Face on first use and stay outside the repo.
+
+Then get the internal dataset (see [data/README.md](data/README.md)) and check the setup:
+
+```bash
+uv run pytest benchmarks/tests
+```
+
+If you use MolScribe, apply `patch_molscribe()` from [`benchmarks/willdaly/smoke_test_track3.py`](benchmarks/willdaly/smoke_test_track3.py) first (see [its README](benchmarks/willdaly/README.md#molscribe-bug-and-patch)). DECIMER needs TensorFlow, so it gets its own environment.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how we use issues, branches, and the project board.
 
 ## People
 
