@@ -7,8 +7,8 @@ MolScribe, and compares the canonical SMILES (RDKit, canonicalized exactly as
 benchmarks/score.py does) against the paper's ground truth. Separately times
 Docling's picture export on the same PDF and counts the pictures it finds.
 
-    .venv-track3/bin/python benchmarks/willdaly/smoke_test_track3.py --paper 16
-    .venv-track3/bin/python benchmarks/willdaly/smoke_test_track3.py --paper 16 --device cpu
+    uv run python benchmarks/willdaly/smoke_test_track3.py --paper 16
+    uv run python benchmarks/willdaly/smoke_test_track3.py --paper 16 --device cpu
 
 Outputs (crops, detections.csv, summary.json) go to data/smoke_track3/paper<id>/,
 which is gitignored because the crops come from the papers.

@@ -1,0 +1,38 @@
+# Shared Python environment (#15). `uv sync` installs exactly what uv.lock pins.
+# Tested 2026-09-29 on an M1 Pro Mac (macOS 26.5), CPU only.
+#
+# Python 3.11 only: MolScribe needs numpy<2, and its OpenNMT-py tokenizer (pyonmttok)
+# has Apple Silicon wheels only for Python 3.10 and 3.11. After changing a pin here,
+# run `uv lock` and commit both files.
+
+[project]
+name = "xn-molecular-extraction"
+version = "0.1.0"
+description = "Find molecule drawings in scientific PDFs and convert them to SMILES (AAI 6630 XN project)"
+requires-python = "==3.11.*"
+dependencies = [
+    # From GitHub, not PyPI: the PyPI release (1.1.1, 2023) pins torch<2.0 and the
+    # retired rdkit-pypi package, which can't coexist with docling (torch>=2.2.2).
+    "molscribe @ git+https://github.com/thomas0809/MolScribe@7296a30413eb55436702011efdff78131f66d162",
+    # MolScribe's own pins (it imports private APIs of these exact versions)
+    "timm==0.4.12",
+    "albumentations==1.1.0",
+    "OpenNMT-py==2.2.0",
+    "torchtext==0.5.0",
+    "SmilesPE==0.0.3",
+    "numpy==1.26.4",                    # MolScribe needs numpy<2; this also caps OpenCV at 4.11
+    "opencv-python==4.11.0.86",
+    "opencv-python-headless==4.11.0.86",  # pulled in by albumentations; keep in step with opencv-python
+    "torch==2.14.0",
+    "torchvision==0.29.0",
+    "rdkit==2026.3.2",                  # the sponsor paper's version; benchmarks/score.py expects it
+    "ultralytics==8.4.165",             # runs MolDetV2 (YOLO11n)
+    "docling==2.131.0",
+    "pymupdf==1.28.2",
+    "huggingface_hub==1.33.0",
+    "pandas==3.0.6",
+    "pytest==9.1.1",
+]
+
+[tool.uv]
+package = false   # a collection of scripts, not an installable package

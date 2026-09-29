@@ -57,11 +57,7 @@ benchmarks/results/<your-handle>/<run_id>/
 
 ### Run the scorer
 
-The scorer needs RDKit 2026.3.2, the sponsor paper's version, because canonical SMILES can change between releases. Until the shared environment from [#15](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/15) exists:
-
-```bash
-pip install -r benchmarks/requirements-score.txt
-```
+The scorer needs RDKit 2026.3.2, the sponsor paper's version, because canonical SMILES can change between releases. The shared environment pins it; see [Getting started](../README.md#getting-started).
 
 It reads the ground truth from `data/internal/` (see [data/README.md](../data/README.md)).
 
