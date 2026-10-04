@@ -1,0 +1,30 @@
+{
+  "handle": "willdaly",
+  "tool": "moldetv2-molscribe-pad0",
+  "track": 3,
+  "task": "e2e",
+  "dataset": "patent300",
+  "pipeline": "MolDetV2 boxes with score >= 0.5 -> crop with 0 px margin -> MolScribe (patched)",
+  "settings": {
+    "det_conf": 0.5,
+    "pad_px": 0,
+    "imgsz": 960
+  },
+  "versions": {
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "molscribe": "1.1.1 (GitHub 7296a30, patched)",
+    "torch": "2.14.0",
+    "rdkit": "2026.3.2",
+    "moldetv2_weights": "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt",
+    "molscribe_weights": "yujieq/MolScribe swin_base_char_aux_1m.pth"
+  },
+  "command": "uv run python benchmarks/willdaly/run_patent300.py --tasks e2e --pad 0 --e2e-tool moldetv2-molscribe-pad0 --notes 'Ablation: e2e with no margin around MolDetV2 boxes (the baseline adds 10 px).'",
+  "git_commit": "a4117e9",
+  "hardware": "Apple M1 Pro 16 GB, macOS 26.5.2, cpu",
+  "runtime_s": {
+    "all": 760.0
+  },
+  "api_cost_usd": null,
+  "notes": "Ablation: e2e with no margin around MolDetV2 boxes (the baseline adds 10 px)."
+}
