@@ -13,7 +13,11 @@ https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/14#issuecomme
 A run folder holds run.json and predictions.csv (see benchmarks/README.md).
 Scoring writes scores.csv and matches.csv into the run folder; --all scores
 every run under benchmarks/results/ and stacks the scores into
-benchmarks/results/summary.csv.
+benchmarks/results/summary.csv (e2e runs on the internal papers) and one
+summary_<task>_<dataset>.csv per other task and dataset.
+
+Runs on page-image datasets with ground-truth boxes (MolMole Patent300) are
+scored by score_boxes.py, which handles detect, ocsr and e2e tasks.
 """
 
 from __future__ import annotations
