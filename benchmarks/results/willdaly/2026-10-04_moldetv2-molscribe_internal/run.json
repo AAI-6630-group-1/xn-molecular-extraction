@@ -1,0 +1,62 @@
+{
+  "handle": "willdaly",
+  "tool": "moldetv2-molscribe",
+  "track": 3,
+  "task": "e2e",
+  "dataset": "internal",
+  "pipeline": "PyMuPDF render at 300 dpi -> MolDetV2 boxes (conf >= 0.5) -> crop with 10 px margin -> MolScribe (patched) -> every box's SMILES",
+  "settings": {
+    "dpi": 300,
+    "det_conf": 0.5,
+    "pad_px": 10,
+    "device": "cpu"
+  },
+  "versions": {
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "molscribe": "1.1.1 (GitHub 7296a30, patched)",
+    "torch": "2.14.0",
+    "rdkit": "2026.3.2",
+    "moldetv2_weights": "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt",
+    "molscribe_weights": "yujieq/MolScribe swin_base_char_aux_1m.pth"
+  },
+  "command": "uv run python benchmarks/willdaly/run_track3.py --notes 'Baseline Track 3 run. No label linking, no filtering: every MolDetV2 box'\"'\"'s MolScribe output is a prediction.'",
+  "git_commit": "baa5ba7",
+  "hardware": "Apple M1 Pro 16 GB, macOS 26.5.2, cpu",
+  "runtime_s": {
+    "1": 9.1,
+    "2": 18.3,
+    "4": 25.6,
+    "6": 5.1,
+    "16": 5.0,
+    "19": 20.0
+  },
+  "counts": {
+    "1": {
+      "pages": 13,
+      "boxes": 18
+    },
+    "2": {
+      "pages": 19,
+      "boxes": 74
+    },
+    "4": {
+      "pages": 16,
+      "boxes": 77
+    },
+    "6": {
+      "pages": 25,
+      "boxes": 2
+    },
+    "16": {
+      "pages": 13,
+      "boxes": 8
+    },
+    "19": {
+      "pages": 18,
+      "boxes": 54
+    }
+  },
+  "api_cost_usd": null,
+  "notes": "Baseline Track 3 run. No label linking, no filtering: every MolDetV2 box's MolScribe output is a prediction."
+}

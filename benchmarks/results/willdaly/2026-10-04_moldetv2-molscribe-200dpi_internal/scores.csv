@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,paper_id,n_gt,n_output_raw,n_output,n_invalid,tp,precision,recall,f1,recall_stereo_blind,n_gt_local,recall_local_names,mean_best_tanimoto,rdkit_version
+2026-10-04_moldetv2-molscribe-200dpi_internal,willdaly,moldetv2-molscribe-200dpi,internal,1,17,18,18,0,10,0.5556,0.5882,0.5714,0.5882,0,,0.9809,2026.03.2
+2026-10-04_moldetv2-molscribe-200dpi_internal,willdaly,moldetv2-molscribe-200dpi,internal,2,34,81,38,2,8,0.2105,0.2353,0.2222,0.2353,31,0.1613,0.7056,2026.03.2
+2026-10-04_moldetv2-molscribe-200dpi_internal,willdaly,moldetv2-molscribe-200dpi,internal,4,60,75,68,9,9,0.1324,0.1500,0.1406,0.1500,52,0.1346,0.6803,2026.03.2
+2026-10-04_moldetv2-molscribe-200dpi_internal,willdaly,moldetv2-molscribe-200dpi,internal,6,1,1,1,1,0,0.0000,0.0000,0.0000,0.0000,0,,0.0000,2026.03.2
+2026-10-04_moldetv2-molscribe-200dpi_internal,willdaly,moldetv2-molscribe-200dpi,internal,16,4,8,8,2,0,0.0000,0.0000,0.0000,0.0000,4,0.0000,0.8118,2026.03.2
+2026-10-04_moldetv2-molscribe-200dpi_internal,willdaly,moldetv2-molscribe-200dpi,internal,19,104,52,51,5,16,0.3137,0.1538,0.2065,0.1538,103,0.1553,0.7317,2026.03.2
+2026-10-04_moldetv2-molscribe-200dpi_internal,willdaly,moldetv2-molscribe-200dpi,internal,macro,220,235,184,19,43,0.2020,0.1879,0.1901,0.1879,190,0.1128,0.6517,2026.03.2
+2026-10-04_moldetv2-molscribe-200dpi_internal,willdaly,moldetv2-molscribe-200dpi,internal,pooled,220,235,184,19,43,0.2337,0.1955,0.2129,0.1955,190,0.1474,0.7310,2026.03.2
