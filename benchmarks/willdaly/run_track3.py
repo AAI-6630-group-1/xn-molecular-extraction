@@ -47,7 +47,7 @@ def git_commit() -> str:
     def git(*args: str) -> str:
         return subprocess.run(["git", *args], cwd=REPO, capture_output=True, text=True).stdout.strip()
     commit = git("rev-parse", "--short", "HEAD")
-    return commit + ("-dirty" if git("status", "--porcelain", "--", "benchmarks/willdaly") else "")
+    return commit + ("-dirty" if git("status", "--porcelain", "--untracked-files=no", "--", "benchmarks") else "")
 
 
 def hardware() -> str:
