@@ -1,0 +1,31 @@
+{
+  "handle": "willdaly",
+  "tool": "moldetv2",
+  "track": 3,
+  "task": "detect",
+  "dataset": "patent300",
+  "pipeline": "MolDetV2 (960 px doc model) on each page image, boxes with score >= 0.01",
+  "settings": {
+    "imgsz": 960,
+    "min_conf": 0.01,
+    "max_det": 300
+  },
+  "score_threshold": 0.5,
+  "versions": {
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "molscribe": "1.1.1 (GitHub 7296a30, patched)",
+    "torch": "2.14.0",
+    "rdkit": "2026.3.2",
+    "moldetv2_weights": "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt",
+    "molscribe_weights": "yujieq/MolScribe swin_base_char_aux_1m.pth"
+  },
+  "command": "uv run python benchmarks/willdaly/run_patent300.py --notes 'First Track 3 run on Patent300: detector, recognizer on ground-truth crops, and both together.'",
+  "git_commit": "c42e1df",
+  "hardware": "Apple M1 Pro 16 GB, macOS 26.5.2, cpu",
+  "runtime_s": {
+    "all": 32.1
+  },
+  "api_cost_usd": null,
+  "notes": "First Track 3 run on Patent300: detector, recognizer on ground-truth crops, and both together."
+}
