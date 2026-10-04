@@ -1,0 +1,62 @@
+{
+  "handle": "willdaly",
+  "tool": "moldetv2-molscribe-200dpi",
+  "track": 3,
+  "task": "e2e",
+  "dataset": "internal",
+  "pipeline": "PyMuPDF render at 200 dpi -> MolDetV2 boxes (conf >= 0.5) -> crop with 10 px margin -> MolScribe (patched) -> every box's SMILES",
+  "settings": {
+    "dpi": 200,
+    "det_conf": 0.5,
+    "pad_px": 10,
+    "device": "cpu"
+  },
+  "versions": {
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "molscribe": "1.1.1 (GitHub 7296a30, patched)",
+    "torch": "2.14.0",
+    "rdkit": "2026.3.2",
+    "moldetv2_weights": "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt",
+    "molscribe_weights": "yujieq/MolScribe swin_base_char_aux_1m.pth"
+  },
+  "command": "uv run python benchmarks/willdaly/run_track3.py --dpi 200 --tool moldetv2-molscribe-200dpi --notes 'Ablation: same as the baseline but rendered at 200 dpi, the smoke test'\"'\"'s original setting.'",
+  "git_commit": "2d98342",
+  "hardware": "Apple M1 Pro 16 GB, macOS 26.5.2, cpu",
+  "runtime_s": {
+    "1": 9.8,
+    "2": 19.6,
+    "4": 24.9,
+    "6": 3.6,
+    "16": 4.5,
+    "19": 19.6
+  },
+  "counts": {
+    "1": {
+      "pages": 13,
+      "boxes": 18
+    },
+    "2": {
+      "pages": 19,
+      "boxes": 81
+    },
+    "4": {
+      "pages": 16,
+      "boxes": 75
+    },
+    "6": {
+      "pages": 25,
+      "boxes": 1
+    },
+    "16": {
+      "pages": 13,
+      "boxes": 8
+    },
+    "19": {
+      "pages": 18,
+      "boxes": 52
+    }
+  },
+  "api_cost_usd": null,
+  "notes": "Ablation: same as the baseline but rendered at 200 dpi, the smoke test's original setting."
+}
