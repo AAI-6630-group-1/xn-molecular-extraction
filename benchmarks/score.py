@@ -37,6 +37,10 @@ TAGS = BENCHMARKS / "gt_tags.csv"
 GROUND_TRUTH = {
     "internal": REPO / "data" / "internal" / "ground_truth_SMILES_confirmed_1,2,4,6,16,19.csv",
 }
+# Page images with ground-truth boxes; runs on these are scored by score_boxes.py.
+BOX_DATASETS = {
+    "patent300": REPO / "data" / "patent300",
+}
 # The sponsor paper's version. Canonical SMILES can change between RDKit releases.
 RDKIT_VERSION = "2026.03.2"
 SOURCES = ("drawing", "name", "text", "unknown")
@@ -375,6 +379,10 @@ def load_run(run_dir: Path) -> dict:
     for key in ("task", "dataset"):
         if not meta.get(key):
             raise ScoringError(f"{path} needs a {key!r} field")
+    try:
+        score_threshold = float(meta.get("score_threshold") or 0.0)
+    except (TypeError, ValueError):
+        raise ScoringError(f"{path}: score_threshold must be a number") from None
     run_dir = run_dir.resolve()
     return {
         "run_id": run_dir.name,
@@ -383,14 +391,19 @@ def load_run(run_dir: Path) -> dict:
         "tool": meta.get("tool") or "_".join(run_dir.name.split("_")[1:-1]),
         "dataset": meta["dataset"],
         "task": meta["task"],
+        "score_threshold": score_threshold,  # detect runs: confidence cut-off for precision and recall
     }
 
 
 def score_run(run_dir: Path, ground_truth: Path | None = None, tags: Path = TAGS) -> list[dict]:
     """Score one run folder, write scores.csv and matches.csv into it, and return the score rows."""
     run = load_run(run_dir)
+    if run["dataset"] in BOX_DATASETS:
+        import score_boxes  # it imports this module, so load it only when needed
+        root = ground_truth if ground_truth and ground_truth.is_dir() else BOX_DATASETS[run["dataset"]]
+        return score_boxes.score_run(run_dir, run, root, run["score_threshold"])[1]
     if run["task"] != "e2e":
-        raise ScoringError(f"{run_dir}: score.py only scores e2e runs so far, not {run['task']!r}")
+        raise ScoringError(f"{run_dir}: dataset {run['dataset']!r} only has e2e scoring, not {run['task']!r}")
     gt_path = ground_truth or GROUND_TRUTH.get(run["dataset"])
     if gt_path is None:
         raise ScoringError(f"{run_dir}: no ground truth is set up for dataset {run['dataset']!r}; pass --gt")
@@ -416,17 +429,27 @@ def find_runs(results_dir: Path = RESULTS) -> list[Path]:
     return sorted(p.parent for p in results_dir.glob("*/*/predictions.csv"))
 
 
+def summary_name(run: dict) -> str:
+    """summary.csv for e2e runs on the internal papers (task 1.5); one file per task and dataset otherwise."""
+    if (run["task"], run["dataset"]) == ("e2e", "internal"):
+        return "summary.csv"
+    return f"summary_{run['task']}_{run['dataset']}.csv"
+
+
 def score_all(results_dir: Path = RESULTS, ground_truth: Path | None = None,
               tags: Path = TAGS) -> tuple[list[dict], list[str]]:
-    """Score every run under results_dir and write summary.csv. Returns the rows and any errors."""
-    summary, errors = [], []
+    """Score every run under results_dir and write the summary files. Returns the rows and any errors."""
+    groups: dict[str, list[dict]] = {"summary.csv": []}
+    errors = []
     for run_dir in find_runs(results_dir):
         try:
-            summary += score_run(run_dir, ground_truth, tags)
+            run = load_run(run_dir)
+            groups.setdefault(summary_name(run), []).extend(score_run(run_dir, ground_truth, tags))
         except ScoringError as e:
             errors.append(str(e))
-    _write_csv(results_dir / "summary.csv", SCORE_COLUMNS, summary)
-    return summary, errors
+    for name, rows in groups.items():
+        _write_csv(results_dir / name, list(rows[0]) if rows else SCORE_COLUMNS, rows)
+    return [r for rows in groups.values() for r in rows], errors
 
 
 def _write_csv(path: Path, columns: list[str], rows: list[dict]) -> None:
@@ -440,6 +463,10 @@ def _print_scores(rows: list[dict]) -> None:
     if not rows:
         return
     print(f"\n{rows[0]['handle']}/{rows[0]['run_id']}")
+    if "paper_id" not in rows[0]:  # a box-dataset run: one row of metrics
+        skip = {"run_id", "handle", "tool", "dataset"}
+        print("  " + "  ".join(f"{k}={v}" for k, v in rows[0].items() if k not in skip))
+        return
     print(f"{'paper':<8}{'n_gt':>6}{'output':>8}{'tp':>6}{'precision':>11}{'recall':>9}")
     for r in rows:
         print(f"{r['paper_id']:<8}{r['n_gt']:>6}{r['n_output']:>8}{r['tp']:>6}{r['precision']:>11}{r['recall']:>9}")
@@ -449,9 +476,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("runs", nargs="*", type=Path, help="run folders to score")
     parser.add_argument("--all", action="store_true",
-                        help="score every run under benchmarks/results/ and write summary.csv")
-    parser.add_argument("--gt", type=Path, help="ground-truth CSV to use for every run "
-                        "(default: the dataset's file under data/)")
+                        help="score every run under benchmarks/results/ and write the summary files")
+    parser.add_argument("--gt", type=Path, help="ground-truth CSV to use for every run, or a folder for a box "
+                        "dataset (default: the dataset's files under data/)")
     parser.add_argument("--tags", type=Path, default=TAGS, help="ground-truth tags (default: benchmarks/gt_tags.csv)")
     args = parser.parse_args(argv)
     if bool(args.runs) == args.all:
@@ -465,7 +492,8 @@ def main(argv: list[str] | None = None) -> int:
         summary, errors = score_all(RESULTS, args.gt, args.tags)
         for run_id in dict.fromkeys(r["run_id"] for r in summary):
             _print_scores([r for r in summary if r["run_id"] == run_id])
-        print(f"\nwrote {(RESULTS / 'summary.csv').relative_to(REPO)}")
+        for path in sorted(RESULTS.glob("summary*.csv")):
+            print(f"wrote {path.relative_to(REPO)}")
     else:
         errors = []
         for run_dir in args.runs:
@@ -479,4 +507,7 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # Run main() from the module named `score`, the one score_boxes imports, so that
+    # both share one ScoringError class and errors from either are caught.
+    import score
+    sys.exit(score.main())

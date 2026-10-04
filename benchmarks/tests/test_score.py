@@ -175,7 +175,7 @@ def test_unknown_source_is_an_error(tmp_path, gt):
 
 def test_other_tasks_are_not_supported_yet(tmp_path, gt):
     run_dir = make_run(tmp_path / "results", [], meta={"task": "ocsr", "dataset": "internal"})
-    with pytest.raises(score.ScoringError, match="only scores e2e"):
+    with pytest.raises(score.ScoringError, match="only has e2e scoring"):
         score.score_run(run_dir, gt)
 
 
