@@ -21,15 +21,15 @@
     "molscribe_weights": "yujieq/MolScribe swin_base_char_aux_1m.pth"
   },
   "command": "uv run python benchmarks/willdaly/run_track3.py --dpi 200 --tool moldetv2-molscribe-200dpi --notes 'Ablation: same as the baseline but rendered at 200 dpi, the smoke test'\"'\"'s original setting.'",
-  "git_commit": "e3701cf-dirty",
+  "git_commit": "2d98342",
   "hardware": "Apple M1 Pro 16 GB, macOS 26.5.2, cpu",
   "runtime_s": {
-    "1": 9.9,
-    "2": 25.5,
-    "4": 29.7,
-    "6": 4.1,
-    "16": 5.3,
-    "19": 21.3
+    "1": 9.8,
+    "2": 19.6,
+    "4": 24.9,
+    "6": 3.6,
+    "16": 4.5,
+    "19": 19.6
   },
   "counts": {
     "1": {
