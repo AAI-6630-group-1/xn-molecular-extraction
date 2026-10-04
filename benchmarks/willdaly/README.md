@@ -46,8 +46,8 @@ Results on 2026-10-04. A molecule counts only if its canonical SMILES matches th
 
 | Run | Macro precision | Macro recall | Macro F1 | Pooled precision | Pooled recall | Correct | Runtime |
 |---|---|---|---|---|---|---|---|
-| [300 dpi](../results/willdaly/2026-10-04_moldetv2-molscribe_internal) (default) | 29.0% | 31.9% | 29.3% | 27.9% | 23.2% | 51 of 220 | 91 s |
-| [200 dpi](../results/willdaly/2026-10-04_moldetv2-molscribe-200dpi_internal) | 20.2% | 18.8% | 19.0% | 23.4% | 19.6% | 43 of 220 | 96 s |
+| [300 dpi](../results/willdaly/2026-10-04_moldetv2-molscribe_internal) (default) | 29.0% | 31.9% | 29.3% | 27.9% | 23.2% | 51 of 220 | 83 s |
+| [200 dpi](../results/willdaly/2026-10-04_moldetv2-molscribe-200dpi_internal) | 20.2% | 18.8% | 19.0% | 23.4% | 19.6% | 43 of 220 | 82 s |
 
 For reference, the sponsor paper's best pipeline (Docling figures, a molecule gate, MolScribe) reported roughly 11% precision and 21% recall on the same papers. Rendering at 300 dpi, the resolution the figures are embedded at, found more molecules than 200 dpi on four papers, tied on paper 6, and found one fewer on paper 19 (15 against 16).
 
