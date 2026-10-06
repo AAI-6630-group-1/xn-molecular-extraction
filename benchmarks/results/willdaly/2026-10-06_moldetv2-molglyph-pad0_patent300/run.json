@@ -1,0 +1,31 @@
+{
+  "handle": "willdaly",
+  "tool": "moldetv2-molglyph-pad0",
+  "track": 3,
+  "task": "e2e",
+  "dataset": "patent300",
+  "pipeline": "MolDetV2 boxes with score >= 0.5 -> crop with 0 px margin -> molglyph",
+  "settings": {
+    "det_conf": 0.5,
+    "pad_px": 0,
+    "imgsz": 960,
+    "reader": "molglyph"
+  },
+  "versions": {
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "torch": "2.14.0",
+    "rdkit": "2026.3.2",
+    "moldetv2_weights": "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt",
+    "molglyph_code": "jiaxianyan/BioMiner 17c6161 (BioMiner/MolScribe, molglyph_utils.py)",
+    "molglyph_weights": "jiaxianustc/MolGlyph molglyph_large.pt"
+  },
+  "command": "uv run python benchmarks/willdaly/run_patent300.py --reader molglyph --tasks ocsr e2e --pad 0 --e2e-tool moldetv2-molglyph-pad0",
+  "git_commit": "71a13c4-dirty",
+  "hardware": "Apple M1 Pro 16 GB, macOS 26.5.2, cpu",
+  "runtime_s": {
+    "all": 1131.9
+  },
+  "api_cost_usd": null,
+  "notes": ""
+}

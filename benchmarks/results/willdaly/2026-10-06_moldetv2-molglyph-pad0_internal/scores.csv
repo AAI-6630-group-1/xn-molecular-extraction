@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,paper_id,n_gt,n_output_raw,n_output,n_invalid,tp,precision,recall,f1,recall_stereo_blind,n_gt_local,recall_local_names,mean_best_tanimoto,rdkit_version
+2026-10-06_moldetv2-molglyph-pad0_internal,willdaly,moldetv2-molglyph-pad0,internal,1,17,18,17,0,17,1.0000,1.0000,1.0000,1.0000,0,,1.0000,2026.03.2
+2026-10-06_moldetv2-molglyph-pad0_internal,willdaly,moldetv2-molglyph-pad0,internal,2,34,72,29,0,10,0.3448,0.2941,0.3175,0.2941,31,0.2258,0.6955,2026.03.2
+2026-10-06_moldetv2-molglyph-pad0_internal,willdaly,moldetv2-molglyph-pad0,internal,4,60,74,57,0,13,0.2281,0.2167,0.2222,0.2167,52,0.2308,0.7122,2026.03.2
+2026-10-06_moldetv2-molglyph-pad0_internal,willdaly,moldetv2-molglyph-pad0,internal,6,1,2,2,0,0,0.0000,0.0000,0.0000,0.0000,0,,0.9322,2026.03.2
+2026-10-06_moldetv2-molglyph-pad0_internal,willdaly,moldetv2-molglyph-pad0,internal,16,4,8,8,0,2,0.2500,0.5000,0.3333,0.7500,4,0.5000,0.8400,2026.03.2
+2026-10-06_moldetv2-molglyph-pad0_internal,willdaly,moldetv2-molglyph-pad0,internal,19,104,54,51,0,22,0.4314,0.2115,0.2839,0.2115,103,0.2136,0.7594,2026.03.2
+2026-10-06_moldetv2-molglyph-pad0_internal,willdaly,moldetv2-molglyph-pad0,internal,macro,220,228,164,0,64,0.3757,0.3704,0.3595,0.4121,190,0.2925,0.8232,2026.03.2
+2026-10-06_moldetv2-molglyph-pad0_internal,willdaly,moldetv2-molglyph-pad0,internal,pooled,220,228,164,0,64,0.3902,0.2909,0.3333,0.2955,190,0.2263,0.7575,2026.03.2

@@ -5,7 +5,7 @@ Code and results for XN tasks 1.2 and 1.3.
 - Put your code in `benchmarks/<your-github-handle>/`.
 - Record results in the shared format the team agrees on in [#14](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/14), so task 1.5 can combine them.
 - For every result, write down the tool version and the exact command you ran.
-- BioMiner setup notes go here once [#18](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/18) is done.
+- BioMiner setup notes go here once [#18](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/18) is done. Until then, [`willdaly/molglyph.py`](willdaly/molglyph.py) runs BioMiner's recognizer, MolGlyph, on a CPU.
 
 ## Scoring (draft)
 
@@ -86,6 +86,12 @@ Runs with `"dataset": "patent300"` are scored by [`score_boxes.py`](score_boxes.
 For detection, keep low-scoring boxes in `predictions.csv` so AP covers the whole precision-recall curve, and put your tool's operating point in `run.json` as `score_threshold`. `--all` writes each task's runs to its own `summary_<task>_patent300.csv`. `summary.csv` stays e2e on the internal papers, for task 1.5.
 
 MolMole's Tanimoto fingerprint isn't stated; ours is Morgan radius 2, 2048 bits, the same as everywhere else in `score.py`.
+
+### BioVista: ocsr on single-molecule crops
+
+Runs with `"dataset": "biovista"` and `"task": "ocsr"` are scored by [`score_biovista.py`](score_biovista.py) against [BioVista's OCSR set](../data/README.md#biovista-ocsr). `predictions.csv` has one row per crop: `paper_id` is the crop's file stem (for example `51_6rrm_image_molminer_bbox_3-0`) and `smiles` is the tool's output. A crop with no row, or an empty SMILES, counts as no output.
+
+`scores.csv` has one row per subset (`all` crops, BioVista's `test` split) and structure type (`all`, `full`, `chiral`, `markush`, as in BioMiner's OCSR table). Each row gives exact-match accuracy, stereo-blind accuracy and mean Tanimoto, computed as for Patent300, plus `accuracy_biovista`: accuracy under BioVista's own match rule, which neutralizes charges and requires R-group labels to match (except the first `[1*]`). Use `accuracy` to compare runs and `accuracy_biovista` to compare against the BioMiner paper. `--all` writes BioVista runs to `summary_ocsr_biovista.csv`.
 
 ### Ground-truth tags
 

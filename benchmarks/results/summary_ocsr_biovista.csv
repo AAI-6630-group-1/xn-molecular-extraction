@@ -1,0 +1,17 @@
+run_id,handle,tool,dataset,subset,structure,n_gt,n_output,n_invalid,exact,accuracy,accuracy_stereo_blind,mean_tanimoto,biovista_match,accuracy_biovista
+2026-10-06_molglyph_biovista,willdaly,molglyph,biovista,all,all,8861,8766,0,6955,0.7849,0.8643,0.9384,6763,0.7632
+2026-10-06_molglyph_biovista,willdaly,molglyph,biovista,all,full,4844,4776,0,3658,0.7552,0.8497,0.9341,3668,0.7572
+2026-10-06_molglyph_biovista,willdaly,molglyph,biovista,all,chiral,2230,2168,0,1143,0.5126,0.7807,0.9044,1123,0.5036
+2026-10-06_molglyph_biovista,willdaly,molglyph,biovista,all,markush,4017,3990,0,3297,0.8208,0.8820,0.9436,3095,0.7705
+2026-10-06_molglyph_biovista,willdaly,molglyph,biovista,test,all,8006,7919,0,6247,0.7803,0.8617,0.9372,6074,0.7587
+2026-10-06_molglyph_biovista,willdaly,molglyph,biovista,test,full,4410,4349,0,3300,0.7483,0.8444,0.9322,3310,0.7506
+2026-10-06_molglyph_biovista,willdaly,molglyph,biovista,test,chiral,2056,2000,0,1044,0.5078,0.7768,0.9035,1024,0.4981
+2026-10-06_molglyph_biovista,willdaly,molglyph,biovista,test,markush,3596,3570,0,2947,0.8195,0.8829,0.9435,2764,0.7686
+2026-10-06_molscribe_biovista,willdaly,molscribe,biovista,all,all,8861,8861,338,4090,0.4616,0.4917,0.7551,3941,0.4448
+2026-10-06_molscribe_biovista,willdaly,molscribe,biovista,all,full,4844,4844,216,3309,0.6831,0.7296,0.8839,3329,0.6872
+2026-10-06_molscribe_biovista,willdaly,molscribe,biovista,all,chiral,2230,2230,142,1059,0.4749,0.5682,0.8129,1040,0.4664
+2026-10-06_molscribe_biovista,willdaly,molscribe,biovista,all,markush,4017,4017,122,781,0.1944,0.2049,0.5999,612,0.1524
+2026-10-06_molscribe_biovista,willdaly,molscribe,biovista,test,all,8006,8006,305,3714,0.4639,0.4926,0.7547,3582,0.4474
+2026-10-06_molscribe_biovista,willdaly,molscribe,biovista,test,full,4410,4410,197,3026,0.6862,0.7299,0.8828,3046,0.6907
+2026-10-06_molscribe_biovista,willdaly,molscribe,biovista,test,chiral,2056,2056,130,1002,0.4874,0.5739,0.8133,983,0.4781
+2026-10-06_molscribe_biovista,willdaly,molscribe,biovista,test,markush,3596,3596,108,688,0.1913,0.2016,0.5974,536,0.1491

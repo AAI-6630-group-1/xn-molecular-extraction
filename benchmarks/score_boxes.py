@@ -256,44 +256,61 @@ def _tanimoto(a: Molecule, b: Molecule | None) -> float:
     return DataStructs.TanimotoSimilarity(a.fingerprint, b.fingerprint)
 
 
-def score_ocsr(truth, path: Path) -> tuple[dict, list[dict]]:
-    crops = {b.id: b for boxes in truth.values() for b in boxes}
-    preds: dict[str, Molecule] = {}
+def load_crop_predictions(path: Path, crop_ids) -> dict[str, str]:
+    """Read an ocsr run's predictions.csv into {crop ID: SMILES as the tool wrote it}.
+
+    Crops with an empty SMILES are left out (no output). An unknown crop ID, or
+    two rows for one crop, is an error rather than a silent zero.
+    """
+    if not path.exists():
+        raise ScoringError(f"{path} is missing")
+    preds: dict[str, str] = {}
+    seen, unknown = set(), set()
     with open(path, newline="", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         missing = {"paper_id", "smiles"} - set(reader.fieldnames or [])
         if missing:
             raise ScoringError(f"{path} is missing the column(s) {', '.join(sorted(missing))}")
-        unknown = set()
         for row in reader:
             crop, smiles = (row["paper_id"] or "").strip(), (row["smiles"] or "").strip()
-            if crop not in crops:
+            if crop not in crop_ids:
                 unknown.add(crop)
-            elif crop in preds:
+            elif crop in seen:
                 raise ScoringError(f"{path}: more than one SMILES for {crop}; an ocsr run gives one per image")
-            elif smiles:
-                preds[crop] = parse(smiles)
+            seen.add(crop)
+            if smiles and crop in crop_ids:
+                preds[crop] = smiles
     if unknown:
         raise ScoringError(f"{path}: paper_id(s) not in the ground truth: {', '.join(sorted(unknown)[:5])}")
+    return preds
 
+
+def score_crops(truth: dict[str, Molecule], preds: dict[str, Molecule]) -> tuple[dict, list[dict]]:
+    """Score one SMILES per crop against its ground truth: exact, stereo-blind, and Tanimoto (MolMole Table 3)."""
     rows, exact, blind, sims = [], 0, 0, []
-    for crop, gt in crops.items():
+    for crop, gt in truth.items():
         pred = preds.get(crop)
-        is_exact = pred is not None and pred.key == gt.molecule.key
-        is_blind = pred is not None and pred.valid and pred.stereo_blind == gt.molecule.stereo_blind
-        sim = _tanimoto(gt.molecule, pred)
+        is_exact = pred is not None and gt.valid and pred.key == gt.key
+        is_blind = pred is not None and pred.valid and gt.valid and pred.stereo_blind == gt.stereo_blind
+        sim = _tanimoto(gt, pred) if gt.valid else 0.0
         exact, blind = exact + is_exact, blind + is_blind
         sims.append(sim)
         rows.append({"crop": crop, "status": "correct" if is_exact else ("no_output" if pred is None else "wrong"),
-                     "stereo_blind_match": is_blind, "tanimoto": f"{sim:.4f}", "gt_smiles": gt.molecule.smiles,
+                     "stereo_blind_match": is_blind, "tanimoto": f"{sim:.4f}", "gt_smiles": gt.smiles,
                      "pred_smiles": pred.smiles if pred else ""})
-    n = len(crops)
+    n = len(truth)
     row = {
         "n_gt": n, "n_output": len(preds), "n_invalid": sum(not p.valid for p in preds.values()), "exact": exact,
         "accuracy": exact / n if n else 0.0, "accuracy_stereo_blind": blind / n if n else 0.0,
         "mean_tanimoto": float(np.mean(sims)) if sims else 0.0,
     }
     return row, rows
+
+
+def score_ocsr(truth, path: Path) -> tuple[dict, list[dict]]:
+    crops = {b.id: b.molecule for boxes in truth.values() for b in boxes}
+    preds = {crop: parse(smiles) for crop, smiles in load_crop_predictions(path, crops).items()}
+    return score_crops(crops, preds)
 
 
 def score_e2e(truth, preds) -> tuple[dict, list[dict]]:

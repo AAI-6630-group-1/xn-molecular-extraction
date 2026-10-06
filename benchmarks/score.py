@@ -17,7 +17,8 @@ benchmarks/results/summary.csv (e2e runs on the internal papers) and one
 summary_<task>_<dataset>.csv per other task and dataset.
 
 Runs on page-image datasets with ground-truth boxes (MolMole Patent300) are
-scored by score_boxes.py, which handles detect, ocsr and e2e tasks.
+scored by score_boxes.py, which handles detect, ocsr and e2e tasks. Runs on
+BioVista's molecule crops are scored by score_biovista.py (ocsr only).
 """
 
 from __future__ import annotations
@@ -44,6 +45,10 @@ GROUND_TRUTH = {
 # Page images with ground-truth boxes; runs on these are scored by score_boxes.py.
 BOX_DATASETS = {
     "patent300": REPO / "data" / "patent300",
+}
+# Single-molecule crops with one SMILES each; runs on these are scored by score_biovista.py.
+CROP_DATASETS = {
+    "biovista": REPO / "data" / "biovista",
 }
 # The sponsor paper's version. Canonical SMILES can change between RDKit releases.
 RDKIT_VERSION = "2026.03.2"
@@ -406,6 +411,10 @@ def score_run(run_dir: Path, ground_truth: Path | None = None, tags: Path = TAGS
         import score_boxes  # it imports this module, so load it only when needed
         root = ground_truth if ground_truth and ground_truth.is_dir() else BOX_DATASETS[run["dataset"]]
         return score_boxes.score_run(run_dir, run, root, run["score_threshold"])[1]
+    if run["dataset"] in CROP_DATASETS:
+        import score_biovista  # imports this module too
+        root = ground_truth if ground_truth and ground_truth.is_dir() else CROP_DATASETS[run["dataset"]]
+        return score_biovista.score_run(run_dir, run, root)[1]
     if run["task"] != "e2e":
         raise ScoringError(f"{run_dir}: dataset {run['dataset']!r} only has e2e scoring, not {run['task']!r}")
     gt_path = ground_truth or GROUND_TRUTH.get(run["dataset"])
@@ -467,9 +476,10 @@ def _print_scores(rows: list[dict]) -> None:
     if not rows:
         return
     print(f"\n{rows[0]['handle']}/{rows[0]['run_id']}")
-    if "paper_id" not in rows[0]:  # a box-dataset run: one row of metrics
+    if "paper_id" not in rows[0]:  # a box or crop dataset: one row of metrics per subset
         skip = {"run_id", "handle", "tool", "dataset"}
-        print("  " + "  ".join(f"{k}={v}" for k, v in rows[0].items() if k not in skip))
+        for row in rows:
+            print("  " + "  ".join(f"{k}={v}" for k, v in row.items() if k not in skip))
         return
     print(f"{'paper':<8}{'n_gt':>6}{'output':>8}{'tp':>6}{'precision':>11}{'recall':>9}")
     for r in rows:
