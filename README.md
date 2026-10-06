@@ -43,7 +43,7 @@ Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then crea
 uv sync
 ```
 
-`pyproject.toml` lists the direct dependencies and why each is pinned; `uv.lock` pins everything else, with entries for macOS, Linux, and Windows (tested on macOS so far). To change a version, edit `pyproject.toml`, run `uv lock`, and commit both files. The environment covers PDF parsing (PyMuPDF, Docling), molecule detection (MolDetV2 through Ultralytics), recognition (MolScribe), RDKit 2026.3.2 for scoring, and pytest. It runs on a CPU; a GPU is optional. Model weights download from Hugging Face on first use and stay outside the repo.
+`pyproject.toml` lists the direct dependencies and why each is pinned; `uv.lock` pins everything else, with entries for macOS, Linux, and Windows (tested on macOS so far). Without uv, `requirements.txt` holds the same pins for pip (`python3.11 -m venv .venv && .venv/bin/pip install -r requirements.txt`); it is generated with `uv export --format requirements-txt --no-hashes`, so regenerate it after `uv lock`. To change a version, edit `pyproject.toml`, run `uv lock`, and commit both files. The environment covers PDF parsing (PyMuPDF, Docling), molecule detection (MolDetV2 through Ultralytics), recognition (MolScribe), RDKit 2026.3.2 for scoring, and pytest. It runs on a CPU; a GPU is optional. Model weights download from Hugging Face on first use and stay outside the repo.
 
 Then get the internal dataset (see [data/README.md](data/README.md)) and check the setup:
 
@@ -54,6 +54,17 @@ uv run pytest benchmarks/tests
 If you use MolScribe, apply `patch_molscribe()` from [`benchmarks/willdaly/smoke_test_track3.py`](benchmarks/willdaly/smoke_test_track3.py) first (see [its README](benchmarks/willdaly/README.md#molscribe-bug-and-patch)). DECIMER needs TensorFlow, so it gets its own environment.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how we use issues, branches, and the project board.
+
+## Benchmark code (task 1.2)
+
+Each person's benchmarking code lives in `benchmarks/<handle>/` with its own README; the scorers they share are in `benchmarks/`.
+
+| Where | What it is |
+|---|---|
+| [`benchmarks/willdaly/`](benchmarks/willdaly/README.md) | Track 3: MolDetV2 finds molecules on rendered PDF pages, then MolScribe or MolGlyph (BioMiner's recognizer) reads each one. Benchmarked on the internal papers, MolMole Patent300, and BioVista. Start with its README; `reproduce.sh` runs everything in order |
+| [`benchmarks/score.py`](benchmarks/score.py), [`score_boxes.py`](benchmarks/score_boxes.py), [`score_biovista.py`](benchmarks/score_biovista.py) | Shared scoring: exact match of canonical SMILES (RDKit 2026.3.2), precision and recall per paper, detection AP, Tanimoto similarity. Rules in [`benchmarks/README.md`](benchmarks/README.md) |
+| [`benchmarks/results/<handle>/<run_id>/`](benchmarks/results/willdaly) | One folder per run: `run.json` (command, versions, hardware, runtime), `predictions.csv` (every output SMILES with its confidence), `scores.csv` and `matches.csv` (from the scorer) |
+| [`benchmarks/tests/`](benchmarks/tests) | `uv run pytest benchmarks/tests` |
 
 ## People
 

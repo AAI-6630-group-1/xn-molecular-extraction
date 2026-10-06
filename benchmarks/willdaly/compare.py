@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+"""Side-by-side comparison of MolScribe and MolGlyph across every Track 3 benchmark.
+
+    uv run python benchmarks/willdaly/compare.py
+
+Reads the scores.csv of each scored run under benchmarks/results/willdaly/
+(run score.py first) and writes two files there:
+
+- comparison.csv: one row per (dataset, stage, setting, metric) with a column
+  per reader, for anyone who wants to recompute or plot.
+- comparison.md: the same numbers as Markdown tables, plus MolDetV2's
+  detection scores, which don't depend on the reader.
+
+For each tool, dataset and task, the latest run is used (run IDs start with
+the date).
+"""
+
+from __future__ import annotations
+
+import csv
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[1]
+RESULTS = REPO / "benchmarks" / "results" / "willdaly"
+READERS = {"molscribe": "MolScribe", "molglyph": "MolGlyph"}
+
+# (section, dataset, task, tool with {r} for the reader, label for the setting, row filter, metrics to show)
+RECOGNITION = ["accuracy", "accuracy_stereo_blind", "mean_tanimoto"]
+E2E_PAGES = ["precision", "recall", "f1", "tp", "n_pred"]
+E2E_PAPERS = ["precision", "recall", "f1", "tp", "n_output"]
+SPECS = [
+    ("Recognition on given crops", "biovista", "ocsr", "{r}", "BioVista test split, all 8,006 crops",
+     {"subset": "test", "structure": "all"}, RECOGNITION + ["accuracy_biovista"]),
+    ("Recognition on given crops", "biovista", "ocsr", "{r}", "BioVista test split, full structures (4,410)",
+     {"subset": "test", "structure": "full"}, ["accuracy"]),
+    ("Recognition on given crops", "biovista", "ocsr", "{r}", "BioVista test split, chiral (2,056)",
+     {"subset": "test", "structure": "chiral"}, ["accuracy"]),
+    ("Recognition on given crops", "biovista", "ocsr", "{r}", "BioVista test split, Markush (3,596)",
+     {"subset": "test", "structure": "markush"}, ["accuracy"]),
+    ("Recognition on given crops", "patent300", "ocsr", "{r}", "Patent300 ground-truth crops (2,482)",
+     {}, RECOGNITION),
+    ("Detection + recognition", "patent300", "e2e", "moldetv2-{r}-pad0", "Patent300, no crop margin",
+     {}, E2E_PAGES),
+    ("Detection + recognition", "patent300", "e2e", "moldetv2-{r}", "Patent300, 10 px margin",
+     {}, E2E_PAGES),
+    ("Detection + recognition", "internal", "e2e", "moldetv2-{r}-pad0", "Internal papers (macro), no margin",
+     {"paper_id": "macro"}, E2E_PAPERS),
+    ("Detection + recognition", "internal", "e2e", "moldetv2-{r}", "Internal papers (macro), 10 px margin",
+     {"paper_id": "macro"}, E2E_PAPERS),
+    ("Detection + recognition", "internal", "e2e", "moldetv2-{r}-pad0", "Internal papers (pooled), no margin",
+     {"paper_id": "pooled"}, E2E_PAPERS),
+]
+COUNTS = {"tp", "n_pred", "n_output", "exact"}
+
+
+def latest_runs() -> dict[tuple[str, str, str], Path]:
+    """{(tool, dataset, task): newest run folder that has been scored}."""
+    runs = {}
+    for scores in sorted(RESULTS.glob("*/scores.csv")):  # sorted by run ID, so by date
+        meta = json.loads((scores.parent / "run.json").read_text())
+        runs[(meta["tool"], meta["dataset"], meta["task"])] = scores.parent
+    return runs
+
+
+def read_rows(run_dir: Path) -> list[dict]:
+    with open(run_dir / "scores.csv", newline="", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def pick(rows: list[dict], where: dict) -> dict | None:
+    matches = [r for r in rows if all(r.get(k) == v for k, v in where.items())]
+    return matches[0] if matches else None
+
+
+def fmt(metric: str, value: str | None) -> str:
+    """Counts as integers; rates exactly as scores.csv stores them (4 decimals), so nothing is rounded twice."""
+    if value in (None, ""):
+        return "n/a"
+    return str(int(float(value))) if metric in COUNTS else value
+
+
+def main() -> int:
+    runs = latest_runs()
+    long_rows = []
+    for section, dataset, task, tool, setting, where, metrics in SPECS:
+        cells = {}
+        for reader in READERS:
+            run_dir = runs.get((tool.format(r=reader), dataset, task))
+            cells[reader] = (pick(read_rows(run_dir), where) if run_dir else None, run_dir)
+        for metric in metrics:
+            long_rows.append({
+                "section": section, "dataset": dataset, "setting": setting, "metric": metric,
+                **{reader: (row or {}).get(metric, "") for reader, (row, _) in cells.items()},
+                **{f"{reader}_run": run_dir.name if run_dir else "" for reader, (_, run_dir) in cells.items()},
+            })
+
+    columns = ["section", "dataset", "setting", "metric", *READERS, *(f"{r}_run" for r in READERS)]
+    with open(RESULTS / "comparison.csv", "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=columns)
+        writer.writeheader()
+        writer.writerows(long_rows)
+
+    lines = ["# Track 3: MolScribe vs MolGlyph (BioMiner's recognizer)", "",
+             "Generated by `benchmarks/willdaly/compare.py` from each run's `scores.csv`. Rates are fractions "
+             "(0.7828 = 78.28%). Exact match of canonical SMILES unless the metric says otherwise; "
+             "`accuracy_biovista` uses BioVista's own match rule (see `benchmarks/score_biovista.py`).", ""]
+    for section in dict.fromkeys(s[0] for s in SPECS):
+        lines += [f"## {section}", "", "| Setting | Metric | " + " | ".join(READERS.values()) + " |",
+                  "|---|---|" + "---|" * len(READERS)]
+        for r in long_rows:
+            if r["section"] == section:
+                lines.append(f"| {r['setting']} | {r['metric']} | "
+                             + " | ".join(fmt(r["metric"], r[reader]) for reader in READERS) + " |")
+        lines.append("")
+
+    detect = runs.get(("moldetv2", "patent300", "detect"))
+    if detect:
+        d = read_rows(detect)[0]
+        lines += ["## Detection only (MolDetV2, Patent300)", "",
+                  "| COCO AP | COCO AR | AP at IoU 0.5 | Precision at IoU 0.5 | Recall at IoU 0.5 | Boxes kept |",
+                  "|---|---|---|---|---|---|",
+                  f"| {float(d['ap']):.3f} | {float(d['ar']):.3f} | {float(d['ap50']):.3f} | "
+                  f"{float(d['precision50']):.3f} | {float(d['recall50']):.3f} | {d['n_pred_used']} |", ""]
+    lines += ["Runs used: " + ", ".join(sorted({r[f'{k}_run'] for r in long_rows for k in READERS if r[f'{k}_run']}))
+              + (f", {detect.name}" if detect else "") + "."]
+    (RESULTS / "comparison.md").write_text("\n".join(lines) + "\n")
+    print(f"wrote {(RESULTS / 'comparison.csv').relative_to(REPO)} and comparison.md ({len(long_rows)} rows)")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
