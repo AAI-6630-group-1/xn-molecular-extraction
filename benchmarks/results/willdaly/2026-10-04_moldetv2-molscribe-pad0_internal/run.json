@@ -1,0 +1,62 @@
+{
+  "handle": "willdaly",
+  "tool": "moldetv2-molscribe-pad0",
+  "track": 3,
+  "task": "e2e",
+  "dataset": "internal",
+  "pipeline": "PyMuPDF render at 300 dpi -> MolDetV2 boxes (conf >= 0.5) -> crop with 0 px margin -> MolScribe (patched) -> every box's SMILES",
+  "settings": {
+    "dpi": 300,
+    "det_conf": 0.5,
+    "pad_px": 0,
+    "device": "cpu"
+  },
+  "versions": {
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "molscribe": "1.1.1 (GitHub 7296a30, patched)",
+    "torch": "2.14.0",
+    "rdkit": "2026.3.2",
+    "moldetv2_weights": "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt",
+    "molscribe_weights": "yujieq/MolScribe swin_base_char_aux_1m.pth"
+  },
+  "command": "uv run python benchmarks/willdaly/run_track3.py --pad 0 --tool moldetv2-molscribe-pad0 --notes 'Margin tuned on Patent300 (no margin beat 10 px: e2e F1 0.778 vs 0.720), then applied here unchanged.'",
+  "git_commit": "f0532c4",
+  "hardware": "Apple M1 Pro 16 GB, macOS 26.5.2, cpu",
+  "runtime_s": {
+    "1": 8.1,
+    "2": 16.6,
+    "4": 21.4,
+    "6": 4.6,
+    "16": 4.3,
+    "19": 17.4
+  },
+  "counts": {
+    "1": {
+      "pages": 13,
+      "boxes": 18
+    },
+    "2": {
+      "pages": 19,
+      "boxes": 74
+    },
+    "4": {
+      "pages": 16,
+      "boxes": 77
+    },
+    "6": {
+      "pages": 25,
+      "boxes": 2
+    },
+    "16": {
+      "pages": 13,
+      "boxes": 8
+    },
+    "19": {
+      "pages": 18,
+      "boxes": 54
+    }
+  },
+  "api_cost_usd": null,
+  "notes": "Margin tuned on Patent300 (no margin beat 10 px: e2e F1 0.778 vs 0.720), then applied here unchanged."
+}

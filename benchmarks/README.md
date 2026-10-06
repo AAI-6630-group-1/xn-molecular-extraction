@@ -71,7 +71,21 @@ The first command scores one run and prints a per-paper table. `--all` scores ev
 - **`scores.csv`** has one row per paper, then a `macro` row (the equal-weight average across papers, our headline) and a `pooled` row (all molecules together). In both rows the count columns are sums.
 - **`matches.csv`** has one row per unique molecule on each side: every ground-truth molecule is a TP or an FN, and every prediction is a TP or an FP. Each row also gives the most similar molecule on the other side, which is where error analysis starts.
 
-Only `e2e` runs (a PDF in, a set of SMILES out) are scored so far. `ocsr` (Track 2) and `detect` (Track 3) come next.
+On the internal papers, only `e2e` runs (a PDF in, a set of SMILES out) are scored, because those papers have no ground-truth boxes.
+
+### Patent300: detect, ocsr, and e2e
+
+Runs with `"dataset": "patent300"` are scored by [`score_boxes.py`](score_boxes.py) against [MolMole Patent300](../data/README.md#molmole-patent300), following the MolMole paper's page-level protocol so our numbers line up with its Tables 2 to 4. Boxes are `x0, y0, x1, y1` in pixels of the page image.
+
+| `task` | `paper_id` | Other columns | Metrics in `scores.csv` |
+|---|---|---|---|
+| `detect` | page stem, e.g. `AU2004259738B2_page_104` | `x0`-`y1`, `confidence` | COCO AP and AR (IoU 0.50 to 0.95), F1 of the two (MolMole Table 2), AP at IoU 0.5, and precision, recall and F1 at IoU 0.5 for boxes scoring at least `score_threshold` from `run.json` (default 0). `best_f1_threshold` is the confidence cut-off with the best F1 |
+| `ocsr` | crop ID, e.g. `AU2004259738B2_page_104_bbox_0` | `smiles` | Exact-match accuracy, stereo-blind accuracy, mean Tanimoto; a crop with no output counts as wrong (MolMole Table 3) |
+| `e2e` | page stem | `smiles`, `x0`-`y1` | A ground-truth molecule counts as found if the predicted box overlapping it most has IoU of at least 0.5 and the same SMILES. Precision is found / predicted boxes and recall is found / ground-truth boxes (MolMole equation 1, Table 4). `detected50` counts the molecules whose box was found, whatever the SMILES |
+
+For detection, keep low-scoring boxes in `predictions.csv` so AP covers the whole precision-recall curve, and put your tool's operating point in `run.json` as `score_threshold`. `--all` writes each task's runs to its own `summary_<task>_patent300.csv`. `summary.csv` stays e2e on the internal papers, for task 1.5.
+
+MolMole's Tanimoto fingerprint isn't stated; ours is Morgan radius 2, 2048 bits, the same as everywhere else in `score.py`.
 
 ### Ground-truth tags
 

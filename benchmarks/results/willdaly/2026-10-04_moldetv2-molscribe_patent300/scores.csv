@@ -1,0 +1,2 @@
+run_id,handle,tool,dataset,n_pages,n_gt,n_pred,n_invalid,detected50,tp,precision,recall,f1
+2026-10-04_moldetv2-molscribe_patent300,willdaly,moldetv2-molscribe,patent300,300,2482,2473,187,2466,1784,0.7214,0.7188,0.7201

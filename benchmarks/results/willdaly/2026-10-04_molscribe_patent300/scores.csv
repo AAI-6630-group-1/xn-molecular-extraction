@@ -1,0 +1,2 @@
+run_id,handle,tool,dataset,n_gt,n_output,n_invalid,exact,accuracy,accuracy_stereo_blind,mean_tanimoto
+2026-10-04_molscribe_patent300,willdaly,molscribe,patent300,2482,2482,150,1943,0.7828,0.7961,0.8914
