@@ -1,0 +1,63 @@
+{
+  "handle": "willdaly",
+  "tool": "moldetv2-molglyph-pad0",
+  "track": 3,
+  "task": "e2e",
+  "dataset": "internal",
+  "pipeline": "PyMuPDF render at 300 dpi -> MolDetV2 boxes (conf >= 0.5) -> crop with 0 px margin -> molglyph -> every box's SMILES",
+  "settings": {
+    "dpi": 300,
+    "det_conf": 0.5,
+    "pad_px": 0,
+    "reader": "molglyph",
+    "device": "cpu"
+  },
+  "versions": {
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "torch": "2.14.0",
+    "rdkit": "2026.3.2",
+    "moldetv2_weights": "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt",
+    "molglyph_code": "jiaxianyan/BioMiner 17c6161 (BioMiner/MolScribe, molglyph_utils.py)",
+    "molglyph_weights": "jiaxianustc/MolGlyph molglyph_large.pt"
+  },
+  "command": "uv run python benchmarks/willdaly/run_track3.py --reader molglyph --pad 0 --tool moldetv2-molglyph-pad0",
+  "git_commit": "71a13c4-dirty",
+  "hardware": "Apple M1 Pro 16 GB, macOS 26.5.2, cpu",
+  "runtime_s": {
+    "1": 8.8,
+    "2": 19.9,
+    "4": 26.9,
+    "6": 5.4,
+    "16": 7.0,
+    "19": 19.8
+  },
+  "counts": {
+    "1": {
+      "pages": 13,
+      "boxes": 18
+    },
+    "2": {
+      "pages": 19,
+      "boxes": 74
+    },
+    "4": {
+      "pages": 16,
+      "boxes": 77
+    },
+    "6": {
+      "pages": 25,
+      "boxes": 2
+    },
+    "16": {
+      "pages": 13,
+      "boxes": 8
+    },
+    "19": {
+      "pages": 18,
+      "boxes": 54
+    }
+  },
+  "api_cost_usd": null,
+  "notes": ""
+}

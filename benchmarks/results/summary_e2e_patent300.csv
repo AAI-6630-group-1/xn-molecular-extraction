@@ -1,0 +1,5 @@
+run_id,handle,tool,dataset,n_pages,n_gt,n_pred,n_invalid,detected50,tp,precision,recall,f1
+2026-10-04_moldetv2-molscribe-pad0_patent300,willdaly,moldetv2-molscribe-pad0,patent300,300,2482,2473,159,2466,1927,0.7792,0.7764,0.7778
+2026-10-04_moldetv2-molscribe_patent300,willdaly,moldetv2-molscribe,patent300,300,2482,2473,187,2466,1784,0.7214,0.7188,0.7201
+2026-10-06_moldetv2-molglyph-pad0_patent300,willdaly,moldetv2-molglyph-pad0,patent300,300,2482,2473,0,2466,1953,0.7897,0.7869,0.7883
+2026-10-06_moldetv2-molglyph_patent300,willdaly,moldetv2-molglyph,patent300,300,2482,2473,0,2466,1961,0.7930,0.7901,0.7915
