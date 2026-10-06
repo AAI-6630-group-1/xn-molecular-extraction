@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
-"""Track 3 benchmark: PDF pages -> MolDetV2 boxes -> MolScribe SMILES, for every internal paper.
+"""Track 3 benchmark: PDF pages -> MolDetV2 boxes -> SMILES, for every internal paper.
 
 Renders each page with PyMuPDF, detects molecule drawings with MolDetV2 (the 960 px
 "doc" YOLO11n weights), crops each box with a margin, and reads every crop with
-MolScribe (patched, see smoke_test_track3.py). Writes one run in the #14 results
-format, ready for benchmarks/score.py:
+MolScribe (patched, see smoke_test_track3.py) or MolGlyph, BioMiner's recognizer
+(see readers.py). Writes one run in the #14 results format, ready for
+benchmarks/score.py:
 
     uv run python benchmarks/willdaly/run_track3.py
     uv run python benchmarks/willdaly/run_track3.py --dpi 200 --tool moldetv2-molscribe-200dpi
+    uv run python benchmarks/willdaly/run_track3.py --reader molglyph --pad 0
     uv run python benchmarks/score.py benchmarks/results/willdaly/<run_id>
 
 The run folder (run.json, predictions.csv) is committed. Crops go to
@@ -29,14 +31,14 @@ import time
 from datetime import date
 from pathlib import Path
 
-import torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE))
-from smoke_test_track3 import patch_molscribe, render  # noqa: E402
+from readers import READERS, load_reader  # noqa: E402
+from smoke_test_track3 import render  # noqa: E402
 
 PAPERS = ["1", "2", "4", "6", "16", "19"]
 COLUMNS = ["paper_id", "smiles", "page", "x0", "y0", "x1", "y1", "label", "source", "confidence",
@@ -60,15 +62,14 @@ def hardware() -> str:
 
 
 def versions() -> dict[str, str]:
+    """Versions shared by every Track 3 run; each reader adds its own (readers.py)."""
     out = {}
-    for pkg in ("pymupdf", "ultralytics", "molscribe", "torch", "rdkit"):
+    for pkg in ("pymupdf", "ultralytics", "torch", "rdkit"):
         try:
             out[pkg] = importlib.metadata.version(pkg)
         except importlib.metadata.PackageNotFoundError:
             out[pkg] = "not installed"
-    out["molscribe"] += " (GitHub 7296a30, patched)"
     out["moldetv2_weights"] = "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt"
-    out["molscribe_weights"] = "yujieq/MolScribe swin_base_char_aux_1m.pth"
     return out
 
 
@@ -78,12 +79,14 @@ def main() -> int:
     ap.add_argument("--dpi", type=int, default=300,
                     help="render resolution; the papers' raster figures are embedded at about 300 dpi")
     ap.add_argument("--conf", type=float, default=0.5, help="MolDetV2 confidence threshold (model card uses 0.5)")
-    ap.add_argument("--pad", type=int, default=10, help="pixels added around each box before MolScribe")
+    ap.add_argument("--pad", type=int, default=10, help="pixels added around each box before recognition")
+    ap.add_argument("--reader", choices=READERS, default="molscribe", help="recognizer for each crop")
     ap.add_argument("--device", default="cpu", help="cpu was faster than mps for MolScribe on an M1 Pro")
-    ap.add_argument("--tool", default="moldetv2-molscribe", help="tool name in the run_id")
+    ap.add_argument("--tool", help="tool name in the run_id (default: moldetv2-<reader>)")
     ap.add_argument("--run-id", help="default: <today>_<tool>_internal")
     ap.add_argument("--notes", default="")
     args = ap.parse_args()
+    args.tool = args.tool or f"moldetv2-{args.reader}"
 
     run_id = args.run_id or f"{date.today().isoformat()}_{args.tool}_internal"
     run_dir = REPO / "benchmarks" / "results" / "willdaly" / run_id
@@ -91,13 +94,9 @@ def main() -> int:
     run_dir.mkdir(parents=True, exist_ok=True)
     crop_dir.mkdir(parents=True, exist_ok=True)
 
-    det_w = hf_hub_download("UniParser/MolDetv2", "moldet_v2_yolo11n_960_doc.pt")
-    ocsr_w = hf_hub_download("yujieq/MolScribe", "swin_base_char_aux_1m.pth")
-    from molscribe import MolScribe
     from ultralytics import YOLO
-    patch_molscribe()
-    detector = YOLO(det_w)
-    reader = MolScribe(ocsr_w, device=torch.device(args.device))
+    detector = YOLO(hf_hub_download("UniParser/MolDetv2", "moldet_v2_yolo11n_960_doc.pt"))
+    reader = load_reader(args.reader, args.device)
 
     rows, runtime, counts = [], {}, {}
     scale = 72 / args.dpi  # pixels -> PDF points
@@ -117,13 +116,13 @@ def main() -> int:
                 Image.fromarray(crop).save(crop_dir / f"{box_id}.png")
                 boxes.append((box_id, page_no, x0, y0, x1, y1, conf))
                 crops.append(crop)
-        preds = reader.predict_images(crops, return_confidence=True, batch_size=8) if crops else []
+        preds = reader.predict(crops)
         for (box_id, page_no, x0, y0, x1, y1, conf), pred in zip(boxes, preds):
             rows.append({
                 "paper_id": paper, "smiles": pred["smiles"], "page": page_no,
                 "x0": round(x0 * scale, 1), "y0": round(y0 * scale, 1),
                 "x1": round(x1 * scale, 1), "y1": round(y1 * scale, 1),
-                "label": "", "source": "drawing", "confidence": round(float(pred["confidence"]), 4),
+                "label": "", "source": "drawing", "confidence": round(pred["confidence"], 4),
                 "det_confidence": round(conf, 4), "box_id": box_id,
             })
         runtime[paper] = round(time.perf_counter() - t0, 1)
@@ -142,9 +141,10 @@ def main() -> int:
         "task": "e2e",
         "dataset": "internal",
         "pipeline": (f"PyMuPDF render at {args.dpi} dpi -> MolDetV2 boxes (conf >= {args.conf}) "
-                     f"-> crop with {args.pad} px margin -> MolScribe (patched) -> every box's SMILES"),
-        "settings": {"dpi": args.dpi, "det_conf": args.conf, "pad_px": args.pad, "device": args.device},
-        "versions": versions(),
+                     f"-> crop with {args.pad} px margin -> {args.reader} -> every box's SMILES"),
+        "settings": {"dpi": args.dpi, "det_conf": args.conf, "pad_px": args.pad, "reader": args.reader,
+                     "device": args.device},
+        "versions": {**versions(), **reader.versions},
         "command": "uv run python " + " ".join(shlex.quote(a) for a in [str(Path(sys.argv[0]).resolve().relative_to(REPO)), *sys.argv[1:]]),
         "git_commit": git_commit(),
         "hardware": f"{hardware()}, {args.device}",
