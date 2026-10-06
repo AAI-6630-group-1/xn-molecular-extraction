@@ -27,7 +27,8 @@ Propose changes to the layout in a pull request.
 |---|---|
 | `benchmarks/` | Phase 1 benchmarking code (one folder per person) and shared results |
 | `pipeline/` | Phase 2 extraction pipeline, one module per stage |
-| `reports/` | Sources and figures for write-ups worth versioning |
+| `reports/` | Individual reports in `reports/<handle>/`, plus group write-ups (1.5, 2.4) |
+| `setup-proposals/` | Each person's 1.1 setup proposal, in `setup-proposals/<handle>/` |
 | `data/` | Notes on where datasets live; the data itself stays out of git |
 
 ## Getting started
