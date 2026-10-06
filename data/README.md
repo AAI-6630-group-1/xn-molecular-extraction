@@ -6,6 +6,7 @@ Datasets stay out of git: everything in this folder except this README is ignore
 |---|---|---|---|
 | Internal papers (IDs 1, 2, 4, 6, 16, 19) | [Dataset 2.zip](https://northeastern.instructure.com/courses/257799/files/44295732) in the Canvas XN Project module | `ground_truth_SMILES_confirmed_1,2,4,6,16,19.csv`, in the same zip | Course use only. Papers 1, 2, and 6 are CC BY-NC-ND 4.0, so don't post them anywhere public |
 | MolMole Patent300 | [Hugging Face](https://huggingface.co/datasets/doxa-friend/MolMole_Patent300) (151 MB) | Boxes in `json/`, one molfile per box in `mol/` | CC BY-NC-ND 4.0 |
+| BioVista OCSR | Google Drive link in [BioMiner's README](https://github.com/jiaxianyan/BioMiner#statistics-and-access-of-biovista) (61 MB) | `ocsr/labels/gd_SMIELS.csv`, one SMILES per crop | Crops from copyrighted papers, distributed by the BioMiner authors for evaluation; keep them out of git |
 | Other public benchmarks | TBD ([#17](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/17)) | | |
 
 ## Internal papers
@@ -35,7 +36,7 @@ The ground-truth CSV has 222 rows with the columns `paperID`, `name of molecule`
 
 300 patent pages with 2,482 boxed molecules, released with the MolMole paper ([arXiv:2505.03777](https://arxiv.org/abs/2505.03777)). It's the only public page-level set with molecule boxes, so Track 3 uses it to score detection and to tune filter thresholds without touching the internal papers. The paper's 250 journal-article pages weren't released.
 
-Download it into `data/patent300/` (about 90 s):
+`benchmarks/willdaly/download_data.py` fetches it (and BioVista) and skips whatever is already in place. To download it by hand into `data/patent300/` (about 90 s):
 
 ```bash
 uv run python -c "from huggingface_hub import snapshot_download; snapshot_download('doxa-friend/MolMole_Patent300', repo_type='dataset', local_dir='data/patent300')"
@@ -49,3 +50,21 @@ data/patent300/
 ```
 
 All 2,482 molfiles parse with RDKit 2026.3.2. 19 contain R-group atoms and 11 have more than one fragment. How runs on it are scored is in [benchmarks/README.md](../benchmarks/README.md#patent300-detect-ocsr-and-e2e).
+
+## BioVista OCSR
+
+The recognition (OCSR) part of BioVista, the benchmark released with BioMiner ([arXiv:2604.21508](https://arxiv.org/abs/2604.21508)): 8,861 molecule crops cut from 335 medicinal-chemistry papers cited in PDBbind, each with one ground-truth SMILES. 4,017 of them (45%) are Markush scaffolds with `*` atoms for R-groups, and 2,230 have stereocentres. BioVista splits its papers into a validation set and a held-out test set; the crops cover 302 test papers (8,006 crops) and 33 validation papers (855 crops). Its page-level tasks need the 500 PDFs, which aren't distributed, so only the OCSR task is used here.
+
+```bash
+uv run python benchmarks/willdaly/download_data.py --biovista
+```
+
+```
+data/biovista/
+├── ocsr/data/<pdf_name>_image_molminer_bbox_<page>-<index>.png    8,861 crops
+├── ocsr/labels/gd_SMIELS.csv                                      pdf_name, index, molminer_id, smiles
+├── test_set_names.txt, valid_set_names.txt                         BioVista's split, from the BioMiner repo
+└── ocsr.tar.gz                                                     the downloaded archive
+```
+
+The labels CSV isn't in crop-file order, so join it to the crops on `(pdf_name, index)`, as `benchmarks/score_biovista.py` does. One label (a BODIPY dye with a `B~N` bond) doesn't parse in RDKit. A spot check found labels that write a selenium atom as `*`, so a few correct readings will score as misses.
