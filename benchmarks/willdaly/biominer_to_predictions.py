@@ -29,7 +29,7 @@ import re
 import sys
 from pathlib import Path
 
-import fitz  # PyMuPDF
+import pymupdf
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
@@ -70,11 +70,16 @@ def parse_slurm_log(path: Path | None) -> dict[str, str]:
 
 
 def read_structures(csv_path: Path) -> list[tuple[str, str]]:
-    """(label, smiles) rows of one of BioMiner's structure CSVs; empty SMILES are dropped."""
+    """(label, smiles) rows of one of BioMiner's structure CSVs; empty SMILES are dropped.
+
+    BioMiner writes the label "None" when its language model found no compound label for a
+    drawing; that becomes a blank label.
+    """
     if not csv_path.exists():
         return []
     with open(csv_path, newline="") as f:
-        return [(r["ligand"].strip(), r["smiles"].strip()) for r in csv.DictReader(f) if (r.get("smiles") or "").strip()]
+        rows = [((r.get("ligand") or "").strip(), (r.get("smiles") or "").strip()) for r in csv.DictReader(f)]
+    return [("" if label in ("None", "nan") else label, smiles) for label, smiles in rows if smiles]
 
 
 def final_rows(out: Path, names: list[str]) -> list[dict]:
@@ -104,7 +109,7 @@ def stage1_rows(ocsr_json: Path, names: list[str], pdf_dir: Path) -> list[dict]:
     per_paper = json.loads(ocsr_json.read_text())
     rows = []
     for name, boxes in zip(names, per_paper):
-        with fitz.open(pdf_dir / f"{name}.pdf") as doc:
+        with pymupdf.open(pdf_dir / f"{name}.pdf") as doc:
             sizes = [(page.rect.width, page.rect.height) for page in doc]
         for box in boxes:
             page = int(box["page"])
@@ -127,9 +132,12 @@ def check_pages(out: Path, names: list[str], pdf_dir: Path) -> dict[str, dict[st
     """
     counts = {}
     for name in names:
-        with fitz.open(pdf_dir / f"{name}.pdf") as doc:
+        with pymupdf.open(pdf_dir / f"{name}.pdf") as doc:
             pages = doc.page_count
-        rendered = len(list((out / "page_images" / name).glob("*.png")))
+        # Page renders are <name>_image_<n>.png; the folder also holds table crops and copies
+        # of pages with figures (<name>_image_3_tb_0.png, <name>_image_ctimg_3.png).
+        render = re.compile(rf"{re.escape(name)}_image_\d+\.png")
+        rendered = sum(1 for f in (out / "page_images" / name).iterdir() if render.fullmatch(f.name))
         counts[name] = {"pages": pages, "rendered_pages": rendered}
         if rendered != pages:
             raise SystemExit(f"paper {name}: {rendered} page images for {pages} PDF pages; BioMiner didn't see the whole paper")

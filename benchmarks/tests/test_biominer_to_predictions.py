@@ -5,7 +5,7 @@ import json
 import sys
 from pathlib import Path
 
-import fitz
+import pymupdf
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "willdaly"))
@@ -31,7 +31,7 @@ def fake_run(tmp_path, rendered_pages=2):
     """A BioMiner output folder for one two-page paper, "7", as run.sbatch packs it."""
     pdf_dir = tmp_path / "pdfs"
     pdf_dir.mkdir()
-    doc = fitz.open()
+    doc = pymupdf.open()
     doc.new_page(width=600, height=800)
     doc.new_page(width=600, height=800)
     doc.save(pdf_dir / "7.pdf")
@@ -40,6 +40,8 @@ def fake_run(tmp_path, rendered_pages=2):
     (out / "page_images" / "7").mkdir(parents=True)
     for i in range(rendered_pages):
         (out / "page_images" / "7" / f"7_image_{i}.png").write_bytes(b"")
+    for extra in ("7_image_1_tb_0.png", "7_image_ctimg_1.png"):  # table crop, page with a figure
+        (out / "page_images" / "7" / extra).write_bytes(b"")
     (out / "biominer_upgrade.txt").write_text("7")
     boxes = [[{"index": 0, "page": 1, "bbox": [0.1, 0.25, 0.5, 0.25], "smiles": "CCO"},
               {"index": 1, "page": 1, "bbox": [0.0, 0.0, 0.1, 0.1], "smiles": ""}]]
@@ -47,9 +49,9 @@ def fake_run(tmp_path, rendered_pages=2):
 
     paper = out / "extraction_local-biominer-instruct" / "7"
     paper.mkdir(parents=True)
-    write_csv(paper / f"7_structure_full_output_{FULL_SUFFIX}.csv", [("12a", "CCO")])
+    write_csv(paper / f"7_structure_full_output_{FULL_SUFFIX}.csv", [("12a", "CCO"), ("None", "CCCl")])
     write_csv(paper / f"7_structure_part_output_{FULL_SUFFIX}.csv", [("13b", "CCN"), ("13c", "")])
-    write_csv(paper / f"7_structure_merged_output_{FULL_SUFFIX}_{FULL_SUFFIX}.csv", [("12a", "CCO"), ("13b", "CCN")])
+    write_csv(paper / f"7_structure_merged_output_{FULL_SUFFIX}_{FULL_SUFFIX}.csv", [("12a", "CCO"), ("None", "CCCl"), ("13b", "CCN")])
     (tmp_path / "slurm.out").write_text(LOG)
     return out, pdf_dir
 
@@ -71,10 +73,10 @@ def test_final_run_tags_each_row_with_its_stage(monkeypatch, tmp_path):
     out, pdf_dir = fake_run(tmp_path)
     results = run(monkeypatch, tmp_path, out, pdf_dir)
     rows = read(results / "2026-10-13_biominer_internal" / "predictions.csv")
-    assert [(r["label"], r["smiles"], r["stage"]) for r in rows] == [("12a", "CCO", "full"), ("13b", "CCN", "markush")]
+    assert [(r["label"], r["smiles"], r["stage"]) for r in rows] == [("12a", "CCO", "full"), ("", "CCCl", "full"), ("13b", "CCN", "markush")]
     meta = json.loads((results / "2026-10-13_biominer_internal" / "run.json").read_text())
     assert (meta["task"], meta["dataset"], meta["tool"]) == ("e2e", "internal", "biominer")
-    assert meta["counts"]["7"] == {"pages": 2, "rendered_pages": 2, "boxes": 2, "full_rows": 1, "markush_rows": 1}
+    assert meta["counts"]["7"] == {"pages": 2, "rendered_pages": 2, "boxes": 2, "full_rows": 2, "markush_rows": 1}
     assert meta["hardware"] == "Explorer d4052, NVIDIA H200, 570.86.15, 143771 MiB"
     assert (meta["slurm_job"], meta["git_commit"], meta["runtime_s"], meta["llm_failures"]) == ("11040999", "abc1234", {"all_papers": 812}, 0)
 
