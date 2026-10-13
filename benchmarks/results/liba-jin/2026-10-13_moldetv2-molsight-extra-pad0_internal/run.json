@@ -1,0 +1,31 @@
+{
+  "handle": "liba-jin",
+  "tool": "moldetv2-molsight-extra-pad0",
+  "track": 2,
+  "task": "e2e",
+  "dataset": "internal",
+  "pipeline": "PyMuPDF render at 300 dpi -> MolDetV2 boxes (conf >= 0.5) -> crop with 0 px margin -> MolSight-extra -> every box's SMILES",
+  "settings": {
+    "variant": "extra",
+    "n_crops": 233,
+    "device": "cuda",
+    "batch_size": 32,
+    "decoding": "greedy"
+  },
+  "versions": {
+    "torch": "2.14.1+cu130",
+    "timm": "1.0.30",
+    "albumentations": "2.0.5",
+    "rdkit": "2026.3.2",
+    "molsight_code": "hustvl/MolSight 86e979b (abbreviation fix applied)",
+    "molsight_weights": "Robert-zwr/MolSight pubchem_uspto_smiles_edges_30.pth"
+  },
+  "command": "python benchmarks/liba-jin/run_molsight.py --dataset internal --variant extra --device cuda --batch-size 32",
+  "git_commit": "10e6ea4",
+  "hardware": "Intel(R) Core(TM) Ultra 9 185H, 31 GB, Windows 10.0.26200, cuda",
+  "runtime_s": {
+    "all": 53.9
+  },
+  "api_cost_usd": null,
+  "notes": ""
+}

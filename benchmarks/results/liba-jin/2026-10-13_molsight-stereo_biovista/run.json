@@ -1,0 +1,31 @@
+{
+  "handle": "liba-jin",
+  "tool": "molsight-stereo",
+  "track": 2,
+  "task": "ocsr",
+  "dataset": "biovista",
+  "pipeline": "MolSight-stereo on each BioVista OCSR crop as distributed (no extra margin or resizing)",
+  "settings": {
+    "variant": "stereo",
+    "n_crops": 8861,
+    "device": "cuda",
+    "batch_size": 32,
+    "decoding": "greedy"
+  },
+  "versions": {
+    "torch": "2.14.1+cu130",
+    "timm": "1.0.30",
+    "albumentations": "2.0.5",
+    "rdkit": "2026.3.2",
+    "molsight_code": "hustvl/MolSight 86e979b (abbreviation fix applied)",
+    "molsight_weights": "Robert-zwr/MolSight stereo_grpo_10_2.pth"
+  },
+  "command": "python benchmarks/liba-jin/run_molsight.py --dataset biovista --variant stereo --device cuda --batch-size 32",
+  "git_commit": "10e6ea4",
+  "hardware": "Intel(R) Core(TM) Ultra 9 185H, 31 GB, Windows 10.0.26200, cuda",
+  "runtime_s": {
+    "all": 1467.2
+  },
+  "api_cost_usd": null,
+  "notes": ""
+}
