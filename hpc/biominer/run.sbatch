@@ -35,10 +35,17 @@ if [ -e "$BIOMINER_ROOT" ]; then
     echo "$BIOMINER_ROOT already exists on $(hostname); is another BioMiner job running here?" >&2
     exit 1
 fi
+logs="$BIOMINER_ROOT/logs"
 cleanup() {
     jobs -p | xargs -r kill 2>/dev/null || true
     sleep 5
     jobs -p | xargs -r kill -9 2>/dev/null || true
+    # Keep the server logs even when the job fails; everything else on local disk goes.
+    if [ -d "$logs" ]; then
+        mkdir -p "$XN_SCRATCH/biominer/runs/$run_id-logs"
+        cp -r "$logs"/. "$XN_SCRATCH/biominer/runs/$run_id-logs/"
+        echo "logs:    $XN_SCRATCH/biominer/runs/$run_id-logs"
+    fi
     rm -rf "$BIOMINER_ROOT"
 }
 trap cleanup EXIT
@@ -57,7 +64,15 @@ echo "biominer: $(git -C "$src" rev-parse --short HEAD) + hpc/biominer/biominer.
 
 ln -s "$(hf_snapshot UniParser/MolDetv2 "$MOLDETV2_REV")/moldet_v2_yolo11n_960_doc.pt" "$src/scripts/"
 ln -s "$(hf_snapshot jiaxianustc/MolGlyph "$MOLGLYPH_REV")/molglyph_large.pt" "$src/scripts/"
-ln -s "$(hf_snapshot jiaxianustc/BioMiner-Instruct "$BIOMINER_INSTRUCT_REV")" "$src/scripts/local-biominer-instruct"
+# BioMiner-Instruct is read once at startup. Copy it to local disk with parallel reads (scratch
+# serves several streams faster than one) so vLLM doesn't page it in over the network.
+snapshot="$(hf_snapshot jiaxianustc/BioMiner-Instruct "$BIOMINER_INSTRUCT_REV")"
+mkdir -p "$BIOMINER_ROOT/biominer-instruct"
+before=$(date +%s)
+ls "$snapshot" | xargs -P 8 -I{} cp -L "$snapshot/{}" "$BIOMINER_ROOT/biominer-instruct/"
+seconds=$(( $(date +%s) - before ))
+echo "model:   copied $(du -sm --apparent-size "$BIOMINER_ROOT/biominer-instruct" | cut -f1) MiB to local disk in $seconds s"
+ln -s "$BIOMINER_ROOT/biominer-instruct" "$src/scripts/local-biominer-instruct"
 for f in "$src"/scripts/{moldet_v2_yolo11n_960_doc.pt,molglyph_large.pt,local-biominer-instruct/config.json}; do
     [ -e "$f" ] || { echo "missing weights: $f (run setup.sbatch weights)" >&2; exit 1; }
 done
@@ -83,14 +98,16 @@ export VLLM_CACHE_ROOT="$BIOMINER_ROOT/cache/vllm" TRITON_CACHE_DIR="$BIOMINER_R
 export TORCHINDUCTOR_CACHE_DIR="$BIOMINER_ROOT/cache/inductor" YOLO_CONFIG_DIR="$BIOMINER_ROOT/config/ultralytics"
 export PATH="$PATH:$BIOMINER_ROOT/poppler/bin"   # appended, so poppler's bin can't shadow system tools
 export PYTHONPATH=.                              # BioMiner imports itself from the checkout
-logs="$BIOMINER_ROOT/logs"
+# Explorer's compute nodes set http_proxy, and curl, requests and the OpenAI client would send
+# even 127.0.0.1 through it, so BioMiner could never reach its own servers (job 11040623).
+export no_proxy=localhost,127.0.0.1,0.0.0.0 NO_PROXY=localhost,127.0.0.1,0.0.0.0
 mkdir -p "$logs"
 cd "$src"
 
 wait_for() {
     # wait_for <name> <url> <seconds> <pid>: poll until the server answers, or fail if it exits.
     local t=0
-    until curl -sf "$2" >/dev/null; do
+    until curl -sf --noproxy "*" "$2" >/dev/null; do
         kill -0 "$4" 2>/dev/null || { echo "$1 exited; last lines of its log:" >&2; tail -40 "$logs/$1.log" >&2; exit 1; }
         [ "$t" -lt "$3" ] || { echo "$1 not up after $3 s" >&2; tail -40 "$logs/$1.log" >&2; exit 1; }
         sleep 10; t=$((t + 10))
@@ -115,6 +132,8 @@ wait_for() {
     --async-scheduling \
     --port 8613 > "$logs/vllm.log" 2>&1 &
 wait_for vllm http://127.0.0.1:8613/health 2400 $!
+grep -E "Loading weights took|Model loading took|torch.compile takes|Graph capturing finished|init engine|GPU KV cache size|Maximum concurrency" \
+    "$logs/vllm.log" | sed -E 's/^.*\] //' | cut -c1-160 | sed 's/^/vllm:    /' || true
 
 "$BIOMINER_ROOT/main/bin/python" scripts/mineru_server.py > "$logs/mineru.log" 2>&1 &
 mineru=$!
