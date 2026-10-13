@@ -23,8 +23,6 @@ dependencies = [
     "numpy==1.26.4",                    # MolScribe needs numpy<2; this also caps OpenCV at 4.11
     "opencv-python==4.11.0.86",
     "opencv-python-headless==4.11.0.86",  # pulled in by albumentations; keep in step with opencv-python
-    "torch==2.14.0",
-    "torchvision==0.29.0",
     "rdkit==2026.3.2",                  # the sponsor paper's version; benchmarks/score.py expects it
     "ultralytics==8.4.165",             # runs MolDetV2 (YOLO11n)
     "docling==2.131.0",
@@ -36,3 +34,20 @@ dependencies = [
 
 [tool.uv]
 package = false   # a collection of scripts, not an installable package
+# torch comes from PyPI by default (CUDA 13 on Linux). Explorer's GPU drivers predate CUDA 13,
+# so the cluster syncs with `--no-group torch-pypi --group torch-cu126` instead (hpc/README.md).
+default-groups = ["torch-pypi"]
+conflicts = [[{ group = "torch-pypi" }, { group = "torch-cu126" }]]
+
+[dependency-groups]
+torch-pypi = ["torch==2.14.0", "torchvision==0.29.0"]
+torch-cu126 = ["torch==2.14.0", "torchvision==0.29.0"]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu126", group = "torch-cu126", marker = "sys_platform == 'linux'" }]
+torchvision = [{ index = "pytorch-cu126", group = "torch-cu126", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
