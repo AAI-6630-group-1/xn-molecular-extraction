@@ -17,6 +17,7 @@ Everything lives in this one repo, in a subfolder named after your GitHub handle
 |---|---|
 | 1.1 setup proposal | `setup-proposals/<handle>/` |
 | 1.2 benchmarking code | `benchmarks/<handle>/` (results in `benchmarks/results/<handle>/`) |
+| Benchmark code the team shares (scorers, readers) | `benchmarks/` |
 | 1.3 and other individual reports | `reports/<handle>/` |
 | Pipeline modules (Part 2) | `pipeline/` |
 

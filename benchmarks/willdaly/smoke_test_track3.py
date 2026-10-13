@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import argparse
 import csv
-import inspect
 import json
 import sys
 import time
@@ -35,30 +34,9 @@ from rdkit import Chem, DataStructs, rdBase
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "benchmarks"))
 from score import GROUND_TRUTH, load_ground_truth, parse  # noqa: E402  same canonicalization as the scorer
+from readers import patch_molscribe  # noqa: E402
 
 warnings.filterwarnings("ignore")  # timm/onmt/albumentations emit deprecation noise under torch 2.x
-
-
-def patch_molscribe() -> None:
-    """Fix MolScribe's abbreviation expansion (Ph, OMe, Boc, ...) on this platform.
-
-    molscribe.chemistry._expand_functional_group reads each bond's order *after*
-    RWMol.RemoveBond has deleted it. The stale Bond object reports order 0 here
-    (macOS arm64, RDKit 2022.09 through 2026.03), so BOND_TYPES[0] raises KeyError
-    and every molecule with an abbreviation comes back '<invalid>'. The fix reads
-    the orders before removing the bonds.
-    """
-    import molscribe.chemistry as chem
-
-    src = inspect.getsource(chem._expand_functional_group)
-    old_1 = "adjacent_indices = [bond.GetOtherAtomIdx(i) for bond in bonds]"
-    old_2 = ("for adjacent_atom, bond in zip(adjacent_atoms, bonds):\n"
-             "                    adjacent_atom.SetNumRadicalElectrons(int(bond.GetBondTypeAsDouble()))")
-    assert old_1 in src and old_2 in src, "MolScribe source changed; re-check the patch"
-    src = src.replace(old_1, old_1 + "\n                bond_orders = [int(b.GetBondTypeAsDouble()) for b in bonds]")
-    src = src.replace(old_2, "for adjacent_atom, order in zip(adjacent_atoms, bond_orders):\n"
-                             "                    adjacent_atom.SetNumRadicalElectrons(order)")
-    exec(src, chem.__dict__)  # redefines _expand_functional_group inside molscribe.chemistry
 
 
 def largest_fragment(mol):

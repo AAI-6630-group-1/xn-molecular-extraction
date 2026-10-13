@@ -29,7 +29,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 DATA = REPO / "data"
-sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent))
 from molglyph import BIOMINER_COMMIT  # noqa: E402  the BioVista split lists come from the same commit
 
 BIOVISTA_OCSR = "https://drive.usercontent.google.com/download?id=11iCH0j7U9iFgwXahjkWZouNyqATfEPoL&export=download&confirm=t"

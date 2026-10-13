@@ -3,8 +3,8 @@
 
 Renders each page with PyMuPDF, detects molecule drawings with MolDetV2 (the 960 px
 "doc" YOLO11n weights), crops each box with a margin, and reads every crop with
-MolScribe (patched, see smoke_test_track3.py) or MolGlyph, BioMiner's recognizer
-(see readers.py). Writes one run in the #14 results format, ready for
+MolScribe (patched) or MolGlyph, BioMiner's recognizer
+(see benchmarks/readers.py). Writes one run in the #14 results format, ready for
 benchmarks/score.py:
 
     uv run python benchmarks/willdaly/run_track3.py
@@ -36,6 +36,7 @@ from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
+sys.path.insert(0, str(HERE.parent))  # shared code: readers.py, molglyph.py
 sys.path.insert(0, str(HERE))
 from readers import READERS, load_reader  # noqa: E402
 from smoke_test_track3 import render  # noqa: E402
@@ -64,7 +65,7 @@ def hardware() -> str:
 
 
 def versions() -> dict[str, str]:
-    """Versions shared by every Track 3 run; each reader adds its own (readers.py)."""
+    """Versions shared by every Track 3 run; each reader adds its own (benchmarks/readers.py)."""
     out = {}
     for pkg in ("pymupdf", "ultralytics", "torch", "rdkit"):
         try:

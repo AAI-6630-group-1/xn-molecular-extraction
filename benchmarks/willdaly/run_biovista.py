@@ -34,6 +34,7 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 DATA = REPO / "data" / "biovista" / "ocsr" / "data"
+sys.path.insert(0, str(HERE.parent))  # shared code: readers.py, molglyph.py
 sys.path.insert(0, str(HERE))
 from readers import READERS, load_reader  # noqa: E402
 from run_track3 import git_commit, hardware, versions  # noqa: E402

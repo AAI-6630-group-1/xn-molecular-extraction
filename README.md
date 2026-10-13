@@ -53,7 +53,7 @@ Then get the internal dataset (see [data/README.md](data/README.md)) and check t
 uv run pytest benchmarks/tests
 ```
 
-If you use MolScribe, apply `patch_molscribe()` from [`benchmarks/willdaly/smoke_test_track3.py`](benchmarks/willdaly/smoke_test_track3.py) first (see [its README](benchmarks/willdaly/README.md#molscribe-bug-and-patch)). DECIMER needs TensorFlow, so it gets its own environment.
+If you use MolScribe, load it with `load_reader("molscribe")` from [`benchmarks/readers.py`](benchmarks/readers.py), or call that file's `patch_molscribe()` first (the bug is described [here](benchmarks/willdaly/README.md#molscribe-bug-and-patch)). DECIMER needs TensorFlow, so it gets its own environment.
 
 To run on a GPU on Northeastern's Explorer cluster, see [hpc/README.md](hpc/README.md).
 

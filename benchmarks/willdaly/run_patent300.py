@@ -6,7 +6,7 @@ Writes up to three runs for benchmarks/score.py, one per MolMole evaluation:
 - detect: MolDetV2 boxes on all 300 page images. Boxes down to --min-conf are kept
   so AP covers the whole precision-recall curve; run.json's score_threshold
   (--conf) is the operating point for precision and recall.
-- ocsr: the reader (MolScribe or MolGlyph, see readers.py) on every ground-truth
+- ocsr: the reader (MolScribe or MolGlyph, see benchmarks/readers.py) on every ground-truth
   box (2,482 crops), so recognition is scored without detection errors.
 - e2e: the reader on the MolDetV2 boxes scoring >= --conf, the pipeline that
   run_track3.py runs on the internal papers.
@@ -37,6 +37,7 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 DATA = REPO / "data" / "patent300"
+sys.path.insert(0, str(HERE.parent))  # shared code: readers.py, molglyph.py
 sys.path.insert(0, str(HERE))
 from readers import READERS, load_reader  # noqa: E402
 from run_track3 import git_commit, hardware, versions  # noqa: E402
