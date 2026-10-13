@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,paper_id,n_gt,n_output_raw,n_output,n_invalid,tp,precision,recall,f1,recall_stereo_blind,n_gt_local,recall_local_names,mean_best_tanimoto,rdkit_version
+2026-10-13_biominer_internal,willdaly,biominer,internal,1,17,18,17,0,17,1.0000,1.0000,1.0000,1.0000,0,,1.0000,2026.03.2
+2026-10-13_biominer_internal,willdaly,biominer,internal,2,34,13,12,0,9,0.7500,0.2647,0.3913,0.2647,31,0.1935,0.6618,2026.03.2
+2026-10-13_biominer_internal,willdaly,biominer,internal,4,60,42,41,0,23,0.5610,0.3833,0.4554,0.3833,52,0.4038,0.7590,2026.03.2
+2026-10-13_biominer_internal,willdaly,biominer,internal,6,1,2,2,0,0,0.0000,0.0000,0.0000,0.0000,0,,0.9322,2026.03.2
+2026-10-13_biominer_internal,willdaly,biominer,internal,16,4,7,7,0,1,0.1429,0.2500,0.1818,0.5000,4,0.2500,0.6451,2026.03.2
+2026-10-13_biominer_internal,willdaly,biominer,internal,19,104,29,29,0,23,0.7931,0.2212,0.3459,0.2212,103,0.2233,0.7648,2026.03.2
+2026-10-13_biominer_internal,willdaly,biominer,internal,macro,220,111,108,0,73,0.5412,0.3532,0.3957,0.3949,190,0.2677,0.7938,2026.03.2
+2026-10-13_biominer_internal,willdaly,biominer,internal,pooled,220,111,108,0,73,0.6759,0.3318,0.4451,0.3364,190,0.2684,0.7641,2026.03.2

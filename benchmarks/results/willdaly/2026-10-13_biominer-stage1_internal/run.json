@@ -1,0 +1,86 @@
+{
+  "tool": "biominer-stage1",
+  "pipeline": "pdf2image pages -> MinerU layout -> MolDetV2 boxes on pages and table crops -> MolGlyph SMILES for every box (BioMiner's stage one, before the language model)",
+  "handle": "willdaly",
+  "track": 1,
+  "task": "e2e",
+  "dataset": "internal",
+  "settings": {
+    "config": "BioMiner/config/default_open_source.yaml with hpc/biominer/biominer.patch (grounding_gpu_num 1)",
+    "vllm": "tensor-parallel 1, gpu-memory-utilization 0.75, max-model-len 65536",
+    "page_render": "pdf2image default (200 dpi)"
+  },
+  "versions": {
+    "BIOMINER_COMMIT": "17c6161b40e34e2c377b2871f760baab3fdeea06",
+    "BIOMINER_INSTRUCT_REV": "c865482f8c8b9515f8c9c04806071e27229be9bc",
+    "MOLGLYPH_REV": "18db8e0e09dbde08dfc82604ccb815c47d36bff5",
+    "MOLDETV2_REV": "88b3836ae4fe692dd2d4c123b4aa0d4a5039eb75",
+    "MINERU_MODELS_REV": "b3f7c96c9e49193ebfb2328cea651129e8f6b9c3",
+    "LAYOUTREADER_REV": "629be376d86fbab624ddc4020804a4e93b5515bc",
+    "torch (main env)": "2.6.0",
+    "transformers (main env)": "4.51.2",
+    "magic-pdf (main env)": "1.3.1",
+    "ultralytics (main env)": "8.3.107",
+    "rdkit-pypi (main env)": "2022.9.5",
+    "pdf2image (main env)": "1.17.0",
+    "torch (vllm env)": "2.8.0",
+    "transformers (vllm env)": "4.57.1",
+    "vllm (vllm env)": "0.11.0",
+    "pdf2image (vllm env)": "1.17.0",
+    "rdkit (scoring)": "2026.3.2"
+  },
+  "command": "sbatch hpc/biominer/run.sbatch 1 2 4 6 16 19",
+  "git_commit": "ac07a4b",
+  "hardware": "Explorer d4054, NVIDIA H200, 570.86.15, 143771 MiB",
+  "slurm_job": "11042074",
+  "runtime_s": {
+    "all_papers": 653
+  },
+  "counts": {
+    "1": {
+      "pages": 13,
+      "rendered_pages": 13,
+      "boxes": 18,
+      "full_rows": 18,
+      "markush_rows": 0
+    },
+    "2": {
+      "pages": 19,
+      "rendered_pages": 19,
+      "boxes": 94,
+      "full_rows": 13,
+      "markush_rows": 0
+    },
+    "4": {
+      "pages": 16,
+      "rendered_pages": 16,
+      "boxes": 76,
+      "full_rows": 22,
+      "markush_rows": 20
+    },
+    "6": {
+      "pages": 25,
+      "rendered_pages": 25,
+      "boxes": 2,
+      "full_rows": 2,
+      "markush_rows": 0
+    },
+    "16": {
+      "pages": 13,
+      "rendered_pages": 13,
+      "boxes": 8,
+      "full_rows": 7,
+      "markush_rows": 0
+    },
+    "19": {
+      "pages": 18,
+      "rendered_pages": 18,
+      "boxes": 54,
+      "full_rows": 24,
+      "markush_rows": 5
+    }
+  },
+  "api_cost_usd": 0,
+  "llm_failures": 0,
+  "notes": "Job 11042074, one H200. MolGlyph's GPU readings depend on batch makeup: in the paper-16 smoke test (job 11041934, that paper's crops batched alone) 2 of 8 crops read differently, giving 2/4 on paper 16 instead of 1/4 here; the CPU MolGlyph run also gets 2/4."
+}
