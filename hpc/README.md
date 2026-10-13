@@ -9,6 +9,7 @@ Scripts for running this repo's code on [Explorer](https://rc-docs.northeastern.
 | `track3_gpu.sbatch` | Runs `benchmarks/willdaly/run_track3.py` on a GPU and scores the run |
 | `deploy.sh` | Run on your laptop: checks out your current pushed commit in the cluster clone |
 | `fetch.sh` | Run on your laptop: copies result folders from the cluster clone back into yours |
+| `biominer/` | Full BioMiner on one H200, with its own environments ([biominer/README.md](biominer/README.md)) |
 
 ## GPUs and the torch build
 

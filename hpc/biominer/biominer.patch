@@ -1,0 +1,74 @@
+diff --git a/BioMiner/config/default_open_source.yaml b/BioMiner/config/default_open_source.yaml
+index a8b0d6d..2ca2719 100644
+--- a/BioMiner/config/default_open_source.yaml
++++ b/BioMiner/config/default_open_source.yaml
+@@ -1,4 +1,4 @@
+-grounding_gpu_num: 4
++grounding_gpu_num: 1
+ task_name: biominer_upgrade
+ output_dir: ./tmp/test_biovista_upgrade
+ ############
+diff --git a/scripts/mineru_server.py b/scripts/mineru_server.py
+index f2248a6..ea416cf 100644
+--- a/scripts/mineru_server.py
++++ b/scripts/mineru_server.py
+@@ -17,11 +17,6 @@ class MinerUAPI(ls.LitAPI):
+         self.output_dir = output_dir
+ 
+     def setup(self, device):
+-        if device.startswith('cuda'):
+-            os.environ['CUDA_VISIBLE_DEVICES'] = device.split(':')[-1]
+-            if torch.cuda.device_count() > 1:
+-                raise RuntimeError("Remove any CUDA actions before setting 'CUDA_VISIBLE_DEVICES'.")
+-
+         from magic_pdf.tools.cli import do_parse, convert_file_to_pdf
+         from magic_pdf.model.doc_analyze_by_custom_model import ModelSingleton
+ 
+@@ -98,9 +93,9 @@ if __name__ == '__main__':
+     server = ls.LitServer(
+         MinerUAPI(output_dir='./tmp'),
+         accelerator='cuda',
+-        devices=[0, 1, 2, 3],
++        devices=[0],
+         workers_per_device=1,
+         timeout=False
+     )
+-    print("Starting MinerU 4-GPU Server on port 8002...")
++    print("Starting MinerU 1-GPU Server on port 8002...")
+     server.run(port=8002)
+diff --git a/scripts/moldet_server.py b/scripts/moldet_server.py
+index adaa596..12a19e6 100644
+--- a/scripts/moldet_server.py
++++ b/scripts/moldet_server.py
+@@ -108,10 +108,10 @@ if __name__ == '__main__':
+     server = ls.LitServer(
+         MolGlyphAPI(),
+         accelerator="cuda",
+-        devices=[0, 1, 2, 3],  # 指定使用的 GPU ID
++        devices=[0],
+         workers_per_device=1,  # 每个 GPU 跑一个模型实例
+         timeout=False         # 禁用超时，防止大 Batch 处理时间过长断开
+     )
+     
+-    print("Starting MolDetv2 4-GPU Server on port 8001...")
++    print("Starting MolDetv2 1-GPU Server on port 8001...")
+     server.run(port=8001)
+\ No newline at end of file
+diff --git a/scripts/ocsr_server.py b/scripts/ocsr_server.py
+index 6d54535..25b88fc 100644
+--- a/scripts/ocsr_server.py
++++ b/scripts/ocsr_server.py
+@@ -72,10 +72,10 @@ if __name__ == '__main__':
+     server = ls.LitServer(
+         MolGlyphAPI(),
+         accelerator="cuda",
+-        devices=[0, 1, 2, 3],  # 指定使用的 GPU ID
++        devices=[0],
+         workers_per_device=1,  # 每个 GPU 跑一个模型实例
+         timeout=False         # 禁用超时，防止大 Batch 处理时间过长断开
+     )
+     
+-    print("Starting MolGlyph 4-GPU Server on port 8003...")
++    print("Starting MolGlyph 1-GPU Server on port 8003...")
+     server.run(port=8003)
+\ No newline at end of file
