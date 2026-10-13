@@ -117,6 +117,12 @@ hpc/fetch.sh benchmarks/results/willdaly/<date>_moldetv2-molscribe-cuda_internal
 
 Commit the fetched run folder as usual. `run.json` names the GPU, and the Slurm log has the node, driver, and package list.
 
+The job writes crops to the node's local disk and packs them into `/scratch/$USER/xn/crops/<run_id>.tar`, so they don't land in the cluster clone's `data/track3_runs/`. Writing them to home cost about 0.6 s per box. To look at them on your laptop:
+
+```bash
+ssh explorer 'cat /scratch/$USER/xn/crops/<run_id>.tar' | tar -C data/track3_runs -xf -
+```
+
 ## Rules
 
 - **Login nodes** (explorer-01, explorer-02) are only for light commands: `git`, `sbatch`, `squeue`, `sacct`, `rsync`, `ls`. Anything that computes or installs runs in a job (`srun` for a short interactive step, `sbatch` for everything else). Don't start Jupyter, an IDE server, or an AI coding agent on a login node. VS Code Remote SSH gets disconnected there for this reason; use the VS Code app in Open OnDemand if you want an editor on the cluster.
