@@ -88,6 +88,22 @@ The first command scores one run and prints a per-paper table. `--all` scores ev
 
 On the internal papers, only `e2e` runs (a PDF in, a set of SMILES out) are scored, because those papers have no ground-truth boxes.
 
+### Team comparison (1.4 and 1.5)
+
+```bash
+python benchmarks/score.py --all
+python benchmarks/aggregate.py
+```
+
+[`aggregate.py`](aggregate.py) reads the summary files and every run's `run.json`, for all handles, and writes [`results/comparison.md`](results/comparison.md) (#22). It uses each handle's latest run of each tool and has these tables:
+
+- each system's public-benchmark scores beside its internal-paper scores
+- every internal-paper run, paper by paper
+- recognition on given crops (BioVista, Patent300)
+- detection, and detection plus recognition, on Patent300
+
+It flags anything that makes a run not comparable: a run that covers only some papers, a different RDKit version, a different number of BioVista crops, or code that wasn't committed when the run was made. Your runs show up in the per-paper tables automatically. To put your tool in the first table, add a line to `SYSTEMS` at the top of `aggregate.py`, naming your run's `tool` for each dataset.
+
 ### Patent300: detect, ocsr, and e2e
 
 Runs with `"dataset": "patent300"` are scored by [`score_boxes.py`](score_boxes.py) against [MolMole Patent300](../data/README.md#molmole-patent300), following the MolMole paper's page-level protocol so our numbers line up with its Tables 2 to 4. Boxes are `x0, y0, x1, y1` in pixels of the page image.
