@@ -58,7 +58,9 @@ def hardware() -> str:
             return subprocess.run(["sysctl", "-n", key], capture_output=True, text=True).stdout.strip()
         mem_gb = int(sysctl("hw.memsize") or 0) // 2**30
         return f"{sysctl('machdep.cpu.brand_string')} {mem_gb} GB, macOS {platform.mac_ver()[0]}"
-    return f"{platform.machine()} {platform.system()} {platform.release()}"
+    import torch  # already loaded by the readers; imported here to name the GPU in run.json
+    gpu = f", {torch.cuda.get_device_name(0)}" if torch.cuda.is_available() else ""
+    return f"{platform.machine()} {platform.system()} {platform.release()}{gpu}"
 
 
 def versions() -> dict[str, str]:
