@@ -2,10 +2,25 @@
 
 Code and results for XN tasks 1.2 and 1.3.
 
-- Put your code in `benchmarks/<your-github-handle>/`.
+- Put your code in `benchmarks/<your-github-handle>/`. Code more than one person uses (the scorers and readers) lives here in `benchmarks/`.
 - Record results in the shared format the team agrees on in [#14](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/14), so task 1.5 can combine them.
 - For every result, write down the tool version and the exact command you ran.
-- BioMiner setup notes go here once [#18](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/18) is done. Until then, [`willdaly/molglyph.py`](willdaly/molglyph.py) runs BioMiner's recognizer, MolGlyph, on a CPU.
+- BioMiner setup notes go here once [#18](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/18) is done. Until then, [`molglyph.py`](molglyph.py) runs BioMiner's recognizer, MolGlyph, on a CPU.
+
+## Readers
+
+[`readers.py`](readers.py) loads each molecule recognizer behind one interface, so every reader can get the same crops and the same scorer. It has MolScribe (with the [abbreviation patch](willdaly/README.md#molscribe-bug-and-patch)) and MolGlyph ([`molglyph.py`](molglyph.py)).
+
+```python
+sys.path.insert(0, str(REPO / "benchmarks"))
+from readers import READERS, load_reader
+
+reader = load_reader("molglyph", device="cpu")
+reader.predict(crops)  # RGB arrays in, [{"smiles", "confidence", "raw"}, ...] out
+reader.versions        # goes in run.json
+```
+
+To add a reader, write a loader that returns those three keys for each crop and register it in `_LOADERS`; the docstring at the top of `readers.py` has the details. [`willdaly/run_biovista.py`](willdaly/run_biovista.py) is a short runner to copy. A tool that needs its own environment (DECIMER needs TensorFlow) can't be loaded this way, so run it there and write `predictions.csv` directly.
 
 ## Scoring (draft)
 

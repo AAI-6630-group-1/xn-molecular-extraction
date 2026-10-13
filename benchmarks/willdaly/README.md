@@ -17,9 +17,9 @@ It runs on three datasets that go from clean to messy: **BioVista**'s 8,861 mole
 | [`run_track3.py`](run_track3.py) | render, detect, recognize | The six internal papers, PDF to SMILES (`--reader`, `--pad`, `--dpi`) |
 | [`run_patent300.py`](run_patent300.py) | detect, recognize | Patent300: MolDetV2 boxes, the reader on ground-truth crops, and both together |
 | [`run_biovista.py`](run_biovista.py) | recognize | BioVista's crops, one SMILES each; resumable |
-| [`readers.py`](readers.py) | recognize | MolScribe and MolGlyph behind one `predict(crops)` interface |
-| [`molglyph.py`](molglyph.py) | recognize | Loads BioMiner's MolGlyph from a pinned commit without installing BioMiner |
-| [`smoke_test_track3.py`](smoke_test_track3.py) | all | One-paper smoke test; also holds `render()` and the MolScribe patch |
+| [`../readers.py`](../readers.py) | recognize | MolScribe and MolGlyph behind one `predict(crops)` interface, shared with the team |
+| [`../molglyph.py`](../molglyph.py) | recognize | Loads BioMiner's MolGlyph from a pinned commit without installing BioMiner |
+| [`smoke_test_track3.py`](smoke_test_track3.py) | all | One-paper smoke test; also holds `render()` |
 | [`../score.py`](../score.py), [`../score_boxes.py`](../score_boxes.py), [`../score_biovista.py`](../score_biovista.py) | score | Shared scorers (rules in [`../README.md`](../README.md)) |
 | [`analyze_track3.py`](analyze_track3.py) | analysis | Breaks an internal-paper run down by error type |
 | [`compare.py`](compare.py) | analysis | Writes the MolScribe vs MolGlyph table, `comparison.md` and `comparison.csv` |
@@ -105,7 +105,7 @@ Track 3 uses the shared environment (`uv sync`; see [Getting started](../../READ
 
 Why Python 3.11: MolScribe needs `numpy<2`, and its OpenNMT-py 2.2.0 tokenizer (`pyonmttok`) only has Apple Silicon wheels for Python 3.10 and 3.11. MolScribe is installed from GitHub because the PyPI release (1.1.1) pins `torch<2.0`, which has no Python 3.11 build for Apple Silicon.
 
-MolGlyph needs nothing extra. Its code is BioMiner's fork of MolScribe, which uses the same pinned libraries; `molglyph.py` checks out only that folder of [jiaxianyan/BioMiner](https://github.com/jiaxianyan/BioMiner) at commit `17c6161` into `~/.cache/xn-molecular-extraction/` (62 files) and imports it as `biominer_molscribe`, so it can't shadow the installed MolScribe.
+MolGlyph needs nothing extra. Its code is BioMiner's fork of MolScribe, which uses the same pinned libraries; [`molglyph.py`](../molglyph.py) checks out only that folder of [jiaxianyan/BioMiner](https://github.com/jiaxianyan/BioMiner) at commit `17c6161` into `~/.cache/xn-molecular-extraction/` (62 files) and imports it as `biominer_molscribe`, so it can't shadow the installed MolScribe.
 
 ## Weights
 
@@ -216,8 +216,8 @@ On the M1 Pro's CPU, detection took 32 s and each recognition run 13 to 19 minut
 
 ## MolScribe bug and patch
 
-MolScribe returns `<invalid>` for every drawing that contains an abbreviation (Ph, OMe, Boc, ...). `_expand_functional_group` in `molscribe/chemistry.py` reads each bond's order after `RWMol.RemoveBond` has deleted the bond, and RDKit then reports the order as 0, so the lookup raises a `KeyError` that MolScribe catches silently. `patch_molscribe()` in `smoke_test_track3.py` reads the orders before removing the bonds. Call it before using MolScribe anywhere in this project.
+MolScribe returns `<invalid>` for every drawing that contains an abbreviation (Ph, OMe, Boc, ...). `_expand_functional_group` in `molscribe/chemistry.py` reads each bond's order after `RWMol.RemoveBond` has deleted the bond, and RDKit then reports the order as 0, so the lookup raises a `KeyError` that MolScribe catches silently. `patch_molscribe()` in [`../readers.py`](../readers.py) reads the orders before removing the bonds. `load_reader("molscribe")` applies it; call it yourself before using MolScribe any other way in this project.
 
 ## How this code was written
 
-The course expects agentic AI for the project code, so this says which parts it wrote. Claude Code (Anthropic) wrote the Track 3 code in this folder and the shared scorers at Will's direction, ran every benchmark on Will's laptop, and drafted this README. Will chose the tools, datasets, and metrics (1.1 proposal and #14), approved each dataset and weight download, and reviews and merges every pull request. The checks behind the numbers: `pytest benchmarks/tests` (26 tests), a fresh-environment install from `requirements.txt`, the refactored runners reproducing the committed MolScribe predictions exactly, and both readers reproducing BioMiner's published BioVista accuracies within 1.3 points.
+The course expects agentic AI for the project code, so this says which parts it wrote. Claude Code (Anthropic) wrote the Track 3 code in this folder and the shared scorers and readers in `benchmarks/` at Will's direction, ran every benchmark on Will's laptop, and drafted this README. Will chose the tools, datasets, and metrics (1.1 proposal and #14), approved each dataset and weight download, and reviews and merges every pull request. The checks behind the numbers: `pytest benchmarks/tests` (28 tests), a fresh-environment install from `requirements.txt`, the refactored runners reproducing the committed MolScribe predictions exactly, and both readers reproducing BioMiner's published BioVista accuracies within 1.3 points.
