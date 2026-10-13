@@ -1,6 +1,8 @@
 # BioMiner's vLLM environment, which serves BioMiner-Instruct (Qwen3-VL-32B) over an
 # OpenAI-compatible API. The pip pins from vllm_environment.yml at BioMiner commit 17c6161,
-# unchanged. Python 3.10. torch 2.8.0 is the CUDA 12.8 build, which the H200 driver (570) runs.
+# except prody (below). Python 3.10. torch 2.8.0 is the CUDA 12.8 build, which the H200 driver (570) runs.
+# Dropped: prody, a protein-structure library BioMiner never imports, which has no Linux wheel
+# for Python 3.10 and fails to build from source without numpy already installed.
 accelerate==1.11.0
 aiohappyeyeballs==2.6.1
 aiohttp==3.13.2
@@ -100,7 +102,6 @@ partial-json-parser==0.2.1.1.post6
 pdf2image==1.17.0
 peft==0.18.0
 pillow==12.0.0
-prody==2.6.1
 prometheus-client==0.23.1
 prometheus-fastapi-instrumentator==7.1.0
 propcache==0.4.1

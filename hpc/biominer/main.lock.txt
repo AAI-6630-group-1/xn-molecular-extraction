@@ -131,7 +131,6 @@ pdfminer-six==20231228
 pillow==10.4.0
 platformdirs==4.3.7
 pooch==1.8.2
-prody==2.3.1
 proto-plus==1.26.1
 protobuf==5.29.4
 psutil==7.0.0
