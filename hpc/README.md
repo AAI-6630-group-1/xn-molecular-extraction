@@ -85,7 +85,20 @@ Ask for any GPU with `--gres=gpu:1`, or a type with `--gres=gpu:a100:1` (types: 
 
    The log is in `/scratch/$USER/xn/logs/xn-setup-<jobid>.out`. Rerun after any change to `uv.lock`.
 
-6. **Data.** Put the internal papers in the cluster clone's `data/internal/`, the same layout as on your laptop (see [data/README.md](../data/README.md)). They are course-use only, so keep them in your home directory. Uploading `Dataset 2.zip` through the [Open OnDemand](https://ood.explorer.northeastern.edu) file browser and unzipping it there works. Patent300 and BioVista download directly on the cluster:
+6. **Data.** Put the internal papers in the cluster clone's `data/internal/`, the same layout as on your laptop (see [data/README.md](../data/README.md)). They are course-use only, so keep them in your home directory. Either upload `Dataset 2.zip` through the [Open OnDemand](https://ood.explorer.northeastern.edu) file browser and unzip it there, or stream your local copy. Don't use rsync from a Mac: macOS ships openrsync, which fails against the cluster's rsync with "unexpected end of file". Use tar instead:
+
+   ```bash
+   cd data && COPYFILE_DISABLE=1 tar --no-mac-metadata -cf - internal | ssh explorer 'tar -C xn-molecular-extraction/data -xf -'
+   ```
+
+   GNU tar on the cluster prints "Ignoring unknown extended header keyword" for macOS file tags; that's harmless. Home and scratch are network filesystems that create small files at only 2 or 3 a second from the login node. That's fine for the seven internal files. For anything with thousands of files, send one archive and unpack it in a job, which ran at about 90 files a second (11,651 files in 128 s):
+
+   ```bash
+   cd data && COPYFILE_DISABLE=1 tar --no-mac-metadata -cf - patent300 biovista | ssh explorer 'cat > /scratch/$USER/xn/datasets.tar'
+   ssh explorer 'cd xn-molecular-extraction/data && srun -p short -c 2 --mem=4G -t 00:30:00 tar -xf /scratch/$USER/xn/datasets.tar && rm /scratch/$USER/xn/datasets.tar'
+   ```
+
+   Or download Patent300 and BioVista directly on the cluster:
 
    ```bash
    ssh explorer 'cd xn-molecular-extraction && source hpc/env.sh &&

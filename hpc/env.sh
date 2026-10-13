@@ -10,6 +10,9 @@ export XN_SCRATCH="/scratch/$USER/xn"
 export UV_CACHE_DIR="$XN_SCRATCH/cache/uv"
 export UV_LINK_MODE=copy      # home and scratch are separate filesystems, so uv can't hardlink from its cache
 export UV_NO_SYNC=1           # `uv run` would otherwise re-sync to the default torch-pypi group (CUDA 13)
+# Home and scratch create small files at a few per second, so Python writing a .pyc for every
+# module on first import stalled a job for 30 minutes. setup.sbatch compiles them all up front.
+export PYTHONDONTWRITEBYTECODE=1
 export HF_HOME="$XN_SCRATCH/cache/huggingface"
 export TORCH_HOME="$XN_SCRATCH/cache/torch"
 mkdir -p "$UV_CACHE_DIR" "$HF_HOME" "$TORCH_HOME" "$XN_SCRATCH/logs"

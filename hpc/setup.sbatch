@@ -15,8 +15,9 @@
 set -euo pipefail
 source hpc/env.sh
 
-# Explorer's drivers (545 and 570) predate CUDA 13, so use torch's CUDA 12.6 build (see pyproject.toml)
-uv sync --frozen --no-group torch-pypi --group torch-cu126
+# Explorer's drivers (545 and 570) predate CUDA 13, so use torch's CUDA 12.6 build (see pyproject.toml).
+# --compile-bytecode writes every .pyc now, in parallel, because jobs don't write them (env.sh).
+uv sync --frozen --compile-bytecode --no-group torch-pypi --group torch-cu126
 xn_provenance
 uv run python -c "import torch; print('torch', torch.__version__, '| CUDA build', torch.version.cuda, '| archs', torch.cuda.get_arch_list())"
 uv run pytest -q benchmarks/tests
