@@ -1,0 +1,63 @@
+{
+  "handle": "willdaly",
+  "tool": "moldetv2-molscribe-cuda",
+  "track": 3,
+  "task": "e2e",
+  "dataset": "internal",
+  "pipeline": "PyMuPDF render at 300 dpi -> MolDetV2 boxes (conf >= 0.5) -> crop with 10 px margin -> molscribe -> every box's SMILES",
+  "settings": {
+    "dpi": 300,
+    "det_conf": 0.5,
+    "pad_px": 10,
+    "reader": "molscribe",
+    "device": "cuda:0"
+  },
+  "versions": {
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "torch": "2.14.0+cu126",
+    "rdkit": "2026.3.2",
+    "moldetv2_weights": "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt",
+    "molscribe": "1.1.1 (GitHub 7296a30, patched)",
+    "molscribe_weights": "yujieq/MolScribe swin_base_char_aux_1m.pth"
+  },
+  "command": "uv run python benchmarks/willdaly/run_track3.py --device cuda:0 --tool moldetv2-molscribe-cuda",
+  "git_commit": "6235219",
+  "hardware": "x86_64 Linux 5.14.0-362.13.1.el9_3.x86_64, Tesla V100-SXM2-32GB, cuda:0",
+  "runtime_s": {
+    "1": 52.5,
+    "2": 45.8,
+    "4": 56.5,
+    "6": 5.7,
+    "16": 7.1,
+    "19": 44.9
+  },
+  "counts": {
+    "1": {
+      "pages": 13,
+      "boxes": 18
+    },
+    "2": {
+      "pages": 19,
+      "boxes": 74
+    },
+    "4": {
+      "pages": 16,
+      "boxes": 77
+    },
+    "6": {
+      "pages": 25,
+      "boxes": 2
+    },
+    "16": {
+      "pages": 13,
+      "boxes": 8
+    },
+    "19": {
+      "pages": 18,
+      "boxes": 54
+    }
+  },
+  "api_cost_usd": null,
+  "notes": ""
+}

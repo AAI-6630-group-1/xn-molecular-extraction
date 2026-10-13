@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,paper_id,n_gt,n_output_raw,n_output,n_invalid,tp,precision,recall,f1,recall_stereo_blind,n_gt_local,recall_local_names,mean_best_tanimoto,rdkit_version
+2026-10-13_moldetv2-molscribe-cuda_internal,willdaly,moldetv2-molscribe-cuda,internal,1,17,18,18,0,14,0.7778,0.8235,0.8000,0.8235,0,,0.9877,2026.03.2
+2026-10-13_moldetv2-molscribe-cuda_internal,willdaly,moldetv2-molscribe-cuda,internal,2,34,74,35,1,9,0.2571,0.2647,0.2609,0.2647,31,0.1935,0.7063,2026.03.2
+2026-10-13_moldetv2-molscribe-cuda_internal,willdaly,moldetv2-molscribe-cuda,internal,4,60,77,69,11,11,0.1594,0.1833,0.1705,0.1833,52,0.1731,0.6617,2026.03.2
+2026-10-13_moldetv2-molscribe-cuda_internal,willdaly,moldetv2-molscribe-cuda,internal,6,1,2,2,0,0,0.0000,0.0000,0.0000,0.0000,0,,0.8833,2026.03.2
+2026-10-13_moldetv2-molscribe-cuda_internal,willdaly,moldetv2-molscribe-cuda,internal,16,4,8,8,3,2,0.2500,0.5000,0.3333,0.5000,4,0.5000,0.7945,2026.03.2
+2026-10-13_moldetv2-molscribe-cuda_internal,willdaly,moldetv2-molscribe-cuda,internal,19,104,54,51,6,15,0.2941,0.1442,0.1935,0.1442,103,0.1456,0.7146,2026.03.2
+2026-10-13_moldetv2-molscribe-cuda_internal,willdaly,moldetv2-molscribe-cuda,internal,macro,220,233,183,21,51,0.2897,0.3193,0.2930,0.3193,190,0.2531,0.7914,2026.03.2
+2026-10-13_moldetv2-molscribe-cuda_internal,willdaly,moldetv2-molscribe-cuda,internal,pooled,220,233,183,21,51,0.2787,0.2318,0.2531,0.2318,190,0.1684,0.7222,2026.03.2
