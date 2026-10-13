@@ -47,10 +47,11 @@ done
 rm -rf "$UV_CACHE_DIR"
 
 # pdf2image, which BioMiner uses to render pages, calls poppler's pdftoppm; Explorer doesn't
-# have it. Same version as BioMiner's conda env.
+# have it. BioMiner's conda env has 24.09.0 from Anaconda's defaults channel, which needs its
+# terms of service accepted; conda-forge's nearest release is 24.08.0.
 module load miniconda3/25.9.1
 CONDA_PKGS_DIRS="$BIOMINER_ROOT/conda-pkgs" conda create --quiet --yes --prefix "$BIOMINER_ROOT/poppler" \
-    --override-channels -c conda-forge poppler=24.09.0
+    --override-channels -c conda-forge poppler=24.08.0
 rm -rf "$BIOMINER_ROOT/conda-pkgs"
 
 # Check that each piece loads before packing.
