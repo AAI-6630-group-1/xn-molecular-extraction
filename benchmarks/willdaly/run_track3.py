@@ -13,7 +13,7 @@ benchmarks/score.py:
     uv run python benchmarks/score.py benchmarks/results/willdaly/<run_id>
 
 The run folder (run.json, predictions.csv) is committed. Crops go to
-data/track3_runs/<run_id>/, which is gitignored because they come from the papers;
+data/track3_runs/<run_id>/ (or --crop-root), which is gitignored because they come from the papers;
 each predictions.csv row's box_id names its crop file there.
 """
 
@@ -87,12 +87,15 @@ def main() -> int:
     ap.add_argument("--tool", help="tool name in the run_id (default: moldetv2-<reader>)")
     ap.add_argument("--run-id", help="default: <today>_<tool>_internal")
     ap.add_argument("--notes", default="")
+    ap.add_argument("--crop-root", type=Path, default=REPO / "data" / "track3_runs",
+                    help="crops go to <crop-root>/<run_id>/; hpc/track3_gpu.sbatch points this at the "
+                         "node's local disk, because the cluster's network filesystems create small files slowly")
     args = ap.parse_args()
     args.tool = args.tool or f"moldetv2-{args.reader}"
 
     run_id = args.run_id or f"{date.today().isoformat()}_{args.tool}_internal"
     run_dir = REPO / "benchmarks" / "results" / "willdaly" / run_id
-    crop_dir = REPO / "data" / "track3_runs" / run_id
+    crop_dir = args.crop_root / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     crop_dir.mkdir(parents=True, exist_ok=True)
 
@@ -156,7 +159,7 @@ def main() -> int:
         "notes": args.notes,
     }
     (run_dir / "run.json").write_text(json.dumps(run, indent=2) + "\n")
-    print(f"wrote {run_dir.relative_to(REPO)} ({len(rows)} predictions); crops in {crop_dir.relative_to(REPO)}")
+    print(f"wrote {run_dir.relative_to(REPO)} ({len(rows)} predictions); crops in {crop_dir.relative_to(REPO) if crop_dir.is_relative_to(REPO) else crop_dir}")
     return 0
 
 
