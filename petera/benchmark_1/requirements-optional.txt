@@ -1,2 +1,0 @@
-# Optional: Open Babel cross-check of canonical SMILES (metrics.openbabel_cross_check: true)
-openbabel-wheel>=3.1.1
