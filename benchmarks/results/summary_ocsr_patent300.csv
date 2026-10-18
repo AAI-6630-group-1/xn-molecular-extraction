@@ -1,3 +1,5 @@
 run_id,handle,tool,dataset,n_gt,n_output,n_invalid,exact,accuracy,accuracy_stereo_blind,mean_tanimoto
+2026-10-13_molsight-extra_patent300,liba-jin,molsight-extra,patent300,2482,2338,0,1760,0.7091,0.7494,0.8686
+2026-10-13_molsight-stereo_patent300,liba-jin,molsight-stereo,patent300,2482,2375,0,1683,0.6781,0.7184,0.8623
 2026-10-04_molscribe_patent300,willdaly,molscribe,patent300,2482,2482,150,1943,0.7828,0.7961,0.8914
 2026-10-06_molglyph_patent300,willdaly,molglyph,patent300,2482,2383,0,1950,0.7857,0.8312,0.9263
