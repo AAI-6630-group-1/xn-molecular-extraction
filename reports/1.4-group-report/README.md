@@ -46,7 +46,7 @@ starting reader policy (MolGlyph primary, agreement with MolScribe or MolSight a
 precision filter, MolSight's stereochemistry when the skeletons agree), the cross-member
 evidence behind it, the separate-environment rationale, and evaluation notes (one
 R-group label convention; stereo evaluated on BioVista's chiral crops because only 7
-internal answer rows are chiral). The four reports are now cited. The same policy is
+internal answer rows are chiral). The four reports are now cited, and so is the sponsor paper. The same policy is
 in `pipeline/INTERFACES.md` as a proposal for Bijay's module. The draft renders at 5
 pages including the figure, disclosure and references.
 
@@ -74,8 +74,10 @@ error reporting and rejection of smoke runs by the scorer.
 
 The Word draft should be reviewed and rewritten by Will and the group. Export
 the eventual combined document to PDF from Word, not from this build process.
-External literature citations are not drafted here; the sponsor PDF could not be
-retrieved during this work, so the literature review remains open. Sources used
+The sponsor paper (Gulluoglu et al., 2026) is now cited in the architecture and
+evaluation paragraphs; its open full text is on PubMed Central
+(https://pmc.ncbi.nlm.nih.gov/articles/PMC13345091/). The literature review itself
+(#89) remains open. Sources used
 here are the Canvas overview, current repo results and team planning issues.
 
 ## AI disclosure
