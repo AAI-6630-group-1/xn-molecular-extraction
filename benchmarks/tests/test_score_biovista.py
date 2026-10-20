@@ -38,10 +38,10 @@ def root(tmp_path):
     return tmp_path
 
 
-def make_run(results, rows, run_id="2026-10-06_molglyph_biovista"):
+def make_run(results, rows, run_id="2026-10-06_molglyph_biovista", **meta):
     run_dir = results / "someone" / run_id
     run_dir.mkdir(parents=True)
-    (run_dir / "run.json").write_text(json.dumps({"task": "ocsr", "dataset": "biovista"}))
+    (run_dir / "run.json").write_text(json.dumps({"task": "ocsr", "dataset": "biovista", **meta}))
     with open(run_dir / "predictions.csv", "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["paper_id", "smiles"])
@@ -97,3 +97,13 @@ def test_unknown_crop_is_an_error(root, tmp_path):
     run_dir = make_run(tmp_path / "results", [("9_zzzz_image_molminer_bbox_1-0", "CCO")])
     with pytest.raises(score.ScoringError, match="not in the ground truth"):
         score.score_run(run_dir, ground_truth=root)
+
+
+def test_crop_sample_scores_only_listed_crops(root, tmp_path):
+    rows = [("1_aaaa_image_molminer_bbox_1-0", "OCC"), ("1_aaaa_image_molminer_bbox_1-1", "")]
+    full = score.score_run(make_run(tmp_path / "full", rows), ground_truth=root)
+    sample = score.score_run(make_run(tmp_path / "sample", rows, crop_sample=True), ground_truth=root)
+    assert {(r["subset"], r["structure"]): r for r in full}[("all", "all")]["n_gt"] == 4
+    everything = {(r["subset"], r["structure"]): r for r in sample}[("all", "all")]
+    # the listed crop with an empty SMILES stays in the denominator as no output
+    assert (everything["n_gt"], everything["n_output"], everything["exact"]) == (2, 1, 1)

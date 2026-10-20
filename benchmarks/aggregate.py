@@ -31,6 +31,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 RESULTS = HERE / "results"
+# Peter's own benchmark summary, for the public sets score.py doesn't cover (CLEF, UOB, USPTO, JPO).
+PETER_SUMMARY = HERE / "petera" / "benchmark_1_results" / "comparison.csv"
 PAPERS = ["1", "2", "4", "6", "16", "19"]
 BIOVISTA_TEST_CROPS = 8006
 
@@ -62,6 +64,9 @@ SYSTEMS = {
     },
     "DeepSeek-OCR-2 (SMILES prompt)": {
         ("ocsr", "biovista"): "deepseek_ocr2",
+    },
+    "MolNexTR": {
+        ("ocsr", "biovista"): "molnextr",
     },
     "BioMiner, full (MinerU + MolDetV2 + MolGlyph + BioMiner-Instruct)": {
         ("e2e", "internal"): "biominer",
@@ -165,7 +170,14 @@ def systems_table(summaries: dict) -> tuple[list[str], list[dict]]:
         for label, key, select, metric in columns:
             row = find(summaries.get(key, {}), tools[key], select) if key in tools else None
             record[label] = row[metric] if row else ""
-            cells.append(pct(row[metric]) if row else "not run")
+            cell = pct(row[metric]) if row else "not run"
+            if row and "n_gt" in row and "subset" in row:
+                # A run on a sample of the crops says how many it scored.
+                full = max(int(r["n_gt"]) for rows in summaries[key].values() for r in rows
+                           if r.get("subset") == row["subset"] and r.get("structure") == row["structure"])
+                if int(row["n_gt"]) < full:
+                    cell += f" ({int(row['n_gt']):,} of {full:,} crops)"
+            cells.append(cell)
         lines.append(f"| {system} | " + " | ".join(cells) + " |")
         records.append(record)
     return lines, records
@@ -182,6 +194,19 @@ def biovista_table(groups: dict) -> list[str]:
         flags = [] if int(test["all"]["n_gt"]) == BIOVISTA_TEST_CROPS else [f"{test['all']['n_gt']} of {BIOVISTA_TEST_CROPS} test crops"]
         lines.append(f"| {handle} / {tool} | {int(test['all']['n_gt']):,} | " + " | ".join(pct(test[s]["accuracy"]) if s in test else "" for s in structures)
                      + f" | {pct(test['all']['accuracy_stereo_blind'])} | {float(test['all']['mean_tanimoto']):.3f} | {'; '.join(flags)} |")
+    return lines
+
+
+def other_public_table(path: Path = PETER_SUMMARY) -> list[str]:
+    """Peter's CLEF, UOB, USPTO and JPO results, from his own scorer's summary (category "all")."""
+    rows = [r for r in read_csv(path) if r["category"] == "all" and r["dataset"] != "biovista_ocsr"]
+    if not rows:
+        return ["Not available."]
+    names = {"biominer_molglyph": "MolGlyph", "molnextr": "MolNexTR"}
+    lines = ["| Dataset | Tool | Images scored | Exact match (95% CI) | Stereo-blind |", "|---|---|---|---|---|"]
+    for r in rows:
+        ci = f"{pct(r['exact_match'])} ({pct(r['exact_match_ci_low'])}-{pct(r['exact_match_ci_high'])})"
+        lines.append(f"| {r['dataset'].upper()} | {names.get(r['tool'], r['tool'])} | {int(r['n_scored']):,} | {ci} | {pct(r['exact_match_no_stereo'])} |")
     return lines
 
 
@@ -258,6 +283,12 @@ def main(results: Path = RESULTS) -> int:
         "BioVista's OCSR test split (8,006 crops from journal figures), by structure type:",
         "",
         *biovista_table(summaries[("ocsr", "biovista")]),
+        "",
+        "Older patent and journal OCSR sets (MolNexTR's `real.zip`: CLEF, UOB and USPTO as seeded 500-image samples, JPO complete). "
+        "Only PeterAdr14 ran these, and they are scored by his own scorer (`benchmarks/petera/benchmark_1`), not score.py: it does "
+        "not treat R-group labels like `[1*]` and `*` as the same atom, so Markush scores run lower than score.py's.",
+        "",
+        *other_public_table(),
         "",
         "Patent300's ground-truth crops (2,482 molecules on 300 patent pages):",
         "",
