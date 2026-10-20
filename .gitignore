@@ -31,3 +31,6 @@ data/*
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# AI coding assistant settings stay local
+.claude/
