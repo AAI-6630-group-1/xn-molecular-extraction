@@ -1,0 +1,35 @@
+{
+  "handle": "ArkAngel101",
+  "tool": "molgrapher",
+  "track": 2,
+  "task": "ocsr",
+  "dataset": "biovista",
+  "pipeline": "molgrapher on each BioVista OCSR crop as distributed (no extra margin or resizing)",
+  "settings": {
+    "n_crops": 8861,
+    "shard": "all 4",
+    "device": "cuda",
+    "chunk": 32,
+    "n_crops_written": 8861
+  },
+  "versions": {
+    "python": "3.11.17",
+    "molgrapher": "1.0.0",
+    "molgrapher_commit": "3c9e54b",
+    "molgrapher_weights": "ds4sd/MolGrapher (Hugging Face, downloaded on first use)"
+  },
+  "command": "python /home/chhetri.b/xn_project_AAI6630/bijay/common/ocsr_run.py --reader molgrapher --crops-dir /home/chhetri.b/xn_project_AAI6630/biovista/ocsr/data --out-root results --run-id 2026-10-19_molgrapher_biovista --shard 0/4 --resume",
+  "git_commit": "unknown",
+  "hardware": "x86_64 Linux 5.14.0-362.13.1.el9_3.x86_64, node d1007, Tesla V100-SXM2-32GB, 32768 MiB, 545.23.08 | x86_64 Linux 5.14.0-362.13.1.el9_3.x86_64, node d1012, Tesla V100-SXM2-32GB, 32768 MiB, 545.23.08 | x86_64 Linux 5.14.0-362.8.1.el9_3.x86_64, node d1015, Tesla V100-SXM2-32GB, 32768 MiB, 545.23.08",
+  "runtime_s": {
+    "all": 17755.2
+  },
+  "api_cost_usd": null,
+  "notes": "",
+  "runtime_by_shard_s": [
+    3839.3,
+    3896.2,
+    4994.9,
+    5024.8
+  ]
+}

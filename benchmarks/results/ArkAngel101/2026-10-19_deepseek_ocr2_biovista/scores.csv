@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,subset,structure,n_gt,n_output,n_invalid,exact,accuracy,accuracy_stereo_blind,mean_tanimoto,biovista_match,accuracy_biovista
+2026-10-19_deepseek_ocr2_biovista,ArkAngel101,deepseek_ocr2,biovista,all,all,8861,8861,1533,1127,0.1272,0.1398,0.3952,1131,0.1276
+2026-10-19_deepseek_ocr2_biovista,ArkAngel101,deepseek_ocr2,biovista,all,full,4844,4844,803,1127,0.2327,0.2558,0.5127,1131,0.2335
+2026-10-19_deepseek_ocr2_biovista,ArkAngel101,deepseek_ocr2,biovista,all,chiral,2230,2230,472,188,0.0843,0.1242,0.3885,189,0.0848
+2026-10-19_deepseek_ocr2_biovista,ArkAngel101,deepseek_ocr2,biovista,all,markush,4017,4017,730,0,0.0000,0.0000,0.2536,0,0.0000
+2026-10-19_deepseek_ocr2_biovista,ArkAngel101,deepseek_ocr2,biovista,test,all,8006,8006,1353,1061,0.1325,0.1459,0.4008,1064,0.1329
+2026-10-19_deepseek_ocr2_biovista,ArkAngel101,deepseek_ocr2,biovista,test,full,4410,4410,707,1061,0.2406,0.2649,0.5199,1064,0.2413
+2026-10-19_deepseek_ocr2_biovista,ArkAngel101,deepseek_ocr2,biovista,test,chiral,2056,2056,426,181,0.0880,0.1289,0.3938,182,0.0885
+2026-10-19_deepseek_ocr2_biovista,ArkAngel101,deepseek_ocr2,biovista,test,markush,3596,3596,646,0,0.0000,0.0000,0.2546,0,0.0000

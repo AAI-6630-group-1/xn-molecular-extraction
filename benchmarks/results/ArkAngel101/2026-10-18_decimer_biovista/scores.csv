@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,subset,structure,n_gt,n_output,n_invalid,exact,accuracy,accuracy_stereo_blind,mean_tanimoto,biovista_match,accuracy_biovista
+2026-10-18_decimer_biovista,ArkAngel101,decimer,biovista,all,all,8861,8861,1307,2634,0.2973,0.3237,0.6284,2642,0.2982
+2026-10-18_decimer_biovista,ArkAngel101,decimer,biovista,all,full,4844,4844,159,2634,0.5438,0.5921,0.8770,2642,0.5454
+2026-10-18_decimer_biovista,ArkAngel101,decimer,biovista,all,chiral,2230,2230,286,724,0.3247,0.3848,0.7144,729,0.3269
+2026-10-18_decimer_biovista,ArkAngel101,decimer,biovista,all,markush,4017,4017,1148,0,0.0000,0.0000,0.3287,0,0.0000
+2026-10-18_decimer_biovista,ArkAngel101,decimer,biovista,test,all,8006,8006,1143,2402,0.3000,0.3273,0.6316,2410,0.3010
+2026-10-18_decimer_biovista,ArkAngel101,decimer,biovista,test,full,4410,4410,141,2402,0.5447,0.5941,0.8769,2410,0.5465
+2026-10-18_decimer_biovista,ArkAngel101,decimer,biovista,test,chiral,2056,2056,266,686,0.3337,0.3925,0.7141,691,0.3361
+2026-10-18_decimer_biovista,ArkAngel101,decimer,biovista,test,markush,3596,3596,1002,0,0.0000,0.0000,0.3308,0,0.0000

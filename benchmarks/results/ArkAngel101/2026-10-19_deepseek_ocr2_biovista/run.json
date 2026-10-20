@@ -1,0 +1,38 @@
+{
+  "handle": "ArkAngel101",
+  "tool": "deepseek_ocr2",
+  "track": 2,
+  "task": "ocsr",
+  "dataset": "biovista",
+  "pipeline": "deepseek_ocr2 on each BioVista OCSR crop as distributed (no extra margin or resizing)",
+  "settings": {
+    "n_crops": 8861,
+    "shard": "all 4",
+    "device": "cuda",
+    "chunk": 8,
+    "n_crops_written": 8861
+  },
+  "versions": {
+    "python": "3.12.15",
+    "model": "deepseek-ai/DeepSeek-OCR-2",
+    "model_revision": "unpinned (latest)",
+    "torch": "2.6.0+cu124",
+    "transformers": "4.46.3",
+    "flash_attn": "2.7.3",
+    "prompt": "<image>\nConvert the chemical structure in this image to a SMILES string. Output only the SMILES."
+  },
+  "command": "python common/ocsr_run.py --reader deepseek_ocr2 --crops-dir /home/chhetri.b/xn_project_AAI6630/biovista/ocsr/data --chunk 8 --out-root results --run-id 2026-10-19_deepseek_ocr2_biovista --shard 0/4 --resume",
+  "git_commit": "unknown",
+  "hardware": "x86_64 Linux 5.14.0-362.13.1.el9_3.x86_64, node d1029, NVIDIA A100-SXM4-80GB, 81920 MiB, 570.86.15 | x86_64 Linux 5.14.0-362.13.1.el9_3.x86_64, node d1026, NVIDIA A100-SXM4-40GB, 40960 MiB, 570.86.15",
+  "runtime_s": {
+    "all": 31108.2
+  },
+  "api_cost_usd": null,
+  "notes": "",
+  "runtime_by_shard_s": [
+    8619.2,
+    8630.7,
+    6841.5,
+    7016.8
+  ]
+}
