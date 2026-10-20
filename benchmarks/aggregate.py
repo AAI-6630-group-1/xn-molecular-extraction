@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Team comparison of every scored run, for tasks 1.4 and 1.5 (#22).
+"""Team comparison of every scored run, for the 1.4 group report (#22).
 
     uv run python benchmarks/score.py --all     # rescore every run, refresh the summary files
     uv run python benchmarks/aggregate.py       # write benchmarks/results/comparison.md and .csv
