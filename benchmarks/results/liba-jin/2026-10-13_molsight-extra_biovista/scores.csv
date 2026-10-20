@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,subset,structure,n_gt,n_output,n_invalid,exact,accuracy,accuracy_stereo_blind,mean_tanimoto,biovista_match,accuracy_biovista
+2026-10-13_molsight-extra_biovista,liba-jin,molsight-extra,biovista,all,all,8861,8550,0,4008,0.4523,0.4967,0.7428,3835,0.4328
+2026-10-13_molsight-extra_biovista,liba-jin,molsight-extra,biovista,all,full,4844,4660,0,3143,0.6488,0.7141,0.8676,3161,0.6526
+2026-10-13_molsight-extra_biovista,liba-jin,molsight-extra,biovista,all,chiral,2230,2139,0,912,0.4090,0.5587,0.8085,888,0.3982
+2026-10-13_molsight-extra_biovista,liba-jin,molsight-extra,biovista,all,markush,4017,3890,0,865,0.2153,0.2345,0.5922,674,0.1678
+2026-10-13_molsight-extra_biovista,liba-jin,molsight-extra,biovista,test,all,8006,7721,0,3623,0.4525,0.4991,0.7433,3470,0.4334
+2026-10-13_molsight-extra_biovista,liba-jin,molsight-extra,biovista,test,full,4410,4242,0,2858,0.6481,0.7163,0.8689,2874,0.6517
+2026-10-13_molsight-extra_biovista,liba-jin,molsight-extra,biovista,test,chiral,2056,1974,0,844,0.4105,0.5642,0.8127,820,0.3988
+2026-10-13_molsight-extra_biovista,liba-jin,molsight-extra,biovista,test,markush,3596,3479,0,765,0.2127,0.2328,0.5893,596,0.1657

@@ -49,6 +49,11 @@ SYSTEMS = {
         ("e2e", "patent300"): "moldetv2-molglyph",
         ("e2e", "internal"): "moldetv2-molglyph",
     },
+    "MolDetV2 + MolSight-extra": {
+        ("ocsr", "biovista"): "molsight-extra",
+        ("ocsr", "patent300"): "molsight-extra",
+        ("e2e", "internal"): "moldetv2-molsight-extra-pad0",
+    },
     "BioMiner, full (MinerU + MolDetV2 + MolGlyph + BioMiner-Instruct)": {
         ("e2e", "internal"): "biominer",
     },

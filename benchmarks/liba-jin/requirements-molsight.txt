@@ -1,0 +1,17 @@
+# MolSight's own environment (README.md, "Setup"). Python 3.11.
+# MolSight needs newer timm and albumentations than the shared environment pins for MolScribe
+# (timm 0.4.12, albumentations 1.1.0), so it can't share that environment.
+# Versions as installed and tested on 2026-10-13 (Windows 11, CPU). MolSight's own code is
+# fetched by molsight_reader.py at a pinned commit, so it isn't listed here.
+torch==2.14.1
+torchvision==0.29.1
+timm==1.0.30                    # has efficientvit_l1 and timm.layers.GELUTanh, which MolSight imports
+albumentations==2.0.5           # the version MolSight's requirements.txt pins
+opencv-python-headless==5.0.0.93
+rdkit==2026.3.2                 # same as the shared environment and the sponsor paper
+SmilesPE==0.0.3                 # MolSight's tokenizer helpers
+numpy==2.4.6
+pandas==3.0.6
+pillow==12.3.0
+safetensors==0.8.0
+huggingface-hub==2.2.0

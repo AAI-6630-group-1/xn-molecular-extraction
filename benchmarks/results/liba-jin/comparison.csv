@@ -1,0 +1,22 @@
+section,setting,metric,MolScribe,MolGlyph,MolSight-extra,MolSight-stereo
+Recognition on given crops,"BioVista test split, all (8,006)",accuracy,0.4639,0.7803,0.4525,0.3971
+Recognition on given crops,"BioVista test split, all (8,006)",accuracy_stereo_blind,0.4926,0.8617,0.4991,0.4510
+Recognition on given crops,"BioVista test split, all (8,006)",mean_tanimoto,0.7547,0.9372,0.7433,0.7220
+Recognition on given crops,"BioVista test split, all (8,006)",accuracy_biovista,0.4474,0.7587,0.4334,0.3868
+Recognition on given crops,"BioVista test split, full structures (4,410)",accuracy,0.6862,0.7483,0.6481,0.5710
+Recognition on given crops,"BioVista test split, full structures (4,410)",accuracy_stereo_blind,0.7299,0.8444,0.7163,0.6535
+Recognition on given crops,"BioVista test split, chiral (2,056)",accuracy,0.4874,0.5078,0.4105,0.3288
+Recognition on given crops,"BioVista test split, chiral (2,056)",accuracy_stereo_blind,0.5739,0.7768,0.5642,0.5141
+Recognition on given crops,"BioVista test split, Markush (3,596)",accuracy,0.1913,0.8195,0.2127,0.1838
+Recognition on given crops,"BioVista test split, Markush (3,596)",accuracy_stereo_blind,0.2016,0.8829,0.2328,0.2027
+Recognition on given crops,"BioVista test split, all (8,006)",crops with no valid SMILES,305,87,285,203
+Recognition on given crops,"Patent300 ground-truth crops (2,482)",accuracy,0.7828,0.7857,0.7091,0.6781
+Recognition on given crops,"Patent300 ground-truth crops (2,482)",accuracy_stereo_blind,0.7961,0.8312,0.7494,0.7184
+Recognition on given crops,"Patent300 ground-truth crops (2,482)",mean_tanimoto,0.8914,0.9263,0.8686,0.8623
+Detection + recognition on the six internal papers,"Internal papers (macro), MolDetV2 boxes, no margin",precision,0.3124,0.3757,0.3499,0.3008
+Detection + recognition on the six internal papers,"Internal papers (macro), MolDetV2 boxes, no margin",recall,0.3053,0.3704,0.3599,0.2924
+Detection + recognition on the six internal papers,"Internal papers (macro), MolDetV2 boxes, no margin",f1,0.3007,0.3595,0.3406,0.2866
+Detection + recognition on the six internal papers,"Internal papers (macro), MolDetV2 boxes, no margin",recall_local_names,0.1874,0.2925,0.2652,0.1851
+Detection + recognition on the six internal papers,"Internal papers (pooled), MolDetV2 boxes, no margin",recall,0.2455,0.2909,0.2773,0.2455
+Detection + recognition on the six internal papers,"Internal papers (pooled), MolDetV2 boxes, no margin",tp,54,64,61,54
+Detection + recognition on the six internal papers,"Internal papers (pooled), MolDetV2 boxes, no margin",n_output,177,164,183,179

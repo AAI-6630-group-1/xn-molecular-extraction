@@ -1,4 +1,5 @@
 system,"BioVista test, all crops (accuracy)","BioVista test, Markush (accuracy)",Patent300 given crops (accuracy),Patent300 pages (F1),Internal papers (pooled recall),Internal papers (pooled precision)
 MolDetV2 + MolScribe (patched),0.4639,0.1913,0.7828,0.7778,0.2455,0.3051
 MolDetV2 + MolGlyph,0.7803,0.8195,0.7857,0.7915,0.2909,0.3902
+MolDetV2 + MolSight-extra,0.4525,0.2127,0.7091,,0.2773,0.3333
 "BioMiner, full (MinerU + MolDetV2 + MolGlyph + BioMiner-Instruct)",,,,,0.3318,0.6759

@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,subset,structure,n_gt,n_output,n_invalid,exact,accuracy,accuracy_stereo_blind,mean_tanimoto,biovista_match,accuracy_biovista
+2026-10-13_molsight-stereo_biovista,liba-jin,molsight-stereo,biovista,all,all,8861,8644,0,3531,0.3985,0.4515,0.7232,3441,0.3883
+2026-10-13_molsight-stereo_biovista,liba-jin,molsight-stereo,biovista,all,full,4844,4698,0,2781,0.5741,0.6555,0.8405,2820,0.5822
+2026-10-13_molsight-stereo_biovista,liba-jin,molsight-stereo,biovista,all,chiral,2230,2155,0,739,0.3314,0.5175,0.7898,738,0.3309
+2026-10-13_molsight-stereo_biovista,liba-jin,molsight-stereo,biovista,all,markush,4017,3946,0,750,0.1867,0.2056,0.5818,621,0.1546
+2026-10-13_molsight-stereo_biovista,liba-jin,molsight-stereo,biovista,test,all,8006,7803,0,3179,0.3971,0.4510,0.7220,3097,0.3868
+2026-10-13_molsight-stereo_biovista,liba-jin,molsight-stereo,biovista,test,full,4410,4274,0,2518,0.5710,0.6535,0.8391,2554,0.5791
+2026-10-13_molsight-stereo_biovista,liba-jin,molsight-stereo,biovista,test,chiral,2056,1984,0,676,0.3288,0.5141,0.7878,673,0.3273
+2026-10-13_molsight-stereo_biovista,liba-jin,molsight-stereo,biovista,test,markush,3596,3529,0,661,0.1838,0.2027,0.5784,543,0.1510
