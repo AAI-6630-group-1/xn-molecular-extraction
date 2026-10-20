@@ -1,0 +1,4 @@
+# DECIMER environment (Python 3.10). Versions are the ones that worked on Explorer on 2026-10-13.
+# After the environment works, run ../freeze_env.sh decimer to record every transitive version.
+decimer==2.8.0
+tensorflow[and-cuda]==2.20.0

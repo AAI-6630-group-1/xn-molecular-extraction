@@ -1,0 +1,18 @@
+# DeepSeek-OCR-2 environment (Python 3.12). Pins follow the model card
+# (https://huggingface.co/deepseek-ai/DeepSeek-OCR-2). On Explorer, pip's default torch 2.6.0 wheel
+# (CUDA 12.4) was used with cuda/12.3.0 as the toolkit module; it ran on A100 and H200 GPUs.
+# flash-attn is installed by setup_env.sh after these, with:
+#   pip install flash-attn==2.7.3 --no-build-isolation --no-cache-dir
+# After the environment works, run ../freeze_env.sh deepseek_ocr2 to record every installed version.
+torch==2.6.0
+torchvision==0.21.0   # the model's own code imports it; 0.21.0 is the release that matches torch 2.6.0
+transformers==4.46.3
+tokenizers==0.20.3
+einops
+addict
+easydict
+pillow                # the model's own code imports it
+# Needed by flash-attn's setup script (--no-build-isolation means they must already be installed):
+psutil
+ninja
+packaging

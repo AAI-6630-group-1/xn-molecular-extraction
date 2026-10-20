@@ -1,0 +1,9 @@
+# MolGrapher environment (Python 3.11, from its README). It is installed from a clone, not from PyPI:
+#   git clone https://github.com/DS4SD/MolGrapher && cd MolGrapher && pip install -e ".[gpu]"
+# which pulls torch 2.0.1+cu117 and paddlepaddle-gpu 2.6.0.post117 (CUDA 11.7, as in its README). A torch
+# built for CUDA 11.7 has no kernels for the H200 (compute capability 9.0), so run MolGrapher on a V100 or A100.
+# setup_env.sh then adds what the install doesn't:
+setuptools<70   # pytorch-lightning 2.1.3 imports pkg_resources, which newer setuptools no longer ships
+# and a folder of symlinks (cuda11_shim) so PaddlePaddle can find torch's bundled CUDA 11 libraries by the
+# unversioned names it asks for; run.sbatch puts that folder on LD_LIBRARY_PATH.
+# After the environment works, run ../freeze_env.sh molgrapher to record every installed version.

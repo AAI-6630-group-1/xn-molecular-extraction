@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,subset,structure,n_gt,n_output,n_invalid,exact,accuracy,accuracy_stereo_blind,mean_tanimoto,biovista_match,accuracy_biovista
+2026-10-19_molgrapher_biovista,ArkAngel101,molgrapher,biovista,all,all,8861,8861,523,2120,0.2393,0.3646,0.6200,2140,0.2415
+2026-10-19_molgrapher_biovista,ArkAngel101,molgrapher,biovista,all,full,4844,4844,246,2120,0.4377,0.6670,0.7783,2140,0.4418
+2026-10-19_molgrapher_biovista,ArkAngel101,molgrapher,biovista,all,chiral,2230,2230,131,0,0.0000,0.4659,0.6972,0,0.0000
+2026-10-19_molgrapher_biovista,ArkAngel101,molgrapher,biovista,all,markush,4017,4017,277,0,0.0000,0.0000,0.4291,0,0.0000
+2026-10-19_molgrapher_biovista,ArkAngel101,molgrapher,biovista,test,all,8006,8006,480,1903,0.2377,0.3652,0.6195,1923,0.2402
+2026-10-19_molgrapher_biovista,ArkAngel101,molgrapher,biovista,test,full,4410,4410,231,1903,0.4315,0.6630,0.7764,1923,0.4361
+2026-10-19_molgrapher_biovista,ArkAngel101,molgrapher,biovista,test,chiral,2056,2056,122,0,0.0000,0.4625,0.6947,0,0.0000
+2026-10-19_molgrapher_biovista,ArkAngel101,molgrapher,biovista,test,markush,3596,3596,249,0,0.0000,0.0000,0.4271,0,0.0000

@@ -1,0 +1,36 @@
+{
+  "handle": "ArkAngel101",
+  "tool": "decimer",
+  "track": 2,
+  "task": "ocsr",
+  "dataset": "biovista",
+  "pipeline": "decimer on each BioVista OCSR crop as distributed (no extra margin or resizing)",
+  "settings": {
+    "n_crops": 8861,
+    "shard": "all 4",
+    "device": "cuda",
+    "chunk": 32,
+    "n_crops_written": 8861
+  },
+  "versions": {
+    "python": "3.10.22",
+    "decimer": "2.8.0",
+    "tensorflow": "2.20.0",
+    "decimer_weights": "DECIMER-V2 (downloaded by the package to ~/.data/DECIMER-V2)",
+    "gpus_visible": "1"
+  },
+  "command": "python common/ocsr_run.py --reader decimer --crops-dir /home/chhetri.b/xn_project_AAI6630/biovista/ocsr/data --out-root results --run-id 2026-10-18_decimer_biovista --shard 0/4 --resume",
+  "git_commit": "unknown",
+  "hardware": "x86_64 Linux 5.14.0-362.13.1.el9_3.x86_64, node d4052, NVIDIA H200, 143771 MiB, 570.86.15",
+  "runtime_s": {
+    "all": 3811.7
+  },
+  "api_cost_usd": null,
+  "notes": "",
+  "runtime_by_shard_s": [
+    961.4,
+    961.2,
+    926.7,
+    962.4
+  ]
+}

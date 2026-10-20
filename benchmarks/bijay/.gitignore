@@ -1,0 +1,3 @@
+# Raw job output. Finished runs are copied to benchmarks/results/<handle>/<run_id>/ and committed there.
+logs/
+results/
