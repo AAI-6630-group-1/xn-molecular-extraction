@@ -89,7 +89,15 @@ a declared untouched subset for generalization claims.
 5. Run all six PDFs and inspect errors by paper. Review this proposal together
    before treating it as an agreed contract.
 
-Open choices: gate and consensus policies, table detector, cross-page tables,
+Proposed starting consensus policy (from the four 1.3 reports; Bijay owns the final rule):
+MolGlyph is the primary reader; a SMILES counts as agreed when a second reader
+(MolScribe or MolSight) gives the same canonical skeleton; when MolSight and
+MolGlyph agree on the skeleton but differ only in stereocentres, take MolSight's
+stereochemistry. Reader confidences are not used to break ties (MolNexTR's barely
+separates right from wrong; MolGlyph reports none). Evaluate the stereo rule on
+BioVista's chiral test crops, since only 7 of the 222 internal answer rows are chiral.
+
+Open choices: gate policy, the final consensus rule, table detector, cross-page tables,
 canonical versus original prediction text, and a future assembled-source enum.
 
 ## AI disclosure

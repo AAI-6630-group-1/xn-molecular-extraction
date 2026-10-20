@@ -39,6 +39,17 @@ These are proposed team dates/roles from #4, #23, #89 and #90. Do not count an
 assigned literature source as a member's completed contribution. The draft does
 not replace each person's review or the complete group's contribution statement.
 
+## Revision after the 1.3 reports (October 20, 2026)
+
+Claude revised `content.json` after all four 1.3 reports were in the repo: a proposed
+starting reader policy (MolGlyph primary, agreement with MolScribe or MolSight as the
+precision filter, MolSight's stereochemistry when the skeletons agree), the cross-member
+evidence behind it, the separate-environment rationale, and evaluation notes (one
+R-group label convention; stereo evaluated on BioVista's chiral crops because only 7
+internal answer rows are chiral). The four reports are now cited. The same policy is
+in `pipeline/INTERFACES.md` as a proposal for Bijay's module. The draft renders at 5
+pages including the figure, disclosure and references.
+
 ## Verification record
 
 On October 20, 2026, Codex ran `uv sync --frozen`, then

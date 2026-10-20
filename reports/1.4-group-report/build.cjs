@@ -12,7 +12,7 @@ ${box(360,10,380,65,'Scientific PDF',['Page images and native text'])}
 ${arrow('550,75 550,105')}
 ${box(250,105,600,100,'Front end, detection and molecule filter',['Peter | PeterAdr14','Crops, coordinates, text and table geometry'])}
 ${arrow('550,205 550,235')}
-${box(350,235,400,95,'Recognition and consensus',['Bijay | ArkAngel101','SMILES candidates and disagreements'])}
+${box(350,235,400,95,'Recognition and consensus',['Bijay | ArkAngel101','MolGlyph primary; agreement and stereo votes'])}
 ${arrow('350,282 210,282 210,365')}
 ${box(25,365,370,95,'Label and table linking',['Jin | liba-jin','Labels, scaffold links and row IDs'])}
 ${arrow('250,155 10,155 10,350 210,350 210,365')}
