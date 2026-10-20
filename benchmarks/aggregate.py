@@ -54,6 +54,15 @@ SYSTEMS = {
         ("ocsr", "patent300"): "molsight-extra",
         ("e2e", "internal"): "moldetv2-molsight-extra-pad0",
     },
+    "DECIMER 2.8.0": {
+        ("ocsr", "biovista"): "decimer",
+    },
+    "MolGrapher (no-stereo model)": {
+        ("ocsr", "biovista"): "molgrapher",
+    },
+    "DeepSeek-OCR-2 (SMILES prompt)": {
+        ("ocsr", "biovista"): "deepseek_ocr2",
+    },
     "BioMiner, full (MinerU + MolDetV2 + MolGlyph + BioMiner-Instruct)": {
         ("e2e", "internal"): "biominer",
     },
