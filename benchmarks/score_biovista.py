@@ -20,7 +20,10 @@ Scores are broken down two ways, as in BioMiner's table:
   an R-group, `*`), and all. Chiral overlaps the other two.
 
 predictions.csv has one row per crop. paper_id is the crop's file stem, for
-example 51_6rrm_image_molminer_bbox_3-0 (paper 51_6rrm, page 3, crop 0).
+example 51_6rrm_image_molminer_bbox_3-0 (paper 51_6rrm, page 3, crop 0). A crop
+with no row counts as no output, unless run.json sets "crop_sample": true: then
+the run read a sample of the crops, and only the crops listed in
+predictions.csv (an empty smiles still counts as no output) are scored.
 """
 
 from __future__ import annotations
@@ -156,6 +159,10 @@ def score_run(run_dir: Path, run: dict, root: Path) -> tuple[list[str], list[dic
     if run["task"] != "ocsr":
         raise ScoringError(f"{run_dir}: BioVista runs are scored as ocsr, not {run['task']!r}")
     truth = load_truth(root)
+    if run.get("crop_sample"):
+        with open(run_dir / "predictions.csv", newline="", encoding="utf-8-sig") as f:
+            listed = {(row.get("paper_id") or "").strip() for row in csv.DictReader(f)}
+        truth = {k: v for k, v in truth.items() if k in listed}
     raw = load_crop_predictions(run_dir / "predictions.csv", truth)
     parsed = {i: parse(s) for i, s in raw.items()}
     _, crop_rows = score_crops({c.id: c.molecule for c in truth.values()}, parsed)

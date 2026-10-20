@@ -401,6 +401,7 @@ def load_run(run_dir: Path) -> dict:
         "dataset": meta["dataset"],
         "task": meta["task"],
         "score_threshold": score_threshold,  # detect runs: confidence cut-off for precision and recall
+        "crop_sample": bool(meta.get("crop_sample")),  # crop datasets: score only the crops the run lists
     }
 
 

@@ -1,0 +1,25 @@
+{
+  "handle": "PeterAdr14",
+  "tool": "molglyph-sample",
+  "task": "ocsr",
+  "dataset": "biovista",
+  "crop_sample": true,
+  "pipeline": "MolGlyph (BioMiner's recognizer, postprocessing on) on each BioVista OCSR crop, a seeded sample of 1,000 of the 8,861 crops",
+  "settings": {
+    "n_crops": 1000,
+    "seed": 42,
+    "batch_size": 16
+  },
+  "versions": {
+    "python": "3.10.22",
+    "rdkit": "2026.9.1",
+    "torch": "2.6.0+cu124",
+    "biominer_commit": "17c6161b40e34e2c377b2871f760baab3fdeea06"
+  },
+  "command": "python -m ocsr_bench run (benchmarks/petera/benchmark_1, configs/default.yaml)",
+  "git_commit": "ee85f7b",
+  "hardware": "Linux-5.14.0-362.13.1.el9_3.x86_64-x86_64-with-glibc2.34, NVIDIA H200",
+  "runtime_s": null,
+  "api_cost_usd": null,
+  "notes": "Converted from benchmarks/petera/benchmark_1_results/predictions.csv by benchmarks/petera/to_shared_format.py. git_commit is the commit that added the code and results."
+}
