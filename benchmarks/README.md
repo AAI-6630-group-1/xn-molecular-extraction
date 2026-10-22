@@ -3,7 +3,7 @@
 Code and results for XN tasks 1.2 and 1.3.
 
 - Put your code in `benchmarks/<your-github-handle>/`. Code more than one person uses (the scorers and readers) lives here in `benchmarks/`.
-- Record results in the shared format the team agrees on in [#14](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/14), so task 1.5 can combine them.
+- Record results in the shared format the team agrees on in [#14](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/14), so the 1.4 group report can combine them.
 - For every result, write down the tool version and the exact command you ran.
 - BioMiner setup notes go here once [#18](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/18) is done. Until then, [`molglyph.py`](molglyph.py) runs BioMiner's recognizer, MolGlyph, on a CPU.
 
@@ -81,14 +81,14 @@ python benchmarks/score.py benchmarks/results/<your-handle>/<run_id>
 python benchmarks/score.py --all
 ```
 
-The first command scores one run and prints a per-paper table. `--all` scores every run and writes `benchmarks/results/summary.csv` for task 1.5.
+The first command scores one run and prints a per-paper table. `--all` scores every run and writes `benchmarks/results/summary.csv` for the 1.4 group report.
 
 - **`scores.csv`** has one row per paper, then a `macro` row (the equal-weight average across papers, our headline) and a `pooled` row (all molecules together). In both rows the count columns are sums.
 - **`matches.csv`** has one row per unique molecule on each side: every ground-truth molecule is a TP or an FN, and every prediction is a TP or an FP. Each row also gives the most similar molecule on the other side, which is where error analysis starts.
 
 On the internal papers, only `e2e` runs (a PDF in, a set of SMILES out) are scored, because those papers have no ground-truth boxes.
 
-### Team comparison (1.4 and 1.5)
+### Team comparison (1.4)
 
 ```bash
 python benchmarks/score.py --all

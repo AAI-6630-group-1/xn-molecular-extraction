@@ -1,3 +1,5 @@
+> **Superseded (2026-10-20):** Prof. Dhanjal combined 1.5 into the assignment posted as 1.4 (Group Benchmark Report & Phase 2 Plan, due Sun Nov 1), together with 2.1. The group report is assembled in [`../1.4-group-report/`](../1.4-group-report/) under #4 and #23. This outline is kept as source material for the results and comparative-analysis sections.
+
 # 1.5 Combined report: outline (draft)
 
 XN Project Group 1 · outline of 2026-10-13 for #23 · due Sun Nov 1 (tentative)
