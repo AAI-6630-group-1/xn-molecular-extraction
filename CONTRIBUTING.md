@@ -33,7 +33,7 @@ Share files through GitHub, not Slack. Slack is for discussion; a file in the re
 ## Code
 
 - Python with a pinned environment (see the README). Record tool and package versions for every benchmark result.
-- Keep GPU use optional unless we confirm cluster access.
+- GPU-only inference is fine; run it on Explorer (see [hpc/README.md](hpc/README.md)) or your own GPU. Commit each run's predictions and `run.json` so scoring and analysis rerun on a laptop CPU from those files.
 - Docstrings on non-trivial functions; `pytest` tests for pipeline modules (task 2.3).
 - The course expects agentic AI (Claude, VS Code) for the extraction code. Read and run what it writes before opening a PR, and say in the PR which parts it generated.
 
