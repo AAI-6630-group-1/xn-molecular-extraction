@@ -2,24 +2,32 @@
 
 Canvas: [Group Benchmark Report & Phase 2 Plan](https://northeastern.instructure.com/courses/257799/assignments/3528944).
 One 8-10 page PDF/DOCX, due November 1, 2026, 11:59 PM ET. Final group filename:
-`XNGroup1_1_4_GroupReport.pdf` (or `.docx`). This folder currently contains Will's
-architecture and Phase 2 section draft, not the assembled group submission.
+`XNGroup1_1_4_GroupReport.pdf` (or `.docx`).
 
-## Available now
+## The group report
 
-- `Daly_1_4_Phase2Sections.docx`: editable draft of the architecture and Phase 2
-  plan, with an owner-labeled diagram, disclosure and source notes.
-- `content.json`: text used to generate those sections.
-- `pipeline.svg`: editable diagram source; `pipeline.png` is its Word fallback.
-- `build.cjs`: regenerates the Word draft and diagram from `content.json` with
-  Node packages `docx` and `sharp` installed outside the repo. Run
-  `NODE_PATH=<external-node_modules> node reports/1.4-group-report/build.cjs` from
-  the repo root. No runtime packages were added to the shared Python environment.
-- [Pipeline proposal](../../pipeline/README.md) and [field contract](../../pipeline/INTERFACES.md).
-- [Current team results](../../benchmarks/results/comparison.md), all four members.
+`XNGroup1_1_4_GroupReport.docx` is the one document we submit. It is generated,
+so edit the text files, not the docx:
 
-The former [check-in draft](../1.4-sponsor-checkin/README.md) remains source
-material for conclusions/questions; it has not yet been updated to current results.
+| File | Sections |
+|---|---|
+| `front_content.json` | title, team members and contributions, literature review, AI disclosure, references |
+| `results_content.json` | aggregated results, comparative analysis, conclusions, sponsor questions |
+| `results_tables.json` | Tables 1-3, written by `results_tables.py` from the committed score files |
+| `phase2_content.json` | pipeline architecture and Phase 2 plan |
+
+Bracketed text such as `[pending ...]` is a placeholder and shows highlighted in
+the docx. Rebuild from the repo root (Node packages `docx` and `sharp` installed
+outside the repo; no packages added to the Python environment):
+
+```bash
+uv run python reports/1.4-group-report/results_tables.py
+NODE_PATH=<external-node_modules> node reports/1.4-group-report/build.cjs
+```
+
+`build.cjs` also redraws the diagram (`pipeline.svg`, with `pipeline.png` for Word).
+Export the final PDF from Word. Sources: [pipeline proposal](../../pipeline/README.md),
+[field contract](../../pipeline/INTERFACES.md), [team results](../../benchmarks/results/comparison.md).
 
 ## Status (October 28, 2026)
 
@@ -31,8 +39,8 @@ material for conclusions/questions; it has not yet been updated to current resul
   joins MolGlyph's one-attachment fragments. 17 missed answer-key molecules are
   recoverable with perfect pairing (papers 4 and 19), out of 582 same-page joins;
   paper 2 is the abstention case.
-- Still open for the group report: comparative analysis, conclusions, sponsor
-  questions, literature review (#89) and assembly into `XNGroup1_1_4_GroupReport`.
+- Still open: the literature review (#89), teammates' contribution sentences,
+  and trimming to 10 pages.
 
 Both scripts read committed predictions only (CPU, seconds):
 
@@ -43,7 +51,7 @@ uv run python reports/1.4-group-report/assembly_example.py
 
 ## Revision after the 1.3 reports (October 20, 2026)
 
-Claude revised `content.json` after all four 1.3 reports were in the repo: a proposed
+Claude revised the Phase 2 text (now `phase2_content.json`) after all four 1.3 reports were in the repo: a proposed
 starting reader policy (MolGlyph primary, agreement with MolScribe or MolSight as the
 precision filter, MolSight's stereochemistry when the skeletons agree), the cross-member
 evidence behind it, the separate-environment rationale, and evaluation notes (one

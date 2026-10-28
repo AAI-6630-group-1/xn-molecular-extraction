@@ -1,0 +1,47 @@
+{
+  "title": "Group Benchmark Report and Phase 2 Plan",
+  "subtitle": "XN Project Group 1 | AAI 6630 Applied Computer Vision | Assignment 1.4 | October 28, 2026",
+  "repo": "Repository (benchmarking code, predictions and run metadata): https://github.com/AAI-6630-group-1/xn-molecular-extraction",
+  "members_intro": "Contributing members and their contributions to this report:",
+  "members": [
+    [
+      "Will Daly",
+      "ran the detection, MolScribe, MolGlyph and full BioMiner benchmarks, built the team scorer and comparison table, and drafted the results, analysis, conclusions, sponsor questions, pipeline design and Phase 2 plan."
+    ],
+    [
+      "Peter Adranly",
+      "[pending, due October 30: one sentence. Benchmarked MolGlyph against MolNexTR on BioVista, CLEF, UOB, USPTO and JPO (Tables 1 and 2).]"
+    ],
+    [
+      "Bijay Chhetri",
+      "[pending, due October 30: one sentence. Benchmarked DECIMER, MolGrapher and DeepSeek-OCR-2 on BioVista (Table 1).]"
+    ],
+    [
+      "Xue Jin",
+      "[pending, due October 30: one sentence. Benchmarked MolSight on BioVista, Patent300 and the internal papers (Tables 1 and 3).]"
+    ]
+  ],
+  "lit_intro": "Each member reviewed at least one source. Each paragraph states the problem, the method and the key finding, and how the source relates to our results.",
+  "lit": [
+    "[Will: Gulluoglu et al. (2026), the course paper (required).]",
+    "[Will: Yan et al. (2026), BioMiner and the BioVista benchmark.]",
+    "[Peter, due October 30: MolNexTR (Chen et al., 2024).]",
+    "[Bijay, due October 30: DECIMER or MolGrapher.]",
+    "[Jin, due October 30: MolSight.]",
+    "[Will: synthesis, what the sources tell us together.]"
+  ],
+  "references": [
+    "Adranly, P. (2026). Benchmarking BioMiner's MolGlyph and MolNexTR for molecular structure recognition [XN 1.3 benchmark report]. XN Project Group 1 repository. https://github.com/AAI-6630-group-1/xn-molecular-extraction/blob/main/reports/petera/Adranly_1_3_BenchmarkReport.docx",
+    "Chhetri, B. (2026). Benchmarking three molecular structure readers on BioVista [XN 1.3 benchmark report]. XN Project Group 1 repository. https://github.com/AAI-6630-group-1/xn-molecular-extraction/blob/main/reports/bijay/Chhetri_1_3_BenchmarkReport.pdf",
+    "Daly, W. (2026). XN 1.3 individual benchmark report [Benchmark report]. XN Project Group 1 repository. https://github.com/AAI-6630-group-1/xn-molecular-extraction/blob/main/reports/willdaly/Daly_1_3_BenchmarkReport.docx",
+    "Gulluoglu, H. S. A., Baby, J., Bagul, K. M., Basangari, B. R., Bathini, S. A., Chalamalla, N. K. R., Dcunha, J., Gupta, O., Huang, L., Jiang, X., Naidu, Y. R., Sathishkumar, G., Sehrawat, M., Thota, S. L., Thuvara, D., Vanguri, M. B., Yin, J., Jugder, B.-E., Lusky, I. E., ... Sinitskiy, A. V. (2026). Practical use of advanced AI frameworks on real-life scientific problems: Three case studies [Preprint]. bioRxiv. https://doi.org/10.64898/2026.06.23.734132",
+    "Jin, X. (2026). XN project 1.3 individual benchmark report [Benchmark report, revised]. XN Project Group 1 repository. https://github.com/AAI-6630-group-1/xn-molecular-extraction/blob/main/reports/liba-jin/Jin_1_3_BenchmarkReport_Revised.docx",
+    "LG AI Research. (2025). MolMole: Molecule mining from scientific literature (arXiv:2505.03777). arXiv. https://doi.org/10.48550/arXiv.2505.03777",
+    "Northeastern University, College of Professional Studies. (2026a). Course schedule [Module page]. AAI 6630: Applied Computer Vision [Canvas course site]. https://northeastern.instructure.com/courses/257799/pages/course-schedule",
+    "Northeastern University, College of Professional Studies. (2026b). XN Project Overview [Module page]. AAI 6630: Applied Computer Vision [Canvas course site]. https://northeastern.instructure.com/courses/257799/pages/xn-project-overview-2",
+    "XN Project Group 1. (2026a, October 28). Reader overlap and R-group assembly example [Analysis scripts and output]. https://github.com/AAI-6630-group-1/xn-molecular-extraction/tree/main/reports/1.4-group-report",
+    "XN Project Group 1. (2026b, October 20). Team benchmark comparison [Benchmark results]. https://github.com/AAI-6630-group-1/xn-molecular-extraction/blob/65fb365a250bc01b83d28721ce4b3b5ab70d6e51/benchmarks/results/comparison.md",
+    "Yan, J., Zhu, J., Yang, Y., Liu, Q., Zhang, K., Zhang, Z., Liu, X., Zhang, B., Gao, K., Xiao, J., & Chen, E. (2026). BioMiner: A multi-modal system for automated mining of protein-ligand bioactivity data from literature (arXiv:2604.21508). arXiv. https://doi.org/10.48550/arXiv.2604.21508"
+  ],
+  "disclosure": "AI tool(s) used: Codex and Claude. Purpose: interface design, code scaffolding, analysis scripts, diagram construction, building the result tables, and drafting the report. Specific contribution: Codex inspected the benchmark interfaces and results, drafted the interface specification and an earlier version of this text, generated the diagram, and wrote and tested the CPU smoke run. Claude revised the reader evidence after reading all four members' 1.3 reports and the sponsor paper's OCSR sections. On October 28 Claude wrote reader_overlap.py and assembly_example.py (reports/1.4-group-report/ in the repository), which compute the reader comparison and the assembly example from committed predictions without rerunning any model, and rewrote the pipeline and Phase 2 sections around their output. Claude also wrote results_tables.py, which builds Tables 1 to 3 from the committed score files, and drafted the results, analysis, conclusions and sponsor questions from the four 1.3 reports, the October 13 sponsor check-in draft and the team comparison table. Will decided to run the pipeline in one environment with MolScribe as the second reader and treated the module assignments as final."
+}
