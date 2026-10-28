@@ -1,9 +1,10 @@
-# Proposed file contract version 0.1
+# File contract version 0.1
 
 Use UTF-8. CSV files always have headers; empty JSONL files mean zero records.
 Use JSON `null` or an empty CSV field for unavailable values, never a fabricated
 zero confidence. `run.json` records exact package/model versions, configuration,
-commit/dirty state, hardware, runtime and PDF SHA-256. This proposal is not frozen.
+commit/dirty state, hardware, runtime and PDF SHA-256. Adopted 2026-10-28 (no review
+comments by the Oct 25 target); later changes go through a PR that updates the tests.
 
 ## Conventions
 
@@ -77,31 +78,38 @@ a declared untouched subset for generalization claims.
 
 ## Integration and decisions
 
-1. Confirm owners, export responsibility and the boundary between Peter's table
-   geometry extraction and Will's assembly module.
-2. Each owner supplies a small input/output fixture including an abstention or
-   failure with the Oct 28 module paragraph. Cover a complete drawing, an R-group
-   row and a non-molecule region.
+1. Owners follow #76 (no swaps by Oct 20). Will owns assembly and export/scoring.
+   Peter's front end supplies raw table geometry and cell text; Will's assembly
+   interprets it.
+2. Each owner adds a small input/output fixture with their 2.2 module, including
+   an abstention or failure. Cover a complete drawing, an R-group row and a
+   non-molecule region. The assembly example in `reports/1.4-group-report/`
+   (`assembly_example.py`) is the starting fixture for assembly.
 3. Replace stubs one at a time, preserving IDs/evidence. Test rotated pages,
    missing text, ambiguous labels and reader disagreements.
-4. Keep conflicting ML environments separate, exchange these files, and score in
-   the shared pinned environment. Preserve a CPU path; document GPU-only readers.
-5. Run all six PDFs and inspect errors by paper. Review this proposal together
-   before treating it as an agreed contract.
+4. Everything runs in the shared pinned environment, driven by one script. The
+   stage files are saved for tracing and CPU rescoring, not for moving data
+   between environments. Preserve a CPU path; document GPU-only steps.
+5. Run all six PDFs after each stub is replaced and inspect errors by paper.
 
-Proposed starting consensus policy (from the four 1.3 reports; Bijay owns the final rule):
-MolGlyph is the primary reader; a SMILES counts as agreed when a second reader
-(MolScribe or MolSight) gives the same canonical skeleton; when MolSight and
-MolGlyph agree on the skeleton but differ only in stereocentres, take MolSight's
-stereochemistry. Reader confidences are not used to break ties (MolNexTR's barely
-separates right from wrong; MolGlyph reports none). Evaluate the stereo rule on
-BioVista's chiral test crops, since only 7 of the 222 internal answer rows are chiral.
+Starting consensus policy (Bijay owns the final rule): MolGlyph is the primary
+reader and MolScribe the second; a SMILES is high confidence when both give the
+same canonical SMILES. MolSight and MolNexTR are not in the pipeline: on the same
+1,000 BioVista crops, all three work equally well as the second vote (92-93%
+precision), MolScribe corrects MolGlyph's stereochemistry more often (23 vs 5
+crops, against MolSight's 22 vs 16), and both would need separate environments
+(`reports/1.4-group-report/reader_overlap.py`). Reader confidences are not used
+to break ties (MolNexTR's barely separates right from wrong; MolGlyph reports
+none). Evaluate stereochemistry rules on BioVista's chiral crops, since only 7 of
+the 222 internal answer rows are chiral.
 
-Open choices: gate policy, the final consensus rule, table detector, cross-page tables,
+Open choices: gate policy, the final consensus rule (including whether to prefer
+MolScribe's stereochemistry when skeletons agree), table detector, cross-page tables,
 canonical versus original prediction text, and a future assembled-source enum.
 
 ## AI disclosure
 
-AI tool(s) used: Codex. Purpose: proposed interfaces and integration design.
+AI tool(s) used: Codex and Claude. Purpose: interfaces and integration design.
 Specific contribution: Codex drafted the contract after inspecting the repo's
-reader/scorer. Team confirmation and scientific review remain pending.
+reader/scorer. Claude updated it on 2026-10-28 for the one-environment decision,
+the MolGlyph + MolScribe policy and the adopted status; Will made those decisions.

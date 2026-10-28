@@ -21,23 +21,25 @@ architecture and Phase 2 section draft, not the assembled group submission.
 The former [check-in draft](../1.4-sponsor-checkin/README.md) remains source
 material for conclusions/questions; it has not yet been updated to current results.
 
-## What still needs people
+## Status (October 28, 2026)
 
-| Item | Proposed owner | Team target |
-|---|---|---|
-| Confirm module ownership and interface boundaries | All four members | Review now; interface target Oct 25 |
-| Sponsor paper and BioMiner/BioVista review paragraphs | Will | Oct 28 |
-| DECIMER or MolGrapher review paragraph | Bijay | Oct 28 |
-| MolSight review paragraph | Jin | Oct 28 |
-| MolNexTR review paragraph | Peter | Oct 28 |
-| Each module's input, output, main risk and example fixture | Its owner | Oct 28 |
-| Comparative analysis, refreshed conclusions/questions and full assembly | Per #23, coordinated by Will | Oct 30 |
-| Final comments | Everyone | Oct 31 |
-| One group submission | Will, proposed in #4 | Nov 1 |
+- Owners follow #76; nobody asked to swap by Oct 20, so they are final.
+  Interface version 0.1 is adopted (no review comments by the Oct 25 target).
+- One environment: MolGlyph reads, MolScribe is the second vote. MolSight and
+  MolNexTR are out of the pipeline (`reader_overlap.py`, output in `reader_overlap.txt`).
+- Will's module example: `assembly_example.py` (output in `assembly_example.txt`)
+  joins MolGlyph's one-attachment fragments. 17 missed answer-key molecules are
+  recoverable with perfect pairing (papers 4 and 19), out of 582 same-page joins;
+  paper 2 is the abstention case.
+- Still open for the group report: comparative analysis, conclusions, sponsor
+  questions, literature review (#89) and assembly into `XNGroup1_1_4_GroupReport`.
 
-These are proposed team dates/roles from #4, #23, #89 and #90. Do not count an
-assigned literature source as a member's completed contribution. The draft does
-not replace each person's review or the complete group's contribution statement.
+Both scripts read committed predictions only (CPU, seconds):
+
+```bash
+uv run python reports/1.4-group-report/reader_overlap.py
+uv run python reports/1.4-group-report/assembly_example.py
+```
 
 ## Revision after the 1.3 reports (October 20, 2026)
 

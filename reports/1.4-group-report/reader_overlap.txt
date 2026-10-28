@@ -1,0 +1,15 @@
+1000 shared crops, 253 chiral
+
+reader | exact (all) | exact (chiral) | as MolGlyph's second vote: kept, correct, precision
+MolGlyph | 790 | 132 | n/a
+MolScribe | 450 | 121 | 440, 406, 92.3%
+MolSight | 446 | 107 | 442, 406, 91.9%
+MolNexTR | 438 | 117 | 424, 395, 93.2%
+
+chiral crops with both skeletons right: n, only A has stereo right, only B has stereo right
+MolGlyph vs MolScribe | 134 | 5 | 23
+MolGlyph vs MolSight | 131 | 16 | 22
+MolGlyph vs MolNexTR | 123 | 0 | 24
+MolScribe vs MolSight | 116 | 15 | 4
+MolScribe vs MolNexTR | 113 | 1 | 6
+MolSight vs MolNexTR | 103 | 2 | 14

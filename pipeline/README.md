@@ -1,21 +1,23 @@
-# Phase 2 pipeline interface proposal
+# Phase 2 pipeline interfaces
 
 Draft for [#77](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/77),
-2026-10-20. Owners follow #76 and still need team confirmation. This defines the
-handoffs; it does not claim that the four modules are built.
+2026-10-20, adopted 2026-10-28. Owners follow #76 (no swaps by the Oct 20
+deadline). The whole pipeline runs in the shared uv environment (MolDetV2,
+MolGlyph, MolScribe, PyMuPDF, RDKit). This defines the handoffs; it does not
+claim that the four modules are built.
 
 PDF -> page images and text -> candidate detection and molecule gate -> crops
 -> recognition -> label/table linking -> R-group assembly -> SMILES export -> scoring.
 Fully drawn molecules bypass assembly. Preserve figure/table context so a
 scaffold and its substituents do not become unrelated final predictions.
 
-| Stage and proposed owner | Reads | Writes |
+| Stage and owner | Reads | Writes |
 |---|---|---|
 | Front end, detection and filter: Peter (`PeterAdr14`) | PDF | `pages.jsonl`, `text.jsonl`, `regions.csv`, crops, `tables.jsonl` with cell geometry/raw text |
 | Reading and consensus: Bijay (`ArkAngel101`) | accepted/uncertain crops | `readings.csv`, one row per region and reader |
 | Label linking: Jin (`liba-jin`) | text, regions, tables, readings | `links.jsonl`, labels and scaffold/table/row associations with evidence IDs |
 | R-group assembly: Will (`willdaly`) | linked scaffolds, substituent readings and table text | `assemblies.jsonl`, full molecules or unresolved records |
-| Export and evaluation: Will proposes maintaining the shared adapter; all owners review | eligible readings, links and assemblies | `predictions.csv`, provenance and existing scorer outputs |
+| Export and evaluation: Will (`willdaly`) | eligible readings, links and assemblies | `predictions.csv`, provenance and existing scorer outputs |
 
 ## Files and identifiers
 
@@ -70,5 +72,6 @@ and invalid outputs. No salt, stereo or tautomer scoring policy changes here.
 
 AI tool(s) used: Codex. Purpose: interface design and CPU smoke scaffold.
 Specific contribution: Codex drafted the contract, runner and tests against the
-current reader/scorer interfaces. Will and the module owners still need to review
-the design. Execution details accompany the 1.4 section draft.
+current reader/scorer interfaces. Claude updated the status and environment
+lines on 2026-10-28 after Will's decisions. Execution details accompany the 1.4
+sections.

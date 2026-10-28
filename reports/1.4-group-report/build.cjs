@@ -12,7 +12,7 @@ ${box(360,10,380,65,'Scientific PDF',['Page images and native text'])}
 ${arrow('550,75 550,105')}
 ${box(250,105,600,100,'Front end, detection and molecule filter',['Peter | PeterAdr14','Crops, coordinates, text and table geometry'])}
 ${arrow('550,205 550,235')}
-${box(350,235,400,95,'Recognition and consensus',['Bijay | ArkAngel101','MolGlyph primary; agreement and stereo votes'])}
+${box(350,235,400,95,'Recognition and consensus',['Bijay | ArkAngel101','MolGlyph reads; MolScribe checks'])}
 ${arrow('350,282 210,282 210,365')}
 ${box(25,365,370,95,'Label and table linking',['Jin | liba-jin','Labels, scaffold links and row IDs'])}
 ${arrow('250,155 10,155 10,350 210,350 210,365')}
@@ -24,7 +24,7 @@ ${arrow('750,282 1010,282 1010,565 850,565')}
 <text x="800" y="315" font-size="16">Complete drawings</text>
 ${arrow('210,460 210,565 250,565')}
 <text x="25" y="510" font-size="16">Linked labels</text>
-${box(250,525,600,95,'Canonicalization, export and scoring',['Will proposes shared adapter; all owners review','SMILES with provenance; precision, recall and output counts'])}
+${box(250,525,600,95,'Canonicalization, export and scoring',['Will | willdaly','SMILES with provenance; precision, recall and output counts'])}
 
 </g></svg>`;
 
@@ -39,15 +39,15 @@ async function main() {
     new Paragraph({children:[new TextRun({text:c.subtitle,size:20})],spacing:{after:180}}),
     h('Pipeline architecture'), ...c.architecture.map(p),
     new Paragraph({text:'Figure 1',spacing:{before:120,after:60},keepNext:true}),
-    new Paragraph({children:[new TextRun({text:'Proposed stages and owners',italics:true})],keepNext:true,spacing:{after:80}}),
-    new Paragraph({children:[new ImageRun({type:'png',data:png,transformation:{width:624,height:363},altText:{title:'Proposed Phase 2 pipeline',description:'PDF pages and text flow through Peter’s detection, Bijay’s recognition, Jin’s linking and Will’s R-group assembly to shared export and scoring.',name:'Pipeline diagram'}})],spacing:{line:240,lineRule:'auto',after:100}}),
-    new Paragraph({children:[new TextRun({text:'Note. Responsibilities are proposed, not yet confirmed. Linking uses both text/geometry and reader outputs; complete drawings bypass assembly.',size:20})],spacing:{after:100}}),
+    new Paragraph({children:[new TextRun({text:'Pipeline stages and owners',italics:true})],keepNext:true,spacing:{after:80}}),
+    new Paragraph({children:[new ImageRun({type:'png',data:png,transformation:{width:624,height:363},altText:{title:'Phase 2 pipeline',description:'PDF pages and text flow through Peter’s detection, Bijay’s recognition, Jin’s linking and Will’s R-group assembly to shared export and scoring.',name:'Pipeline diagram'}})],spacing:{line:240,lineRule:'auto',after:100}}),
+    new Paragraph({children:[new TextRun({text:'Note. Owners as assigned in issue 76. All stages run in one shared environment. Linking uses text, geometry and reader outputs; complete drawings bypass assembly.',size:20})],spacing:{after:100}}),
     new Paragraph({text:'Phase 2 implementation and integration',heading:'Heading1',pageBreakBefore:true,spacing:{after:150}}),
     ...c.plan.map(p),
     new Paragraph({text:'AI disclosure',heading:'Heading1',pageBreakBefore:true,spacing:{after:150}}),p(c.disclosure),
     h('References'),...c.references.map(text=>new Paragraph({children:[new TextRun(text)],indent:{left:360,hanging:360},spacing:{after:180,line:276}}))
   ];
-  const doc = new Document({creator:'Will Daly',title:c.title,description:'XN 1.4 architecture and Phase 2 section draft',
+  const doc = new Document({creator:'Will Daly',title:c.title,description:'XN 1.4 architecture and Phase 2 sections',
     styles:{default:{document:{run:{font:'Times New Roman',size:24,color:'000000'}}},paragraphStyles:[
       {id:'Title',name:'Title',basedOn:'Normal',run:{font:'Times New Roman',size:32,bold:true,color:'000000'}},
       {id:'Heading1',name:'Heading 1',basedOn:'Normal',next:'Normal',run:{font:'Times New Roman',size:26,bold:true,color:'000000'}}]},

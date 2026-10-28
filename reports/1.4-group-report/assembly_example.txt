@@ -1,0 +1,27 @@
+paper | readings | read directly | one-attachment fragments | same-page joins | new answer-key molecules
+1 | 18 | 17 | 0 | 0 | 0
+2 | 74 | 9 | 26 | 325 | 0
+4 | 77 | 13 | 31 | 211 | 15
+6 | 2 | 0 | 0 | 0 | 0
+16 | 8 | 2 | 0 | 0 | 0
+19 | 54 | 22 | 20 | 46 | 2
+all | 233 | 63 | 77 | 582 | 17
+
+Recovered molecules (first pairing found):
+paper 4, compound 12: 4-p3-4 O=C1CCC(N2C(=O)c3cccc(OCCN4CCN(*)CC4)c3C2=O)C(=O)N1  +  4-p3-40 *CCCCCNC(=O)OC(C)(C)C  ->  CC(C)(C)OC(=O)NCCCCCN1CCN(CCOc2cccc3c2C(=O)N(C2CCC(=O)NC2=O)C3=O)CC1
+paper 4, compound 9: 4-p3-5 *COc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O  +  4-p3-30 *COCCOCCO[C@@H]1CCN(C(=O)OC(C)(C)C)C1  ->  CC(C)(C)OC(=O)N1CC[C@@H](OCCOCCOCCOc2cccc3c2C(=O)N(C2CCC(=O)NC2=O)C3=O)C1
+paper 4, compound 8: 4-p3-5 *COc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O  +  4-p3-37 *CCCCOCCCCCNC(=O)OC(C)(C)C  ->  CC(C)(C)OC(=O)NCCCCCOCCCCCOc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O
+paper 4, compound 6: 4-p3-5 *COc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O  +  4-p3-38 *COCCOCCOCCNC(=O)OC(C)(C)C  ->  CC(C)(C)OC(=O)NCCOCCOCCOCCOc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O
+paper 4, compound 7: 4-p3-5 *COc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O  +  4-p3-39 *CCOCCCOCCCNC(=O)OC(C)(C)C  ->  CC(C)(C)OC(=O)NCCCOCCCOCCCOc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O
+paper 4, compound 16: 4-p3-7 O=C1CCC(N2C(=O)c3cccc(CC*)c3C2=O)C(=O)N1  +  4-p3-37 *CCCCOCCCCCNC(=O)OC(C)(C)C  ->  CC(C)(C)OC(=O)NCCCCCOCCCCCCc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O
+paper 4, compound 27: 4-p3-16 *COc1ccc(-c2ccc(OCc3ccccc3)nc2OCc2ccccc2)cc1  +  4-p3-37 *CCCCOCCCCCNC(=O)OC(C)(C)C  ->  CC(C)(C)OC(=O)NCCCCCOCCCCCOc1ccc(-c2ccc(OCc3ccccc3)nc2OCc2ccccc2)cc1
+paper 4, compound 30: 4-p3-27 C#Cc1ccccc1OC*  +  4-p3-37 *CCCCOCCCCCNC(=O)OC(C)(C)C  ->  C#Cc1ccccc1OCCCCCOCCCCCNC(=O)OC(C)(C)C
+paper 4, compound 14: 4-p3-31 C#C*  +  4-p3-37 *CCCCOCCCCCNC(=O)OC(C)(C)C  ->  C#CCCCCOCCCCCNC(=O)OC(C)(C)C
+paper 4, compound 4: 4-p3-32 BrC*  +  4-p3-37 *CCCCOCCCCCNC(=O)OC(C)(C)C  ->  CC(C)(C)OC(=O)NCCCCCOCCCCCBr
+paper 4, compound 47: 4-p6-0 *OCCCCCOCCCCCNC(=O)c1ccc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)cc1OC  +  4-p6-1 O=C1CCC(N2Cc3c(*)cccc3C2=O)C(=O)N1  ->  COc1cc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)ccc1C(=O)NCCCCCOCCCCCOc1cccc2c1CN(C1CCC(=O)NC1=O)C2=O
+paper 4, compound 48: 4-p6-0 *OCCCCCOCCCCCNC(=O)c1ccc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)cc1OC  +  4-p6-2 O=C1CCC(n2cc(-c3ccccc3*)nn2)C(=O)N1  ->  COc1cc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)ccc1C(=O)NCCCCCOCCCCCOc1ccccc1-c1cn(C2CCC(=O)NC2=O)nn1
+paper 4, compound 44: 4-p6-0 *OCCCCCOCCCCCNC(=O)c1ccc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)cc1OC  +  4-p6-3 O=C1CCC(N2C(=O)c3cccc(*)c3C2=O)C(=O)N1  ->  COc1cc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)ccc1C(=O)NCCCCCOCCCCCOc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O
+paper 4, compound 49: 4-p6-0 *OCCCCCOCCCCCNC(=O)c1ccc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)cc1OC  +  4-p6-4 O=C1CCC(c2ccc(*)cc2)C(=O)N1  ->  COc1cc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)ccc1C(=O)NCCCCCOCCCCCOc1ccc(C2CCC(=O)NC2=O)cc1
+paper 4, compound CCT400028: 4-p6-0 *OCCCCCOCCCCCNC(=O)c1ccc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)cc1OC  +  4-p6-5 O=C1CCN(c2ccc(*)cc2)C(=O)N1  ->  COc1cc(Nc2ncc3c(n2)-c2ccc(Cl)cc2C(c2c(F)cccc2OC)=NC3)ccc1C(=O)NCCCCCOCCCCCOc1ccc(N2CCC(=O)NC2=O)cc1
+paper 19, compound 19: 19-p7-0 CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2ccc3[nH]c4ncc(*)cc4c3c2)c1F  +  19-p7-7 *c1ccnnc1  ->  CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2ccc3[nH]c4ncc(-c5ccnnc5)cc4c3c2)c1F
+paper 19, compound 18: 19-p7-0 CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2ccc3[nH]c4ncc(*)cc4c3c2)c1F  +  19-p7-8 *c1cccnc1  ->  CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2ccc3[nH]c4ncc(-c5cccnc5)cc4c3c2)c1F
