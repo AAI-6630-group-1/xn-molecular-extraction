@@ -1,0 +1,200 @@
+{
+  "recognition": [
+    [
+      "Reader",
+      "Run by",
+      "BioVista, all",
+      "No R-group",
+      "Chiral",
+      "Markush",
+      "Patent300 crops"
+    ],
+    [
+      "MolGlyph (BioMiner's reader)",
+      "Will",
+      "78.0%",
+      "74.8%",
+      "50.8%",
+      "82.0%",
+      "78.6%"
+    ],
+    [
+      "MolScribe",
+      "Will",
+      "46.4%",
+      "68.6%",
+      "48.7%",
+      "19.1%",
+      "78.3%"
+    ],
+    [
+      "MolSight-extra",
+      "Jin",
+      "45.2%",
+      "64.8%",
+      "41.0%",
+      "21.3%",
+      "70.9%"
+    ],
+    [
+      "MolNexTR*",
+      "Peter",
+      "43.4%",
+      "64.1%",
+      "45.3%",
+      "18.9%",
+      "not run"
+    ],
+    [
+      "DECIMER 2.8.0",
+      "Bijay",
+      "30.0%",
+      "54.5%",
+      "33.4%",
+      "0.0%",
+      "not run"
+    ],
+    [
+      "MolGrapher (no-stereo model)",
+      "Bijay",
+      "23.8%",
+      "43.1%",
+      "0.0%",
+      "0.0%",
+      "not run"
+    ],
+    [
+      "DeepSeek-OCR-2",
+      "Bijay",
+      "13.2%",
+      "24.1%",
+      "8.8%",
+      "0.0%",
+      "not run"
+    ]
+  ],
+  "older": [
+    [
+      "Dataset",
+      "Images",
+      "MolGlyph",
+      "MolNexTR"
+    ],
+    [
+      "CLEF",
+      "454",
+      "78.0%",
+      "76.4%"
+    ],
+    [
+      "UOB",
+      "500",
+      "88.8%",
+      "83.6%"
+    ],
+    [
+      "USPTO",
+      "489",
+      "73.0%",
+      "78.9%"
+    ],
+    [
+      "JPO",
+      "449",
+      "80.0%",
+      "53.0%"
+    ]
+  ],
+  "internal": [
+    [
+      "Paper",
+      "Molecules",
+      "What it tests",
+      "MolDetV2 + MolScribe (Will)",
+      "MolDetV2 + MolSight (Jin)",
+      "MolDetV2 + MolGlyph (Will)",
+      "Full BioMiner (Will)"
+    ],
+    [
+      "1",
+      "17",
+      "Single drawn drugs",
+      "17 (100%)",
+      "17 (100%)",
+      "17 (100%)",
+      "17 (100%)"
+    ],
+    [
+      "2",
+      "34",
+      "Scaffold + drawn substituent table",
+      "8 (26%)",
+      "9 (24%)",
+      "10 (34%)",
+      "9 (75%)"
+    ],
+    [
+      "4",
+      "60",
+      "PROTAC series built from drawn pieces",
+      "11 (16%)",
+      "11 (16%)",
+      "13 (23%)",
+      "23 (56%)"
+    ],
+    [
+      "6",
+      "1",
+      "One molecule, missed by all",
+      "0 (0%)",
+      "0 (0%)",
+      "0 (0%)",
+      "0 (0%)"
+    ],
+    [
+      "16",
+      "4",
+      "Macrocycles",
+      "1 (13%)",
+      "2 (25%)",
+      "2 (25%)",
+      "1 (14%)"
+    ],
+    [
+      "19",
+      "104",
+      "Scaffold + R-groups as table text",
+      "17 (33%)",
+      "22 (45%)",
+      "22 (43%)",
+      "23 (79%)"
+    ],
+    [
+      "Equal-weight P / R",
+      "",
+      "",
+      "31.2% / 30.5%",
+      "35.0% / 36.0%",
+      "37.6% / 37.0%",
+      "54.1% / 35.3%"
+    ],
+    [
+      "Pooled P / R",
+      "",
+      "",
+      "30.5% / 24.6%",
+      "33.3% / 27.7%",
+      "39.0% / 29.1%",
+      "67.6% / 33.2%"
+    ],
+    [
+      "Found / unique SMILES out",
+      "220",
+      "",
+      "54 / 177",
+      "61 / 183",
+      "64 / 164",
+      "73 / 108"
+    ]
+  ]
+}
