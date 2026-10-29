@@ -10,15 +10,15 @@
     ],
     [
       "Peter Adranly",
-      "[pending, due October 30: checked and cut the aggregated results section; reviewed BioMiner and MolNexTR.]"
+      "benchmarked MolGlyph against MolNexTR on BioVista, CLEF, UOB, USPTO and JPO (Tables 1 and 2); [pending, due October 30: checked and cut the aggregated results section; reviewed BioMiner and MolNexTR.]"
     ],
     [
       "Bijay Chhetri",
-      "[pending, due October 30: checked and cut the comparative analysis; reviewed DECIMER or MolGrapher.]"
+      "benchmarked DECIMER, MolGrapher and DeepSeek-OCR-2 on BioVista (Table 1); [pending, due October 30: checked and cut the comparative analysis; reviewed DECIMER or MolGrapher.]"
     ],
     [
       "Xue Jin",
-      "[pending, due October 30: checked and cut the conclusions and sponsor questions; reviewed MolSight; wrote the literature synthesis.]"
+      "benchmarked MolSight on BioVista, Patent300 and the internal papers (Tables 1 and 3); [pending, due October 30: checked and cut the conclusions and sponsor questions; reviewed MolSight; wrote the literature synthesis.]"
     ]
   ],
   "lit_intro": "Each member reviewed at least one source. Each paragraph states the problem, the method and the key finding, and how the source relates to our results.",
