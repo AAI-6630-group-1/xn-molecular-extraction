@@ -40,8 +40,9 @@ ${box(250,525,600,95,'Canonicalization, export and scoring',['Will | willdaly','
 </g></svg>`;
 
 // A string starting with "[" is a placeholder: highlight it so it cannot slip into the submission unnoticed.
-const run = (text, opts = {}) => new TextRun({text, ...opts, ...(text.startsWith('[') ? {highlight:'yellow'} : {})});
-const p = text => new Paragraph({children:[run(text)], spacing:{after:130,line:276}});
+const runs = text => text.split(/(\[[^\]]*\])/).filter(Boolean)
+  .map(part => new TextRun({text:part, ...(part.startsWith('[') ? {highlight:'yellow'} : {})}));
+const p = text => new Paragraph({children:runs(text), spacing:{after:130,line:276}});
 const h = text => new Paragraph({text,heading:'Heading1',spacing:{before:180,after:120},keepNext:true});
 const rule = {style:BorderStyle.SINGLE,size:4,color:'000000'};
 const none = {style:BorderStyle.NONE,size:0,color:'FFFFFF'};
@@ -75,7 +76,7 @@ async function main() {
     new Paragraph({children:[new TextRun({text:front.repo,size:20})],spacing:{after:180}}),
     h('Team members and contributions'), p(front.members_intro),
     ...front.members.map(([name, did]) => new Paragraph({spacing:{after:80,line:276},indent:{left:360,hanging:360},
-      children:[new TextRun({text:name,bold:true}), new TextRun(': '), run(did)]})),
+      children:[new TextRun({text:name,bold:true}), new TextRun(': '), ...runs(did)]})),
     h('Aggregated benchmark results'), ...res.results.map(p),
     ...table('recognition', [2500, 800, 1200, 1200, 1100, 1200, 1360]),
     ...table('older', [3000, 1800, 2280, 2280]),
