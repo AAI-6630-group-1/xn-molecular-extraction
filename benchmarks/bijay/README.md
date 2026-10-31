@@ -22,6 +22,7 @@ Read these numbers with the following in mind:
 - **Markush is 0% by construction.** BioVista writes an R-group as `*`. None of the three readers' predictions
   contains `*` (checked in each run's `matches.csv`), so an exact match is impossible. The 0% means these
   readers can't write R-groups the way BioVista expects, not that they misread the rest of the molecule.
+  [Markush rescoring](#markush-rescoring) shows how much of the 0% is notation.
 - **MolGrapher's chiral 0% is a setup choice.** It ran its default `gc_no_stereo_model`, which doesn't predict
   stereochemistry. Its stereo-blind score on chiral crops is 46.3%.
 - **DeepSeek-OCR-2 is a general document model, not a chemistry model.** The prompt is
@@ -29,12 +30,43 @@ Read these numbers with the following in mind:
   It answers as `<smiles>...</smiles>`, which `reader.py` strips (`raw` keeps the original). It gives no confidence.
 - Nothing was tuned on the test split. Every run is the tool as configured here.
 
+## Markush rescoring
+
+BioVista writes an R-group as `*`, and the three readers write something else, so their Markush score is 0%.
+[`rescore_markush.py`](rescore_markush.py) rewrites the placeholder each reader uses as `*` and scores the
+result with the team's canonicalizer (`score.parse`). It reads the raw predictions in each run's committed
+`matches.csv`, so no model is rerun, and it leaves the committed scores unchanged.
+
+BioVista test split (8,006 crops), exact match, before and after the rewrite:
+
+| Reader | Placeholder rewritten as `*` | Markush (3,596) | All crops | Plain structures (4,410) |
+|---|---|---|---|---|
+| DECIMER 2.8.0 | `[R]`, `[R1]`, `[R17a]`, `[X]`, `[Y]`, `[Z]` | 0.0% to 17.0% | 30.0% to 37.6% | 54.5% to 54.5% |
+| MolGrapher (no-stereo model) | `B` (boron) | 0.0% to 1.8% | 23.8% to 24.1% | 43.2% to 42.3% |
+| DeepSeek-OCR-2 (SMILES prompt) | none found | 0.0% | 13.3% | 24.1% |
+
+- The rules were chosen on BioVista's validation split (33 papers, 855 crops) and applied unchanged to the test
+  split. The script prints the validation table first, with the rule each reader keeps marked.
+- A rule applies to every output, not only to Markush crops, so the plain-structure column shows what it costs.
+  MolGrapher's boron rule rewrites a real boron atom too, which loses 38 plain crops (1,903 to 1,865). I left out an
+  `[H]` rule because it lost more plain crops than it recovered on the validation split. No rule helped DeepSeek-OCR-2.
+- Notation explains only part of the 0%. MolGlyph reads 82.0% of the same Markush crops, so these readers still
+  trail it by a wide margin after the rewrite.
+
+```bash
+uv run python benchmarks/bijay/rescore_markush.py
+```
+
+It needs only RDKit 2026.3.2 and numpy 1.26.4, and the `matches.csv` files committed under
+`benchmarks/results/ArkAngel101/`. It runs in seconds on a CPU.
+
 ## Layout
 
 | Path | What it is |
 |---|---|
 | `common/ocsr_run.py` | One runner for every reader: crops in, `predictions.csv` and `run.json` out. Standard library only, so it runs in any reader's environment. Supports `--shard I/N`, `--limit` and `--resume`, and stops after 3 chunks in a row where every crop failed |
 | `common/merge_shards.py` | Joins the shard files into the `predictions.csv` and `run.json` the scorer reads |
+| `rescore_markush.py` | Rescores the committed BioVista predictions with each reader's R-group placeholder rewritten as `*` (see [Markush rescoring](#markush-rescoring)); CPU only, no model run |
 | `<reader>/reader.py` | The reader itself: `load(device) -> (predict, versions)`. `predict(paths)` returns `[{"smiles", "confidence", "raw"}, ...]`, one per crop |
 | `<reader>/requirements.txt`, `setup_env.sh` | The reader's own environment (they can't share one: DECIMER needs TensorFlow, DeepSeek-OCR-2 pins torch 2.6, MolGrapher is installed from a clone) |
 | `<reader>/run.sbatch` | One array job per reader; each array task reads one shard of the crops |
