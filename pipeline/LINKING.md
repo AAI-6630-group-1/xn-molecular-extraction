@@ -36,26 +36,46 @@ tests expect.
 
 `python -m pipeline.check_linking` runs the linker on the six internal papers. It
 uses the 233 MolDetV2 boxes and MolGlyph readings from Will's committed Phase 1
-run, the PDF text layer, and no tables. A link is confirmed when the answer key
-has that label and its SMILES equals MolGlyph's reading of the box.
+run, and no tables. The text comes either from the PDF text layer or from OCR
+of the page images. A link is confirmed when the answer key has that label and
+its SMILES equals MolGlyph's reading of the box.
 
 | Text records | Boxes linked (of 233) | Confirmed | Wrong | Can't check |
 |---|---|---|---|---|
-| PyMuPDF blocks | 0 | 0 | 0 | 0 |
-| Lines | 4 | 1 | 0 | 3 |
-| Words | 22 | 1 | 6 | 15 |
+| PDF blocks | 0 | 0 | 0 | 0 |
+| PDF lines | 4 | 1 | 0 | 3 |
+| PDF words | 22 | 1 | 6 | 15 |
+| OCR lines (RapidOCR) | 59 | 27 | 5 | 27 |
 
 In these papers, the labels under drawings are part of the figure images, not
 the PDF text, so the text layer has almost nothing to link. The words near the
 boxes come mostly from captions and reaction conditions (`140 °C`, `MKK4`).
-Lines gave no wrong links, but found only 4. The next step is to OCR the area
-under each box and add the result to `text.jsonl` with `source=ocr`; the linker
-itself needs no change for that.
+
+With OCR, the same rules link 59 boxes: 27 of the 32 links that can be checked
+are right. The 5 wrong links took nearby text that looks like a label: a protein
+(`NTRK1`), a residue (`Glu179`), an atom group inside the drawing (`NH2`) and two
+neighbouring compound names. Of the 163 boxes with no label nearby, 125 are
+scaffolds or fragments (MolGlyph's reading has `*`) whose labels sit in R-group
+tables, so they need the table step; 30 are complete answer-key molecules whose
+label the rules missed.
+
+`ocr_text.py` makes the OCR records. It renders the 29 pages that have boxes at
+300 dpi and runs RapidOCR on CPU (about 5 minutes in all), in its own
+environment (`requirements-ocr.txt`, about 120 MB to download), and writes
+`text.jsonl` records with `source=ocr` to `data/liba-jin/ocr_text/`.
+
+## Next steps
+
+- Skip label-like text that is an atom group (`NH2`) or a protein or residue name.
+- Link the scaffolds and fragments through R-group tables, once `tables.jsonl` is
+  available.
+- Look at the 30 complete molecules whose label was missed, for example labels
+  beside the drawing rather than below it.
 
 ## Open questions
 
 - OCR: does the front end add OCR text to `text.jsonl`, or does linking run OCR
-  itself? Which OCR package can go in the shared environment?
+  itself? Can RapidOCR go in the shared environment?
 - Text unit: lines work better than blocks for labels, because a block can merge
   a label with nearby text.
 - A table row with no scaffold gets `box_id` null. The contract does not say
@@ -67,4 +87,5 @@ itself needs no change for that.
 ## AI disclosure
 
 AI tool used: Claude Code. It wrote the module, the fixture, the tests,
-`check_linking.py` and this page at Jin's request, and ran the check above.
+`check_linking.py`, `ocr_text.py` and this page at Jin's request, and ran the
+checks above.

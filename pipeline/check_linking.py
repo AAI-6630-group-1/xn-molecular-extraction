@@ -2,10 +2,11 @@
 
 A development check, not a pipeline run. Regions and readings come from
 Will's committed MolGlyph run on MolDetV2 boxes (233 boxes, no margin),
-text from the PDF text layer, and there are no tables yet. A link is
-confirmed when the answer key has that label for the paper and its SMILES
-equals MolGlyph's reading of the box, and wrong when the reading matches a
-different label's molecule. Needs the course PDFs in data/internal/.
+text from the PDF text layer or from OCR (pipeline/ocr_text.py), and there
+are no tables yet. A link is confirmed when the answer key has that label
+for the paper and its SMILES equals MolGlyph's reading of the box, and
+wrong when the reading matches a different label's molecule. Needs the
+course PDFs in data/internal/.
 
     python -m pipeline.check_linking
 
@@ -14,6 +15,7 @@ AI disclosure: Claude Code wrote this check at Jin's request.
 from __future__ import annotations
 
 import csv
+import re
 import tempfile
 from collections import Counter
 from pathlib import Path
@@ -21,12 +23,13 @@ from pathlib import Path
 import pymupdf
 from rdkit import Chem, RDLogger
 
-from pipeline.linking import link_paper, write_jsonl
+from pipeline.linking import link_paper, read_jsonl, write_jsonl
 from pipeline.smoke import READING_COLUMNS, REGION_COLUMNS
 
 ROOT = Path(__file__).resolve().parents[1]
 RUN = ROOT / "benchmarks/results/willdaly/2026-10-06_moldetv2-molglyph-pad0_internal/predictions.csv"
 KEY = ROOT / "data/internal/ground_truth_SMILES_confirmed_1,2,4,6,16,19.csv"
+OCR_TEXT = ROOT / "data/liba-jin/ocr_text"
 PAPERS = ["1", "2", "4", "6", "16", "19"]
 COLUMNS = ["boxes", "linked", "confirmed", "wrong", "unchecked", "no label", "tie", "taken"]
 RDLogger.DisableLog("rdApp.*")
@@ -38,7 +41,9 @@ def canonical(smiles: str) -> str | None:
 
 
 def text_records(pdf: Path, paper_id: str, unit: str) -> list[dict]:
-    """The PDF text layer as text.jsonl records, one per block, line or word."""
+    """Text records: the PDF text layer by block, line or word, or saved OCR lines."""
+    if unit == "ocr":
+        return read_jsonl(OCR_TEXT / f"{paper_id}.jsonl")
     records = []
     with pymupdf.open(pdf) as doc:
         for number, page in enumerate(doc, start=1):
@@ -108,8 +113,9 @@ def main() -> None:
         boxes = list(csv.DictReader(stream))
     with KEY.open(encoding="utf-8") as stream:
         key = list(csv.DictReader(stream))
-    for unit in ("block", "line", "word"):
-        print(f"\nText as one record per {unit}")
+    units = ["block", "line", "word"] + (["ocr"] if OCR_TEXT.exists() else [])
+    for unit in units:
+        print(f"\nText: {'OCR lines' if unit == 'ocr' else 'one record per PDF ' + unit}")
         print(f"{'paper':>6}" + "".join(f"{name:>11}" for name in COLUMNS))
         total = Counter()
         with tempfile.TemporaryDirectory() as tmp:
@@ -118,8 +124,9 @@ def main() -> None:
                 answers = {}
                 for row in key:
                     if row["paperID"] == paper_id:
-                        answers.setdefault(row["name of molecule"].strip(), set()).add(
-                            canonical(row["canonical_SMILES"]))
+                        # The key sometimes writes "Compound 1h" for label 1h.
+                        name = re.sub(r"(?i)^(compound|cmpd)\s+", "", row["name of molecule"].strip())
+                        answers.setdefault(name, set()).add(canonical(row["canonical_SMILES"]))
                 folder = Path(tmp) / "papers" / paper_id
                 text = text_records(ROOT / "data/internal" / f"{paper_id}.pdf", paper_id, unit)
                 write_inputs(folder, paper_id, mine, text)
