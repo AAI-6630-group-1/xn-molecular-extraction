@@ -1,0 +1,7 @@
+paper_id,page,box_id,x0,y0,x1,y1,crop_path,role,gate,confidence,reason
+fixture,1,fixture-p1-0,100,100,200,180,crops/fixture-p1-0.png,molecule,molecule,0.95,
+fixture,1,fixture-p1-1,300,100,420,180,crops/fixture-p1-1.png,scaffold,molecule,0.93,
+fixture,1,fixture-p1-2,100,400,250,500,,unknown,non_molecule,0.88,plot with axes
+fixture,1,fixture-p1-3,300,400,400,480,crops/fixture-p1-3.png,molecule,molecule,0.91,
+fixture,1,fixture-p1-4,440,276,470,294,crops/fixture-p1-4.png,substituent,molecule,0.80,
+fixture,2,fixture-p2-0,100,100,200,180,crops/fixture-p2-0.png,molecule,uncertain,0.55,
