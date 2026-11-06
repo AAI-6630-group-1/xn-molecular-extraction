@@ -1,0 +1,17 @@
+{
+  "handle": "willdaly",
+  "track": 3,
+  "git_base": "018ad1a",
+  "hardware": "Apple M1 Pro 16 GB, cpu",
+  "versions": {
+    "ultralytics": "8.4.165",
+    "torch": "2.14.0",
+    "pymupdf": "1.28.2",
+    "rdkit": "2026.3.2",
+    "moldetv2_weights": "UniParser/MolDetv2 moldet_v2_yolo11n_960_doc.pt"
+  },
+  "notes": "Scripts and results summary: benchmarks/willdaly/detector_sweep/README.md",
+  "tool": "moldetv2",
+  "dataset": "moldet-bench-doc",
+  "commands": "bench_eval.py, bench_score.py"
+}
