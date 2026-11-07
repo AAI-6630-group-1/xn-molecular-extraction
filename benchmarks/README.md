@@ -114,7 +114,7 @@ Runs with `"dataset": "patent300"` are scored by [`score_boxes.py`](score_boxes.
 | `ocsr` | crop ID, e.g. `AU2004259738B2_page_104_bbox_0` | `smiles` | Exact-match accuracy, stereo-blind accuracy, mean Tanimoto; a crop with no output counts as wrong (MolMole Table 3) |
 | `e2e` | page stem | `smiles`, `x0`-`y1` | A ground-truth molecule counts as found if the predicted box overlapping it most has IoU of at least 0.5 and the same SMILES. Precision is found / predicted boxes and recall is found / ground-truth boxes (MolMole equation 1, Table 4). `detected50` counts the molecules whose box was found, whatever the SMILES |
 
-For detection, keep low-scoring boxes in `predictions.csv` so AP covers the whole precision-recall curve, and put your tool's operating point in `run.json` as `score_threshold`. `--all` writes each task's runs to its own `summary_<task>_patent300.csv`. `summary.csv` stays e2e on the internal papers, for task 1.5.
+For detection, keep low-scoring boxes in `predictions.csv` so AP covers the whole precision-recall curve, and put your tool's operating point in `run.json` as `score_threshold`. `--all` writes each task's runs to its own `summary_<task>_patent300.csv`. `summary.csv` stays e2e on the internal papers, the numbers used in the 1.4 report.
 
 MolMole's Tanimoto fingerprint isn't stated; ours is Morgan radius 2, 2048 bits, the same as everywhere else in `score.py`.
 
