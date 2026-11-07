@@ -5,7 +5,7 @@ Everything we work on is an issue on the [project board](https://github.com/orgs
 ## Issues
 
 - Click **New issue** and pick a template (Task, Bug, or Meeting notes). Templates add the issue to the project board for you.
-- Graded course tasks are the issues with the **Deliverable** issue type ([#1](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/1) to [#12](https://github.com/AAI-6630-group-1/xn-molecular-extraction/issues/12)). Individual deliverables have one sub-issue per person; group deliverables have sub-issues for the work. Break work down further with your own sub-issues.
+- Graded course tasks are the issues with the **Deliverable** issue type (see the [Deliverables](https://github.com/orgs/AAI-6630-group-1/projects/1/views/4) view). Individual deliverables have one sub-issue per person; group deliverables have sub-issues for the work. Break work down further with your own sub-issues.
 - Assign yourself when you pick something up, and move its **Status** as it progresses: Backlog, Todo, In Progress, In Review, Done.
 - Set **Due** on anything with a deadline so it shows up in the [Due Soon](https://github.com/orgs/AAI-6630-group-1/projects/1/views/5) view.
 

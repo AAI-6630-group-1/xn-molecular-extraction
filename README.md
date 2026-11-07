@@ -14,7 +14,7 @@ We are building a computer vision system that finds molecular structure drawings
 | Phase | Weeks | XN tasks |
 |---|---|---|
 | 1. Benchmarking & Project Setup | 1 to 6 (Sep 22 to Nov 2) | 1.1 Setup Proposal · 1.2 Benchmarking Code · 1.3 Individual Benchmark Report · 1.4 Group Benchmark Report & Phase 2 Plan (combines the old 1.4, 1.5 and 2.1) |
-| 2. Pipeline Development | 7 to 12 (Nov 3 to Dec 14) | 2.2 Pipeline Module Implementation · 2.3 Module Documentation & Tests · 2.4 Pipeline Integration & Report |
+| 2. Pipeline Development | 7 to 12 (Nov 3 to Dec 14) | 2.2 In-Class Module Check-in · 2.3 Pipeline Module Implementation (includes documentation and testing evidence) · 2.4 Pipeline Integration & Report |
 | 3. Final Deliverables & Reflection | 13 (Dec 15 to 20) | 3.1 Individual Final Report · 3.2 Project Presentation · 3.3 Individual Reflection |
 
 Due dates and progress live on the project board: see the [Roadmap](https://github.com/orgs/AAI-6630-group-1/projects/1/views/3) and [Deliverables](https://github.com/orgs/AAI-6630-group-1/projects/1/views/4) views.
