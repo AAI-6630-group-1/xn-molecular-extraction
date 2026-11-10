@@ -46,7 +46,7 @@ records.
 | `export.py` | `export_drawings` and `export_assemblies` pick the predictions; `export_run` writes the three files |
 | `stage_io.py` | Reading and writing the stage files, and `select_reading`, the rule for choosing one reading per box |
 | `phase1_run.py` | Converts a committed Phase 1 benchmark run into a pipeline run folder, so the module runs on real readings before the other modules exist |
-| `tests/test_assembly_export.py` | 39 tests; `tests/fixtures/assembly_run/` holds the sample input and expected output |
+| `tests/test_assembly_export.py` | 40 tests; `tests/fixtures/assembly_run/` holds the sample input and expected output |
 
 ## How assembly decides
 
@@ -56,8 +56,8 @@ For each row of each table:
    that `row_id` whose box is not one of the row's cells). If linking left none,
    the table's own `scaffold_box_id`. Two different scaffolds is an abstention.
 2. **Substituents.** One per R-group column. A column counts when its heading is
-   `R`, `R1`, `R^1`, `Ra`, `R'`, `X`, `Y`, `Z` or `Ar`; `Compd` and `IC50 (nM)`
-   are ignored. A cell with text is looked up in the abbreviation table. A cell
+   `R`, `R1`, `R^1`, `Ra` or `R'`; `Compd`, `IC50 (nM)` and other letters such as
+   `X` or `Ar` are ignored, so a table that varies `X` abstains. A cell with text is looked up in the abbreviation table. A cell
    with a drawing uses that box's reading, which must have exactly one `*`.
 3. **Positions.** Only two cases are certain. Either the scaffold's points are
    numbered (`[1*]`, `[2*]`, how readers write R1 and R2) and every column is

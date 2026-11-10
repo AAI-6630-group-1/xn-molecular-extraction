@@ -66,8 +66,9 @@ FRAGMENTS = {name: smiles for smiles, names in _FRAGMENTS.items() for name in na
 
 _SUBSCRIPTS = str.maketrans("₀₁₂₃₄₅₆₇₈₉⁰¹²³⁴⁵⁶⁷⁸⁹", "01234567890123456789")
 _LEADING_BOND = "-–—−‒ "  # "-F" and "–OCH3" print the bond to the scaffold
-# R, R1, R^1, R', Ra, and the single letters papers use for a varied position.
-_POSITION = re.compile(r"(?:R\^?(\d{1,2})|R[a-z]?|X|Y|Z|Ar)'{0,2}")
+# R, R1, R^1, R' and Ra. Headings such as X or Ar are left out: they can mean
+# something other than a substituent, and a wrong join is worse than an abstention.
+_POSITION = re.compile(r"(?:R\^?(\d{1,2})|R[a-z]?)'{0,2}")
 
 
 def _clean(text: str) -> str:
@@ -87,8 +88,8 @@ def text_fragment(text: str) -> str | None:
 def column_position(heading: str) -> tuple[bool, int | None]:
     """Classify a table heading as (is an attachment column, its R number).
 
-    `R1` gives (True, 1). `R`, `Ra` and `X` give (True, None): they name a
-    varied position without a number. `Compd` and `IC50 (nM)` give (False, None).
+    `R1` gives (True, 1). `R` and `Ra` give (True, None): they name a varied
+    position without a number. `Compd`, `IC50 (nM)` and `X` give (False, None).
     """
     match = _POSITION.fullmatch(_clean(heading).replace(" ", ""))
     if not match:

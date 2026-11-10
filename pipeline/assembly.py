@@ -46,7 +46,7 @@ def match_positions(scaffold: Chem.Mol, positions: list[int | None]) -> list[int
     """Choose the scaffold `*` atom for each substituent, or abstain.
 
     `positions` holds each R column's number (1 for R1) or None for an
-    unnumbered heading such as R or X. Returns one atom index per column.
+    unnumbered heading such as R or Ra. Returns one atom index per column.
     """
     points = attachment_points(scaffold)
     numbers = [atom.GetIsotope() for atom in points]  # readers write R1 as [1*]
@@ -121,7 +121,7 @@ def find_scaffold(table: dict, row: dict, row_links: list[dict]) -> str:
     if table.get("scaffold_box_id"):
         return table["scaffold_box_id"]
     reasons = _unique(link.get("reason") for link in row_links if link["status"] != "ok")
-    raise Abstain("link abstained: " + reasons[0] if reasons else "no scaffold is linked to this row")
+    raise Abstain(("link abstained: " + reasons[0]) if reasons else "no scaffold is linked to this row")
 
 
 def read_cell(cell: dict | None, heading: str, readings: dict[str, list[dict]],

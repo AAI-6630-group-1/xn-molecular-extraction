@@ -166,7 +166,7 @@ def test_text_fragment(text, fragment):
 
 @pytest.mark.parametrize("heading, expected", [
     ("R1", (True, 1)), ("R₂", (True, 2)), ("R^3", (True, 3)), ("R", (True, None)),
-    ("Ra", (True, None)), ("R'", (True, None)), ("X", (True, None)),
+    ("Ra", (True, None)), ("R'", (True, None)), ("X", (False, None)), ("Ar", (False, None)),
     ("Compd", (False, None)), ("IC50 (nM)", (False, None)), ("Yield", (False, None)),
 ])
 def test_column_position(heading, expected):
