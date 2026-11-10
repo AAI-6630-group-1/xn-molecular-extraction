@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1",
+  "task": "smoke",
+  "dataset": "pipeline-fixture",
+  "tool": "assembly-export-fixture",
+  "paper_ids": [
+    "fx"
+  ],
+  "notes": "Hand-made input for pipeline/tests/test_assembly_export.py. Not a real paper.",
+  "stages": {}
+}

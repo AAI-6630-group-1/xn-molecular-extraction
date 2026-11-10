@@ -33,6 +33,8 @@ Boxes use PDF points in the unrotated, crop-relative coordinate system. Page
 records include the pixel-to-PDF matrix, rotation, dimensions and DPI.
 [INTERFACES.md](INTERFACES.md) defines fields, statuses, joins and export rules.
 
+Module pages: [ASSEMBLY_EXPORT.md](ASSEMBLY_EXPORT.md) (R-group assembly, export and scoring; Will, #45).
+
 ## Empty output is different from failure
 
 Keep rejected regions as `non_molecule` and uncertain ones as `uncertain`, with a

@@ -1,0 +1,12 @@
+paper_id,box_id,reader,smiles,confidence,raw,status,reason
+fx,fx-p1-0,molglyph,CC(=O)Nc1ccccc1,,,ok,
+fx,fx-p1-1,molglyph,*c1ccc(C(N)=O)cc1,,,ok,
+fx,fx-p1-3,molglyph,c1ccncc1,,,ok,
+fx,fx-p1-4,molglyph,*OCC,,,ok,
+fx,fx-p1-5,molglyph,,,,abstain,no valid SMILES
+fx,fx-p1-6,molglyph,C1CC(,,,ok,
+fx,fx-p2-0,molglyph,[1*]c1ccc([2*])c(C(=O)O)c1,,,ok,
+fx,fx-p2-1,molglyph,*c1cc(*)ccn1,,,ok,
+fx,fx-p2-2,molglyph,C[C@H](N)C(=O)O,,,ok,
+fx,fx-p2-2,molscribe,CC(N)C(=O)O,0.91,,ok,
+fx,fx-p2-2,consensus,C[C@H](N)C(=O)O,,,ok,readers agree on the skeleton
