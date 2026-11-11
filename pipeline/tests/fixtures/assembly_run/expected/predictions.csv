@@ -1,0 +1,8 @@
+paper_id,smiles,page,x0,y0,x1,y1,label,source,confidence,box_id,prediction_id,method,evidence_id
+fx,CC(=O)Nc1ccccc1,1,100,100,200,180,12a,drawing,,fx-p1-0,fx-pred1,reading,fx-p1-0:molglyph
+fx,C[C@H](N)C(=O)O,2,400,100,500,180,,drawing,,fx-p2-2,fx-pred2,reading,fx-p2-2:consensus
+fx,COc1ccc(C(N)=O)cc1,1,300,100,420,180,13a,unknown,,fx-p1-1,fx-pred3,r_group_assembly,fx-asm1
+fx,CCOc1ccc(C(N)=O)cc1,1,300,100,420,180,13b,unknown,,fx-p1-1,fx-pred4,r_group_assembly,fx-asm2
+fx,NC(=O)c1ccccc1,1,300,100,420,180,13d,unknown,,fx-p1-1,fx-pred5,r_group_assembly,fx-asm4
+fx,O=C(O)c1cccc(F)c1,2,100,100,220,180,20a,unknown,,fx-p2-0,fx-pred6,r_group_assembly,fx-asm5
+fx,Cc1ccc(Cl)cc1C(=O)O,2,100,100,220,180,20b,unknown,,fx-p2-0,fx-pred7,r_group_assembly,fx-asm6
