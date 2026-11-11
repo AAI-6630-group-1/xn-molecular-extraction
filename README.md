@@ -51,6 +51,7 @@ Then get the internal dataset (see [data/README.md](data/README.md)) and check t
 
 ```bash
 uv run pytest benchmarks/tests
+uv run pytest pipeline/tests
 ```
 
 If you use MolScribe, load it with `load_reader("molscribe")` from [`benchmarks/readers.py`](benchmarks/readers.py), or call that file's `patch_molscribe()` first (the bug is described [here](benchmarks/willdaly/README.md#molscribe-bug-and-patch)). DECIMER needs TensorFlow, so it gets its own environment.
@@ -67,9 +68,32 @@ Each person's benchmarking code lives in `benchmarks/<handle>/` with its own REA
 |---|---|
 | [`benchmarks/willdaly/`](benchmarks/willdaly/README.md) | Track 3: MolDetV2 finds molecules on rendered PDF pages, then MolScribe or MolGlyph (BioMiner's recognizer) reads each one. Benchmarked on the internal papers, MolMole Patent300, and BioVista. Start with its README; `reproduce.sh` runs everything in order |
 | [`benchmarks/liba-jin/`](benchmarks/liba-jin/README.md) | Track 2: MolSight (AAAI 2026, built for stereochemistry) as a third reader on the same crops as MolScribe and MolGlyph: BioVista, Patent300 ground-truth crops, and MolDetV2 crops of the internal papers. Runs in its own environment; `reproduce.sh` runs everything in order |
+| [`benchmarks/petera/`](benchmarks/petera/benchmark_1/README.md) | MolGlyph (BioMiner's recognizer) and MolNexTR on CLEF, UOB, USPTO, JPO and BioVista's OCSR set, as a resumable Slurm pipeline for Northeastern's Explorer cluster with its own scorer (exact match, stereo-blind match, Tanimoto, bootstrap CIs, paired comparison). Results are in `benchmark_1_results/`; `to_shared_format.py` converts its BioVista runs into the shared results format (`benchmarks/results/PeterAdr14/`) |
+| [`benchmarks/bijay/`](benchmarks/bijay/README.md) | DECIMER, MolGrapher and DeepSeek-OCR-2 as readers on the same BioVista crops as MolScribe and MolGlyph, so the reader is the only variable. One folder per reader; scored by the shared `score_biovista.py`; runs in `benchmarks/results/ArkAngel101/` |
 | [`benchmarks/score.py`](benchmarks/score.py), [`score_boxes.py`](benchmarks/score_boxes.py), [`score_biovista.py`](benchmarks/score_biovista.py) | Shared scoring: exact match of canonical SMILES (RDKit 2026.3.2), precision and recall per paper, detection AP, Tanimoto similarity. Rules in [`benchmarks/README.md`](benchmarks/README.md) |
 | [`benchmarks/results/<handle>/<run_id>/`](benchmarks/results/willdaly) | One folder per run: `run.json` (command, versions, hardware, runtime), `predictions.csv` (every output SMILES with its confidence), `scores.csv` and `matches.csv` (from the scorer) |
 | [`benchmarks/tests/`](benchmarks/tests) | `uv run pytest benchmarks/tests` |
+
+## Pipeline code (task 2.3)
+
+Phase 2 modules live in `pipeline/`, one per stage. They hand data to each other through the files defined in [`pipeline/INTERFACES.md`](pipeline/INTERFACES.md); the stages and their owners are listed in [`pipeline/README.md`](pipeline/README.md). Run the tests with `uv run pytest pipeline/tests`.
+
+| Where | What it is |
+|---|---|
+| [`pipeline/INTERFACES.md`](pipeline/INTERFACES.md) | The file contract: the fields, IDs, statuses and joins that every stage reads and writes |
+| [`pipeline/smoke.py`](pipeline/smoke.py) | CPU smoke run: renders one PDF and writes every stage file with the model stages stubbed. It checks plumbing, not accuracy |
+| [`pipeline/frontend.py`](pipeline/frontend.py) | Front end (Peter): renders pages and text, finds molecule regions with MolDetV2 and gates them, writes crops, and builds `tables.jsonl` from `Table N.` captions and the drawn table rules. Helper scripts in [`pipeline/tools/`](pipeline/tools) list, show and draw a run's tables |
+| [`pipeline/assembly.py`](pipeline/assembly.py), [`export.py`](pipeline/export.py), [`ASSEMBLY_EXPORT.md`](pipeline/ASSEMBLY_EXPORT.md) | R-group assembly and export (Will): joins a scaffold with a table's substituents, then writes `predictions.csv` and provenance |
+| [`pipeline/tests/`](pipeline/tests) | `uv run pytest pipeline/tests` |
+
+To run the front end on the six internal papers (they must be in `data/internal/`, see [data/README.md](data/README.md)):
+
+```bash
+uv run python -m pipeline.frontend --table-strategy captions --out data/pipeline_runs/frontend-all
+uv run python -m pipeline.frontend --check data/pipeline_runs/frontend-all
+```
+
+The output folder must not exist yet, and MolDetV2's weights download on the first run. `--skip-detection` builds tables only. The `--check` command verifies that every reference in a run resolves.
 
 ## People
 
