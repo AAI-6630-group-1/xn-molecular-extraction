@@ -311,9 +311,11 @@ def table_record(paper_id: str, page_no: int, index: int, raw: RawTable, blocks:
     """Build one tables.jsonl record. Every contract field is present; unavailable values are null.
 
     DECISION: row 0 of the grid is the header row. A row's `label` is the raw text of its first cell (often the
-    compound number); deciding what it means is the linker's and assembler's job. row_id is r<grid row>
-    (so the first data row is r1), cell_id is r<row>c<column>.
+    compound number); deciding what it means is the linker's and assembler's job. row_id is
+    <table_id>-r<n> counting data rows from 0 and cell_id is <row_id>c<column>, the convention of the assembly
+    fixture in pipeline/tests/fixtures/assembly_run (unique across the tables of a paper).
     """
+    table_id = f"{paper_id}-p{page_no}-tab{index}"
     page_blocks = [b for b in blocks if b["page"] == page_no]
     page_regions = [r for r in regions if r["page"] == page_no]
     grid = raw.grid
@@ -325,6 +327,7 @@ def table_record(paper_id: str, page_no: int, index: int, raw: RawTable, blocks:
     has_text, matched = False, False
     rows = []
     for i, row in enumerate(grid):
+        row_id = f"{table_id}-r{i - 1}"
         cells = []
         for j, cell in enumerate(row):
             evidence = blocks_in_cell(page_blocks, cell.bbox) if cell.bbox else []
@@ -332,12 +335,12 @@ def table_record(paper_id: str, page_no: int, index: int, raw: RawTable, blocks:
             matched = matched or bool(evidence)
             if i == 0:
                 continue  # header cells feed the checks above and the column headings
-            cells.append({"cell_id": f"r{i}c{j}", "column_id": f"c{j}", "text": cell.text,
+            cells.append({"cell_id": f"{row_id}c{j}", "column_id": f"c{j}", "text": cell.text,
                           "box_id": box_in_cell(page_regions, cell.bbox) if cell.bbox else None,
                           "bbox": list(rounded(cell.bbox)) if cell.bbox else None,
                           "evidence_block_ids": evidence})
         if i > 0:
-            rows.append({"row_id": f"r{i}", "label": (row[0].text or None) if row else None, "cells": cells})
+            rows.append({"row_id": row_id, "label": (row[0].text or None) if row else None, "cells": cells})
 
     if raw.reason:
         status, reason = "abstain", raw.reason
@@ -350,7 +353,7 @@ def table_record(paper_id: str, page_no: int, index: int, raw: RawTable, blocks:
                                      "the block granularity do not match the text blocks")
     else:
         status, reason = "ok", None
-    return {"paper_id": paper_id, "page": page_no, "table_id": f"{paper_id}-p{page_no}-tab{index}",
+    return {"paper_id": paper_id, "page": page_no, "table_id": table_id,
             "bbox": list(rounded(raw.bbox)), "scaffold_box_id": pick_scaffold(page_regions, raw.bbox, raw.block),
             "columns": columns, "rows": rows, "status": status, "reason": reason,
             "caption": raw.caption, "notes": raw.notes}
@@ -608,6 +611,30 @@ def extract_grid(layout: TableLayout, words: list[dict], exclude: list[Box]) -> 
 MIN_DRAWINGS = 3           # a table with no text layer needs this many detected drawings to be built from them
 
 
+def split_two_up(grid: list[list[RawCell]]) -> list[list[RawCell]]:
+    """Turn a table printed two compounds per row into one compound per row.
+
+    A "two-up" table repeats its columns side by side (Entry R BRaf MKK4 Entry R BRaf MKK4). It is split only when the
+    two halves have identical, non-empty headings and both label columns hold text labels (10a, Kinase names), so a
+    numeric table such as "Mean SD Mean SD" is left alone. The left rows come first, then the right rows; the cells keep
+    their own boxes, and the header row is the left half.
+    """
+    if len(grid) < 2 or len(grid[0]) < 4 or len(grid[0]) % 2:
+        return grid
+    half = len(grid[0]) // 2
+    norm = lambda cells: [" ".join(c.text.lower().split()) for c in cells]
+    if norm(grid[0][:half]) != norm(grid[0][half:]) or not any(norm(grid[0][:half])):
+        return grid
+    body = grid[1:]
+    for offset in (0, half):
+        labels = [row[offset].text for row in body if row[offset].text]
+        if not labels or sum(any(ch.isalpha() for ch in t) for t in labels) < 0.5 * len(labels):
+            return grid
+    left = [row[:half] for row in body if any(c.text for c in row[:half])]
+    right = [row[half:] for row in body if any(c.text for c in row[half:])]
+    return [grid[0][:half]] + left + right
+
+
 def rows_of_boxes(boxes: list[Box]) -> list[list[Box]]:
     """Group drawings into table rows by vertical centre (a row's drawings differ in height, so use centres)."""
     if not boxes:
@@ -659,6 +686,7 @@ def table_from_caption(caption: dict, rules: list[dict], words: list[dict], excl
     if layout is None:
         return RawTable(bbox=box, grid=[], caption=text, block=box, reason=reason)
     grid, notes = extract_grid(layout, words, exclude)
+    grid = split_two_up(grid)
     bbox = (layout.columns[0][0], layout.top_y, layout.columns[-1][1], layout.closing_y)
     block = (box[0], box[1], max(box[2], bbox[2]), layout.closing_y)
     reason = None

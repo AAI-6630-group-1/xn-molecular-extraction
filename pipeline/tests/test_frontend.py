@@ -164,6 +164,8 @@ def test_table_record_keeps_every_field_and_links_text_and_drawings():
                region("7-p1-1", (40, 10, 150, 50)),                # a molecule above the table: the scaffold
                region("7-p1-2", (40, 300, 100, 340))]              # a farther molecule
     record = frontend.table_record("7", 1, 0, make_table(TEXTS), blocks_for(TEXTS), regions)
+    assert [r["row_id"] for r in record["rows"]] == ["7-p1-tab0-r0", "7-p1-tab0-r1"]           # table-prefixed, from 0
+    assert record["rows"][1]["cells"][2]["cell_id"] == "7-p1-tab0-r1c2"
     assert set(record) == set(frontend.TABLE_KEYS) | set(frontend.TABLE_EXTRA_KEYS)
     assert record["caption"] is None and record["notes"] is None
     assert record["table_id"] == "7-p1-tab0" and record["status"] == "ok" and record["reason"] is None

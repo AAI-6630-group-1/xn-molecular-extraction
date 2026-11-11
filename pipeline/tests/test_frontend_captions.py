@@ -233,6 +233,48 @@ def test_a_right_column_table_ignores_rules_and_captions_from_the_left_column():
     assert len(layout.columns) == 8
 
 
+def cells(*texts):
+    return [RawCell(t, (10.0 * i, 0.0, 10.0 * i + 9, 5.0)) for i, t in enumerate(texts)]
+
+
+TWO_UP_HEAD = ["Entry", "R", "Binding (PoC) [%] BRaf", "Binding (PoC) [%] MKK4"] * 2
+
+
+def test_a_two_up_table_becomes_one_row_per_compound():
+    """Paper 19 page 5, Table 3: the same four columns twice, two compounds per printed row."""
+    grid = [cells(*TWO_UP_HEAD),
+            cells("1 (VMF)", "CO", "16", "14", "10e", "CH=CH", "96", "64"),
+            cells("10a", "CH2", "100", "94", "10f", "(CO)-(CO)", "100", "100"),
+            cells("10b", "S", "100", "100", "10g", "(COH)-(COH)", "100", "100"),
+            cells("10c", "SO", "100", "100", "10h", "CONH", "100", "99"),
+            cells("10d", "SO2", "100", "100", "10i", "NHCO", "20", "97")]
+    split = frontend.split_two_up(grid)
+    assert [c.text for c in split[0]] == TWO_UP_HEAD[:4] and len(split) == 11              # header + 5 left + 5 right
+    assert [row[0].text for row in split[1:]] == ["1 (VMF)", "10a", "10b", "10c", "10d", "10e", "10f", "10g", "10h", "10i"]
+    assert [c.text for c in split[6]] == ["10e", "CH=CH", "96", "64"]
+    assert split[6][0].bbox == grid[1][4].bbox                                              # cells keep their own boxes
+
+
+def test_a_two_up_table_with_a_shorter_right_half_drops_the_empty_rows():
+    """Paper 19 page 6, Table 6: ten rows on the left, nine on the right."""
+    head = ["Compound", "R", "Binding MKK4", "Binding BRaf"] * 2
+    grid = [cells(*head)] + [cells(f"12{c}", "-Me", "1", "2", f"13{c}" if k < 9 else "", "-Et" if k < 9 else "", "3" if k < 9 else "", "4" if k < 9 else "")
+                             for k, c in enumerate("abcdefghij")]
+    split = frontend.split_two_up(grid)
+    assert len(split) == 1 + 10 + 9
+
+
+def test_tables_that_only_look_two_up_are_left_alone():
+    numeric = [cells("Mean", "SD", "Mean", "SD"), cells("0.94", "0.01", "0.88", "0.02"), cells("0.91", "0.03", "0.85", "0.04")]
+    assert frontend.split_two_up(numeric) is numeric                                       # labels have no letters
+    different = [cells("Entry", "R", "Entry", "X"), cells("10a", "H", "10b", "F")]
+    assert frontend.split_two_up(different) is different                                   # halves differ
+    odd = [cells("Compd", "R", "IC50"), cells("10a", "H", "5")]
+    assert frontend.split_two_up(odd) is odd                                               # odd number of columns
+    one_row = [cells(*TWO_UP_HEAD)]
+    assert frontend.split_two_up(one_row) is one_row                                       # no body
+
+
 def sar_layout():
     """Paper 2 page 5, Table 1: six columns from the header rule; drawings (R1, R2, R4) but no readable text."""
     cols = [(63.5 + 36 * i, 63.5 + 36 * i + 35) for i in range(6)]
