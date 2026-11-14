@@ -28,14 +28,19 @@ _FRAGMENTS = {
     "*C#N": ["CN"],
     "*[N+](=O)[O-]": ["NO2"],
     "*C": ["Me", "CH3"],
-    "*CC": ["Et", "C2H5", "CH2CH3"],
-    "*CCC": ["nPr", "n-Pr", "Pr"],
+    "*CC": ["Et", "C2H5", "CH2CH3", "CH2-CH3", "ethyl"],
+    "*CCC": ["nPr", "n-Pr", "Pr", "propyl"],
     "*C(C)C": ["iPr", "i-Pr", "CH(CH3)2"],
-    "*C1CC1": ["cPr", "c-Pr", "cyclopropyl"],
+    "*C1CC1": ["cPr", "c-Pr", "cyclopropyl", "cyclo-prop", "c-prop"],
     "*CCCC": ["nBu", "n-Bu", "Bu"],
-    "*CC(C)C": ["iBu", "i-Bu"],
+    "*CC(C)C": ["iBu", "i-Bu", "CH2-iprop", "CH2-iPr", "isobutyl"],
+    "*CCC(C)C": ["(CH2)2-iprop", "(CH2)2-iPr", "isopentyl"],
+    "*C1CCCCC1": ["cHex", "c-Hex", "c-hexyl", "cyclohexyl"],
     "*C(C)(C)C": ["tBu", "t-Bu", "C(CH3)3"],
     "*C(F)(F)F": ["CF3"],
+    "*CCC(F)(F)F": ["(CH2)2-CF3", "CH2CH2CF3"],
+    "*CC(C)=O": ["CH2-C(O)-CH3", "CH2COCH3"],
+    "*CC(C)O": ["CH2-C(OH)-CH3", "CH2CH(OH)CH3"],
     "*C(F)F": ["CHF2", "CF2H"],
     "*OC": ["OMe", "MeO", "OCH3", "CH3O"],
     "*OCC": ["OEt", "EtO", "OC2H5"],
@@ -59,8 +64,12 @@ _FRAGMENTS = {
     "*SC": ["SMe", "SCH3"],
     "*S(C)(=O)=O": ["SO2Me", "SO2CH3", "Ms"],
     "*S(N)(=O)=O": ["SO2NH2"],
-    "*c1ccccc1": ["Ph", "C6H5"],
-    "*Cc1ccccc1": ["Bn", "CH2Ph"],
+    "*c1ccccc1": ["Ph", "C6H5", "phenyl"],
+    "*Cc1ccccc1": ["Bn", "CH2Ph", "benzyl"],
+    # Fluorobenzyls as paper 19 writes them; (o), (m), (p) give the F position.
+    "*Cc1ccccc1F": ["CH2-(o)F-phenyl", "2-F-Bn"],
+    "*Cc1cccc(F)c1": ["CH2-(m)F-phenyl", "3-F-Bn"],
+    "*Cc1ccc(F)cc1": ["CH2-(p)F-phenyl", "4-F-Bn"],
 }
 FRAGMENTS = {name: smiles for smiles, names in _FRAGMENTS.items() for name in names}
 
@@ -79,10 +88,30 @@ def text_fragment(text: str) -> str | None:
     """Return the fragment SMILES for a substituent written as text, or None.
 
     Matching is exact and case-sensitive after removing a leading bond dash
-    and spaces, so `-F`, `OCH₃` and `CF3` resolve but `4-F-Ph` does not.
+    and spaces, so `-F`, `OCH₃` and `CF3` resolve but `4-F-Ph` does not. The
+    one pattern rule is a straight chain written as `nC<n>H<2n+1>`.
+    Ambiguous spellings stay out on purpose: `-ethylphenyl` (paper 19, 12l)
+    could be phenethyl or 4-ethylphenyl, so that row abstains.
     """
     cleaned = _clean(text).lstrip(_LEADING_BOND).replace(" ", "")
-    return FRAGMENTS.get(cleaned)
+    if cleaned in FRAGMENTS:
+        return FRAGMENTS[cleaned]
+    return _n_alkyl(cleaned)
+
+
+# A straight chain written as a formula with the n- prefix: nC5H11 is n-pentyl.
+# The hydrogen count must be 2n+1, so a typo or a ring (cC6H11) does not match.
+_N_ALKYL = re.compile(r"n-?C(\d{1,2})H(\d{1,2})")
+
+
+def _n_alkyl(text: str) -> str | None:
+    match = _N_ALKYL.fullmatch(text)
+    if not match:
+        return None
+    carbons, hydrogens = int(match.group(1)), int(match.group(2))
+    if carbons < 1 or hydrogens != 2 * carbons + 1:
+        return None
+    return "*" + "C" * carbons
 
 
 def column_position(heading: str) -> tuple[bool, int | None]:

@@ -159,6 +159,14 @@ def test_every_abbreviation_is_a_one_point_fragment():
 @pytest.mark.parametrize("text, fragment", [
     ("OMe", "*OC"), ("-F", "*F"), ("–OCH₃", "*OC"), (" CF3 ", "*C(F)(F)F"), ("H", "*[H]"),
     ("4-F-Ph", None), ("morpholine", None), ("", None), ("me", None),
+    # paper 19, Table 6 spellings
+    ("-CH2-CH3", "*CC"), ("nC3H7", "*CCC"), ("nC6H13", "*CCCCCC"), ("cyclo-prop", "*C1CC1"),
+    ("-CH2-iprop", "*CC(C)C"), ("-(CH2)2-iprop", "*CCC(C)C"), ("c-hexyl", "*C1CCCCC1"),
+    ("-phenyl", "*c1ccccc1"), ("-benzyl", "*Cc1ccccc1"), ("-(CH2)2-CF3", "*CCC(F)(F)F"),
+    ("-CH2-C(O)-CH3", "*CC(C)=O"), ("-CH2-C(OH)-CH3", "*CC(C)O"),
+    ("-CH2-(o)F-phenyl", "*Cc1ccccc1F"), ("-CH2-(p)F-phenyl", "*Cc1ccc(F)cc1"),
+    # ambiguous or malformed: abstain
+    ("-ethylphenyl", None), ("nC3H8", None), ("cC6H11", None), ("nC0H1", None),
 ])
 def test_text_fragment(text, fragment):
     assert text_fragment(text) == fragment

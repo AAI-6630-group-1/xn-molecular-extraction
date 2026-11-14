@@ -42,7 +42,7 @@ records.
 | File | What it holds |
 |---|---|
 | `assembly.py` | `join` bonds the pieces; `match_positions` decides which substituent goes where; `find_scaffold` and `read_cell` read one row's inputs; `assemble_row`, `assemble_paper` and `assemble_run` write the records |
-| `substituents.py` | The two text lookups: table heading to R position (`R1` is position 1), and cell text to a fragment (`OMe` is `*OC`). 82 spellings of 45 common groups |
+| `substituents.py` | The two text lookups: table heading to R position (`R1` is position 1), and cell text to a fragment (`OMe` is `*OC`). 111 spellings of 53 groups, plus straight chains written as `nC<n>H<2n+1>` |
 | `export.py` | `export_drawings` and `export_assemblies` pick the predictions; `export_run` writes the three files |
 | `stage_io.py` | Reading and writing the stage files, and `select_reading`, the rule for choosing one reading per box |
 | `phase1_run.py` | Converts a committed Phase 1 benchmark run into a pipeline run folder, so the module runs on real readings before the other modules exist |
