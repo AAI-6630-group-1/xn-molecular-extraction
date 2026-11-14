@@ -212,3 +212,14 @@ def test_phase1_run_exports_and_scores_with_the_existing_scorer(tmp_path):
     assert (int(paper["n_output"]), int(paper["tp"]), int(paper["n_gt"])) == (1, 1, 2)
     with pytest.raises(FileExistsError):
         convert(source, run_dir)
+
+
+def test_export_marks_a_frontend_run_as_e2e(run):
+    """A run the front end labelled `frontend` becomes scoreable once export has run."""
+    meta_path = run / "run.json"
+    meta = json.loads(meta_path.read_text())
+    meta.pop("producer_task", None)
+    meta_path.write_text(json.dumps({**meta, "task": "frontend"}))
+    export_run(run)
+    meta = json.loads(meta_path.read_text())
+    assert (meta["task"], meta["producer_task"]) == ("e2e", "frontend")

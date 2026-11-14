@@ -69,6 +69,22 @@ def update_stage(run_dir: Path, stage: str, info: dict) -> None:
     path.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
 
 
+def mark_task(run_dir: Path, task: str, unless: tuple[str, ...] = ()) -> None:
+    """Set run.json's top-level `task`, keeping the earlier value under `producer_task`.
+
+    The front end labels its run `frontend`, but once export has written
+    predictions.csv the run is an end-to-end run, and benchmarks/score.py only
+    scores runs labelled `e2e`. Runs already labelled one of `unless` (the
+    smoke runner's `smoke`) keep their label.
+    """
+    path = run_dir / "run.json"
+    meta = json.loads(path.read_text(encoding="utf-8"))
+    if meta.get("task") not in (task, *unless):
+        meta.setdefault("producer_task", meta.get("task"))
+        meta["task"] = task
+        path.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+
+
 def parse_smiles(smiles: str | None) -> Chem.Mol | None:
     """Parse a SMILES string, returning None for empty or invalid input."""
     if not smiles or not smiles.strip():

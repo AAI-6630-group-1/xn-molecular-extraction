@@ -1,0 +1,162 @@
+{
+  "schema_version": "0.1",
+  "task": "e2e",
+  "dataset": "internal",
+  "tool": "phase2-frontend",
+  "paper_ids": [
+    "19"
+  ],
+  "inputs": {
+    "19": {
+      "file": "19.pdf",
+      "sha256": "ea5f5e9aa155869ba436659cee85e6eaeb3ee5ed0322f0e8f073fef5dd75395b"
+    }
+  },
+  "git_commit": "8be55837d28ee37de4103723f0bc71debf5d48cc-dirty",
+  "hardware": "arm64 Darwin 25.5.0, cpu",
+  "versions": {
+    "python": "3.11.14",
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "torch": "2.14.0",
+    "numpy": "1.26.4",
+    "pillow": "12.3.0",
+    "moldetv2_weights": "UniParser/MolDetv2/moldet_v2_yolo11n_960_doc.pt"
+  },
+  "settings": {
+    "dpi": 300,
+    "accept_conf": 0.5,
+    "detector_floor": 0.5,
+    "pad_px": 10,
+    "device": "cpu",
+    "table_strategy": "captions",
+    "vertical_strategy": null,
+    "horizontal_strategy": null,
+    "skip_detection": false,
+    "min_side_px": 16,
+    "max_aspect": 15.0
+  },
+  "command": [
+    "python",
+    "-m",
+    "pipeline.frontend",
+    "--table-strategy",
+    "captions",
+    "--papers",
+    "19",
+    "--out",
+    "data/pipeline_runs/2026-11-13_p19-assembly"
+  ],
+  "status": "frontend_complete",
+  "stages": {
+    "render_text": {
+      "status": "complete",
+      "pages": 18,
+      "text_blocks": 262
+    },
+    "detect_gate_tables": {
+      "status": "complete",
+      "regions": 54,
+      "tables": 13
+    },
+    "read": {
+      "status": "complete",
+      "crops": 54,
+      "readers": [
+        "molglyph",
+        "molscribe"
+      ],
+      "device": "cpu",
+      "versions": {
+        "molglyph_code": "jiaxianyan/BioMiner 17c6161 (BioMiner/MolScribe, molglyph_utils.py)",
+        "molglyph_weights": "jiaxianustc/MolGlyph molglyph_large.pt",
+        "molscribe": "1.1.1 (GitHub 7296a30, patched)",
+        "molscribe_weights": "yujieq/MolScribe swin_base_char_aux_1m.pth"
+      },
+      "note": "stand-in reading stage (pipeline/read_crops.py): no consensus row, empty links.jsonl"
+    },
+    "assemble": {
+      "status": "complete",
+      "records": 95,
+      "ok": 1,
+      "abstain": 94,
+      "error": 0,
+      "abstain_reasons": {
+        "cannot tell which column fills which attachment point (3 points, 1 R columns, numbers do not match)": 6,
+        "substituent text 'CO' in column R is not in the abbreviation table": 1,
+        "substituent text 'CH2' in column R is not in the abbreviation table": 1,
+        "substituent text 'S' in column R is not in the abbreviation table": 1,
+        "substituent text 'SO' in column R is not in the abbreviation table": 1,
+        "substituent text 'SO2' in column R is not in the abbreviation table": 1,
+        "substituent text 'CH=CH' in column R is not in the abbreviation table": 1,
+        "substituent text '(CO)-(CO)' in column R is not in the abbreviation table": 1,
+        "substituent text '(COH)-(COH)' in column R is not in the abbreviation table": 1,
+        "substituent text 'CONH' in column R is not in the abbreviation table": 1,
+        "substituent text 'NHCO' in column R is not in the abbreviation table": 1,
+        "table has no R-group column": 2,
+        "no scaffold is linked to this row": 45,
+        "substituent text '-CH2-CH3' in column R is not in the abbreviation table": 1,
+        "substituent text 'nC3H7' in column R is not in the abbreviation table": 1,
+        "substituent text 'cyclo-prop' in column R is not in the abbreviation table": 1,
+        "substituent text 'nC4H9' in column R is not in the abbreviation table": 1,
+        "substituent text '-CH2-iprop' in column R is not in the abbreviation table": 1,
+        "substituent text 'nC5H11' in column R is not in the abbreviation table": 1,
+        "substituent text '-(CH2)2-iprop' in column R is not in the abbreviation table": 1,
+        "substituent text 'nC6H13' in column R is not in the abbreviation table": 1,
+        "substituent text 'c-hexyl' in column R is not in the abbreviation table": 1,
+        "substituent text '-phenyl' in column R is not in the abbreviation table": 1,
+        "substituent text '-benzyl' in column R is not in the abbreviation table": 1,
+        "substituent text '-ethylphenyl' in column R is not in the abbreviation table": 1,
+        "substituent text '-(CH2)2-CF3' in column R is not in the abbreviation table": 1,
+        "substituent text '-CH2-C(O)-CH3' in column R is not in the abbreviation table": 1,
+        "substituent text '-CH2-C(OH)-CH3' in column R is not in the abbreviation table": 1,
+        "substituent text '-CH2-(o)F-phenyl' in column R is not in the abbreviation table": 1,
+        "substituent text '-CH2-(m)F-phenyl' in column R is not in the abbreviation table": 1,
+        "substituent text '-CH2-(p)F-phenyl' in column R is not in the abbreviation table": 1,
+        "cannot tell which column fills which attachment point (5 points, 4 R columns, numbers do not match)": 13
+      },
+      "readers": [
+        "consensus",
+        "molglyph",
+        "molscribe"
+      ]
+    },
+    "export": {
+      "status": "complete",
+      "predictions": 23,
+      "rejections": 32,
+      "counts": {
+        "assembly_abstain": 94,
+        "assembly_exported": 1,
+        "drawing_exported": 22,
+        "unresolved_wildcard": 32
+      },
+      "readers": [
+        "consensus",
+        "molglyph",
+        "molscribe"
+      ],
+      "gates": [
+        "molecule"
+      ]
+    }
+  },
+  "notes": "Front-end stage only: reading, linking, assembly and export are not run, so there is no predictions.csv.",
+  "papers": {
+    "19": {
+      "pages": 18,
+      "text_blocks": 262,
+      "regions": 54,
+      "by_gate": {
+        "molecule": 54
+      },
+      "tables": 13,
+      "tables_by_status": {
+        "ok": 10,
+        "abstain": 3
+      }
+    }
+  },
+  "runtime_s": 8.642,
+  "producer_task": "frontend"
+}
