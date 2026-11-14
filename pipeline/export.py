@@ -30,7 +30,7 @@ from pathlib import Path
 from rdkit import Chem
 
 from pipeline.stage_io import (DEFAULT_READERS, PREDICTION_COLUMNS, REJECTION_FIELDS,
-                               attachment_points, paper_dirs, parse_smiles, read_csv, read_jsonl,
+                               attachment_points, mark_task, paper_dirs, parse_smiles, read_csv, read_jsonl,
                                readings_by_box, select_reading, update_stage, write_csv, write_jsonl)
 
 DEFAULT_GATES = ("molecule",)
@@ -143,6 +143,7 @@ def export_run(run_dir: Path, readers: tuple[str, ...] = DEFAULT_READERS,
     info = {"status": "complete", "predictions": len(predictions), "rejections": len(rejections),
             "counts": dict(sorted(counts.items())), "readers": list(readers), "gates": list(gates)}
     update_stage(run_dir, "export", info)
+    mark_task(run_dir, "e2e", unless=("smoke",))
     return info
 
 

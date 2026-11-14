@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,paper_id,n_gt,n_output_raw,n_output,n_invalid,tp,precision,recall,f1,recall_stereo_blind,n_gt_local,recall_local_names,mean_best_tanimoto,rdkit_version
+2026-11-13_p19-vocab_internal,willdaly,phase2-frontend,internal,1,17,0,0,0,0,0.0000,0.0000,0.0000,0.0000,0,,0.0000,2026.03.2
+2026-11-13_p19-vocab_internal,willdaly,phase2-frontend,internal,2,34,0,0,0,0,0.0000,0.0000,0.0000,0.0000,31,0.0000,0.0000,2026.03.2
+2026-11-13_p19-vocab_internal,willdaly,phase2-frontend,internal,4,60,0,0,0,0,0.0000,0.0000,0.0000,0.0000,52,0.0000,0.0000,2026.03.2
+2026-11-13_p19-vocab_internal,willdaly,phase2-frontend,internal,6,1,0,0,0,0,0.0000,0.0000,0.0000,0.0000,0,,0.0000,2026.03.2
+2026-11-13_p19-vocab_internal,willdaly,phase2-frontend,internal,16,4,0,0,0,0,0.0000,0.0000,0.0000,0.0000,4,0.0000,0.0000,2026.03.2
+2026-11-13_p19-vocab_internal,willdaly,phase2-frontend,internal,19,104,40,40,0,37,0.9250,0.3558,0.5139,0.3558,103,0.3495,0.8152,2026.03.2
+2026-11-13_p19-vocab_internal,willdaly,phase2-frontend,internal,macro,220,40,40,0,37,0.1542,0.0593,0.0856,0.0593,190,0.0874,0.1359,2026.03.2
+2026-11-13_p19-vocab_internal,willdaly,phase2-frontend,internal,pooled,220,40,40,0,37,0.9250,0.1682,0.2846,0.1682,190,0.1895,0.3854,2026.03.2

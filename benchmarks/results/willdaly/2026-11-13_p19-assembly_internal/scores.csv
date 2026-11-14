@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,paper_id,n_gt,n_output_raw,n_output,n_invalid,tp,precision,recall,f1,recall_stereo_blind,n_gt_local,recall_local_names,mean_best_tanimoto,rdkit_version
+2026-11-13_p19-assembly_internal,willdaly,phase2-frontend,internal,1,17,0,0,0,0,0.0000,0.0000,0.0000,0.0000,0,,0.0000,2026.03.2
+2026-11-13_p19-assembly_internal,willdaly,phase2-frontend,internal,2,34,0,0,0,0,0.0000,0.0000,0.0000,0.0000,31,0.0000,0.0000,2026.03.2
+2026-11-13_p19-assembly_internal,willdaly,phase2-frontend,internal,4,60,0,0,0,0,0.0000,0.0000,0.0000,0.0000,52,0.0000,0.0000,2026.03.2
+2026-11-13_p19-assembly_internal,willdaly,phase2-frontend,internal,6,1,0,0,0,0,0.0000,0.0000,0.0000,0.0000,0,,0.0000,2026.03.2
+2026-11-13_p19-assembly_internal,willdaly,phase2-frontend,internal,16,4,0,0,0,0,0.0000,0.0000,0.0000,0.0000,4,0.0000,0.0000,2026.03.2
+2026-11-13_p19-assembly_internal,willdaly,phase2-frontend,internal,19,104,23,23,0,20,0.8696,0.1923,0.3150,0.1923,103,0.1942,0.7261,2026.03.2
+2026-11-13_p19-assembly_internal,willdaly,phase2-frontend,internal,macro,220,23,23,0,20,0.1449,0.0321,0.0525,0.0321,190,0.0485,0.1210,2026.03.2
+2026-11-13_p19-assembly_internal,willdaly,phase2-frontend,internal,pooled,220,23,23,0,20,0.8696,0.0909,0.1646,0.0909,190,0.1053,0.3432,2026.03.2

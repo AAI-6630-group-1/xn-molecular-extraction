@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 from pathlib import Path
 
 from rdkit import Chem, RDLogger
@@ -67,6 +68,43 @@ def update_stage(run_dir: Path, stage: str, info: dict) -> None:
     meta = json.loads(path.read_text(encoding="utf-8"))
     meta.setdefault("stages", {})[stage] = info
     path.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+
+
+def mark_task(run_dir: Path, task: str, unless: tuple[str, ...] = ()) -> None:
+    """Set run.json's top-level `task`, keeping the earlier value under `producer_task`.
+
+    The front end labels its run `frontend`, but once export has written
+    predictions.csv the run is an end-to-end run, and benchmarks/score.py only
+    scores runs labelled `e2e`. Runs already labelled one of `unless` (the
+    smoke runner's `smoke`) keep their label.
+    """
+    path = run_dir / "run.json"
+    meta = json.loads(path.read_text(encoding="utf-8"))
+    if meta.get("task") not in (task, *unless):
+        meta.setdefault("producer_task", meta.get("task"))
+        meta["task"] = task
+        path.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+
+
+_STAR_LABEL = re.compile(r"<a>(\d+):([^<]+)</a>")
+
+
+def labelled_scaffold(reading: dict) -> tuple[str, dict[int, str]]:
+    """Return a reading's SMILES and the drawn label of each `*`, when the reader kept them.
+
+    MolGlyph's raw output is its SMILES, then `<sep>`, then one `<a>index:label</a>`
+    per labelled atom (`<a>5:A</a>`, `<a>3:R[b]</a>`). The indices count atoms in
+    that raw SMILES, not in the canonical `smiles` column, so the raw SMILES is
+    returned with them. Readers without labels give the `smiles` column and {}.
+    """
+    raw = reading.get("raw") or ""
+    head, _, tail = raw.partition("<sep>")
+    labels = {int(index): label.strip() for index, label in _STAR_LABEL.findall(tail)}
+    mol = parse_smiles(head) if labels else None
+    if mol is None or any(index >= mol.GetNumAtoms() for index in labels):
+        return reading["smiles"], {}
+    stars = {index: label for index, label in labels.items() if mol.GetAtomWithIdx(index).GetAtomicNum() == 0}
+    return (head, stars) if stars else (reading["smiles"], {})
 
 
 def parse_smiles(smiles: str | None) -> Chem.Mol | None:
