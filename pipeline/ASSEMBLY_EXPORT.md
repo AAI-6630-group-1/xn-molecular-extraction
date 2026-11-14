@@ -55,20 +55,38 @@ For each row of each table:
 1. **Scaffold.** The drawing that label linking tied to the row (a link with
    that `row_id` whose box is not one of the row's cells). If linking left none,
    the table's own `scaffold_box_id`. Two different scaffolds is an abstention.
-2. **Substituents.** One per R-group column. A column counts when its heading is
-   `R`, `R1`, `R^1`, `Ra` or `R'`; `Compd`, `IC50 (nM)` and other letters such as
-   `X` or `Ar` are ignored, so a table that varies `X` abstains. A cell with text is looked up in the abbreviation table. A cell
-   with a drawing uses that box's reading, which must have exactly one `*`.
-3. **Positions.** Only two cases are certain. Either the scaffold's points are
-   numbered (`[1*]`, `[2*]`, how readers write R1 and R2) and every column is
-   numbered to match, or the scaffold has one point and the table one R column.
-4. **Join.** Each pair of `*` atoms that should meet gets the same atom-map
-   number, and RDKit's `molzip` replaces the pair with a bond. The result is
-   written as canonical SMILES (`MolToSmiles`, default settings).
+2. **Columns.** Every R-group column fills a position. A column counts when its
+   heading is `R`, `R1`, `R^1`, `Ra` or `R'`; `Compd`, `IC50 (nM)` and other
+   letters are ignored, except that a heading such as `A` or `B` counts as a
+   ring-atom column when the scaffold reading labels one of its `*` atoms with
+   that heading (paper 19, Tables 1 and 9).
+3. **Cells.** A substituent cell with text is looked up in the abbreviation
+   table (one `*`, such as `OMe`) or, failing that, the linker table (two `*`,
+   such as `SO2` for a group between two parts of the scaffold). Only linkers
+   that read the same both ways are listed: `CONH` and `NHCO` depend on the
+   drawing's orientation, and `CH=CH` or `CH(OH)-CH(OH)` need stereochemistry
+   the table does not give, so those rows abstain. A cell with a drawing uses
+   that box's reading, which must have exactly one `*`. A ring-atom cell
+   (`-CH=`, `-N=`, `CH`, `N`, or `-C(X)=` for a ring carbon carrying X) names
+   the atom that replaces the `*`.
+4. **Positions.** Three cases are certain. The reader kept each `*`'s drawn
+   label (MolGlyph's raw output does: `<a>5:A</a>`) and every column heading
+   matches exactly one label (`Ra` matches `R[a]`, ignoring brackets and case);
+   or the points are numbered (`[1*]`, `[2*]`) and every column is numbered to
+   match; or the scaffold has one point and the table one column. Labels index
+   atoms in the reader's raw SMILES, so a labelled scaffold is joined from that
+   string.
+5. **Join.** A ring atom replaces its in-ring `*`. A linker's `*` must sit
+   between two atoms outside a ring; it is split in two so the linker bonds to
+   both sides. A substituent's `*` must be an end atom. Each pair of `*` atoms
+   that should meet gets the same atom-map number, and RDKit's `molzip`
+   replaces the pair with a bond. The result is written as canonical SMILES
+   (`MolToSmiles`, default settings).
 
 Every other case is an abstention with a reason and no SMILES: unknown
-substituent text, a drawn cell that is not a one-point fragment, unnumbered
-points with several columns, a scaffold position with no column, no linked
+substituent text, a drawn cell that is not a one-point fragment, unlabelled and
+unnumbered points with several columns, a linker on an end atom or a substituent
+between two atoms, a scaffold position with no column, no linked
 scaffold, an invalid product. A malformed record becomes `status=error` for that
 row and the run continues. Each record keeps the cell text, how it was read and
 the fragment used, so a wrong molecule can be traced to the cell that caused it.

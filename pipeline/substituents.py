@@ -1,11 +1,16 @@
 """Turn the text of an R-group table (headings and cells) into chemistry.
 
-Two lookups, both deliberately small and exact:
+Small, exact lookups:
 
 - `column_position("R1")` says whether a table heading names an attachment
   position, and which numbered one.
 - `text_fragment("OMe")` returns the substituent as a SMILES fragment with one
   `*` where it bonds to the scaffold (`*OC`).
+- `linker_fragment("SO2")` returns a group that sits between two parts of the
+  scaffold, with two `*` (`*S(*)(=O)=O`).
+- `ring_atom("-N=")` reads a table cell that names a ring atom (paper 19's A
+  and B columns) as an element and an optional substituent.
+- `same_label("Ra", "R[a]")` matches a table heading to a reader's atom label.
 
 Anything not in the table returns None and the row abstains. A wrong guess here
 would export a wrong molecule with nothing downstream to catch it, so there is
@@ -124,3 +129,58 @@ def column_position(heading: str) -> tuple[bool, int | None]:
     if not match:
         return False, None
     return True, int(match.group(1)) if match.group(1) else None
+
+
+# Groups between two parts of the scaffold, two `*`. Only groups that read the
+# same in both directions: CONH and NHCO depend on the drawing's orientation,
+# and CH=CH or CH(OH)-CH(OH) need stereochemistry the table does not give, so
+# those rows abstain. In a linker column CO is the carbonyl (paper 19, Table 3).
+_LINKERS = {
+    "*C(*)=O": ["CO", "C=O", "C(O)"],
+    "*C*": ["CH2"],
+    "*O*": ["O"],
+    "*N*": ["NH"],
+    "*S*": ["S"],
+    "*S(*)=O": ["SO", "S(O)"],
+    "*S(*)(=O)=O": ["SO2", "S(O)2"],
+    "*C(=O)C(*)=O": ["(CO)-(CO)", "COCO", "C(O)C(O)"],
+}
+LINKERS = {name: smiles for smiles, names in _LINKERS.items() for name in names}
+
+
+def linker_fragment(text: str) -> str | None:
+    """Return the two-point fragment for a linker written as text, or None."""
+    return LINKERS.get(_clean(text).strip(_LEADING_BOND).replace(" ", ""))
+
+
+_RING_ATOM = re.compile(r"(CH|N|C\((.+)\))")
+
+
+def ring_atom(text: str) -> tuple[str, str | None] | None:
+    """Read a cell naming a ring atom: (element, substituent fragment or None).
+
+    Paper 19 writes them with their ring bonds (`-CH=`, `-N=`, `-C(Cl)=`) or
+    bare (`CH`, `N`). `C(X)` is a ring carbon carrying X, which must itself be
+    in the abbreviation table.
+    """
+    cleaned = _clean(text).replace(" ", "").strip("-–—−=")
+    match = _RING_ATOM.fullmatch(cleaned)
+    if not match:
+        return None
+    if match.group(2) is None:
+        return ("N" if cleaned == "N" else "C"), None
+    fragment = text_fragment(match.group(2))
+    return ("C", fragment) if fragment else None
+
+
+def _label_key(text: str) -> str:
+    return re.sub(r"[\[\]\^'\s]", "", _clean(text)).casefold()
+
+
+def same_label(heading: str, label: str) -> bool:
+    """True when a table heading and a reader's atom label name the same position.
+
+    Brackets, carets and case are ignored, so `Ra` matches `R[a]` and `Rc`
+    matches the OCR variant `R[C]`.
+    """
+    return bool(_label_key(heading)) and _label_key(heading) == _label_key(label)

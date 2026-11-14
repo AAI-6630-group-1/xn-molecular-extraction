@@ -22,9 +22,11 @@ from pipeline import smoke
 from pipeline.assembly import Abstain, assemble_row, assemble_run, join
 from pipeline.export import export_run
 from pipeline.phase1_run import convert
-from pipeline.stage_io import (PREDICTION_COLUMNS, attachment_points, parse_smiles, read_csv,
+from pipeline.stage_io import (PREDICTION_COLUMNS, attachment_points, labelled_scaffold, parse_smiles,
+                               read_csv,
                                read_jsonl, select_reading)
-from pipeline.substituents import FRAGMENTS, column_position, text_fragment
+from pipeline.substituents import (FRAGMENTS, column_position, linker_fragment, ring_atom,
+                                   same_label, text_fragment)
 
 FIXTURE = Path(__file__).parent / "fixtures" / "assembly_run"
 
@@ -139,13 +141,86 @@ def test_join_by_number_ignores_column_order():
     ("Nc1c(*)c(*)c(*)c(*)c1*", [(n, "*F") for n in range(1, 6)], "cannot tell which column"),
     ("[1*]c1ccc([2*])cc1", [(1, "*F"), (3, "*C")], "no R3"),
     ("[1*]c1ccc([2*])cc1", [(1, "*F")], "have no table column"),
-    ("*c1ccccc1", [(None, "*CC*")], "not a one-point fragment"),
+    ("*c1ccccc1", [(None, "*CC*")], "linker .* fills an end position"),
     ("c1ccccc1", [(None, "*F")], "no attachment point"),
     ("not smiles", [(None, "*F")], "not valid SMILES"),
 ])
 def test_join_abstains_instead_of_guessing(scaffold, pieces, reason):
     with pytest.raises(Abstain, match=reason):
         join(scaffold, pieces)
+
+
+# --- labels, linkers and ring atoms (paper 19, MolGlyph raw readings) -------
+
+P19_TABLE1 = ("*c1nc2[nH]*c(C(=O)c3c(F)ccc(NS(=O)(=O)CCC)c3F)c2*c1-c1ccc(Cl)cc1"
+              "<sep><a>0:R</a><a>5:A</a><a>25:B</a>")
+P19_TABLE3 = ("CCCS(NC1C(F)=C(*C2C3C(=NC=C(C=3)C3C=CC(Cl)=CC=3)NC=2)C(F)=CC=1)(=O)=O<sep><a>9:R</a>")
+P19_TABLE9 = ("*c1c(*)c(*)c(C(=O)c2*[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c(*)c1NS(=O)(=O)CCC"
+              "<sep><a>0:R[b]</a><a>3:R[C]</a><a>5:R[d]</a><a>10:A</a><a>26:R[a]</a>")
+
+
+def test_labelled_scaffold_reads_molglyph_star_labels():
+    smiles, labels = labelled_scaffold({"smiles": "canonical", "raw": P19_TABLE1})
+    assert smiles == P19_TABLE1.split("<sep>")[0] and labels == {0: "R", 5: "A", 25: "B"}
+    assert labelled_scaffold({"smiles": "C*", "raw": "C*"}) == ("C*", {})            # MolScribe: no labels
+    assert labelled_scaffold({"smiles": "C*", "raw": "C*<sep><a>7:R</a>"}) == ("C*", {})  # index out of range
+
+
+def test_ring_atom_columns_matched_by_label():
+    smiles, labels = labelled_scaffold({"smiles": "", "raw": P19_TABLE1})
+    # compound 4: A = -CH=, B = -C(Cl)=, R = -H
+    assert join(smiles, [(None, "ring:C"), (None, "ring:C:*Cl"), (None, "*[H]")], ["A", "B", "R"], labels) == (
+        "CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)c(Cl)c23)c1F")
+
+
+def test_unnumbered_r_columns_matched_by_label():
+    smiles, labels = labelled_scaffold({"smiles": "", "raw": P19_TABLE9})
+    # compound 25: A = N, Ra = Rb = Rd = F, Rc = H; the reader wrote Rc as R[C]
+    pieces = [(None, "ring:N"), (None, "*F"), (None, "*F"), (None, "*[H]"), (None, "*F")]
+    assert join(smiles, pieces, ["A", "Ra", "Rb", "Rc", "Rd"], labels) == (
+        "CCCS(=O)(=O)Nc1c(F)cc(F)c(C(=O)c2n[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F")
+    # without the labels the same five unnumbered points abstain, as before
+    with pytest.raises(Abstain, match="cannot tell which column"):
+        join(smiles, pieces[1:])
+
+
+def test_linker_joins_both_neighbours():
+    smiles, labels = labelled_scaffold({"smiles": "", "raw": P19_TABLE3})
+    assert join(smiles, [(None, linker_fragment("SO2"))], ["R"], labels) == (
+        "CCCS(=O)(=O)Nc1ccc(F)c(S(=O)(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F")  # compound 10d
+
+
+@pytest.mark.parametrize("scaffold, pieces, reason", [
+    ("Cc1ccccc1*C", [(None, "*F")], "fills a position between two atoms"),
+    ("c1cc*cc1", [(None, "*S*")], "not a two-neighbour chain atom"),
+    ("*C", [(None, "ring:N")], "not in a ring"),
+])
+def test_linker_and_ring_atom_abstentions(scaffold, pieces, reason):
+    with pytest.raises(Abstain, match=reason):
+        join(scaffold, pieces)
+
+
+@pytest.mark.parametrize("text, expected", [
+    ("CO", "*C(*)=O"), ("SO2", "*S(*)(=O)=O"), ("(CO)-(CO)", "*C(=O)C(*)=O"),
+    ("CONH", None), ("NHCO", None), ("CH=CH", None), ("(COH)-(COH)", None),
+])
+def test_linker_fragment(text, expected):
+    assert linker_fragment(text) == expected
+    if expected:
+        assert len(attachment_points(parse_smiles(expected))) == 2
+
+
+@pytest.mark.parametrize("text, expected", [
+    ("-CH=", ("C", None)), ("-N=", ("N", None)), ("CH", ("C", None)), ("N", ("N", None)),
+    ("-C(Cl)=", ("C", "*Cl")), ("-C(CN)=", ("C", "*C#N")), ("-C(foo)=", None), ("Me", None),
+])
+def test_ring_atom(text, expected):
+    assert ring_atom(text) == expected
+
+
+def test_same_label():
+    assert same_label("Ra", "R[a]") and same_label("Rc", "R[C]") and same_label("A", "A")
+    assert not same_label("A", "R[a]") and not same_label("", "")
 
 
 # --- table text -------------------------------------------------------------
