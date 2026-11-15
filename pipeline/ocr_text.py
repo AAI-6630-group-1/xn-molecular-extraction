@@ -48,10 +48,36 @@ def ocr_page(engine: RapidOCR, page: pymupdf.Page, paper_id: str, number: int) -
     return records
 
 
+def ocr_paper_dir(engine: RapidOCR, paper_dir: Path, pdf: Path) -> int:
+    """OCR the pages that hold boxes in a run's papers/<paper_id>/regions.csv.
+
+    Writes ocr_text.jsonl next to it, where pipeline.linking picks it up.
+    """
+    with (paper_dir / "regions.csv").open(encoding="utf-8") as stream:
+        pages = sorted({int(row["page"]) for row in csv.DictReader(stream)})
+    records = []
+    with pymupdf.open(pdf) as doc:
+        for number in pages:
+            records += ocr_page(engine, doc[number - 1], paper_dir.name, number)
+    with (paper_dir / "ocr_text.jsonl").open("w", encoding="utf-8") as stream:
+        for record in records:
+            stream.write(json.dumps(record, ensure_ascii=False) + "\n")
+    return len(records)
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="OCR the pages with Phase 1 boxes.")
-    parser.add_argument("--out", type=Path, required=True, help="folder for <paper_id>.jsonl files")
+    parser = argparse.ArgumentParser(description="OCR the pages that hold molecule boxes.")
+    parser.add_argument("--out", type=Path, help="folder for <paper_id>.jsonl files (Phase 1 boxes)")
+    parser.add_argument("--paper-dir", type=Path, help="a run's papers/<paper_id>/ folder instead")
+    parser.add_argument("--pdf", type=Path, help="the paper's PDF (default data/internal/<paper_id>.pdf)")
     args = parser.parse_args()
+    if args.paper_dir:
+        pdf = args.pdf or ROOT / "data/internal" / f"{args.paper_dir.name}.pdf"
+        count = ocr_paper_dir(RapidOCR(), args.paper_dir, pdf)
+        print(f"paper {args.paper_dir.name}: {count} OCR lines in {args.paper_dir / 'ocr_text.jsonl'}")
+        return
+    if not args.out:
+        parser.error("give --paper-dir or --out")
     with RUN.open(encoding="utf-8") as stream:
         pages = sorted({(row["paper_id"], int(row["page"])) for row in csv.DictReader(stream)})
     args.out.mkdir(parents=True, exist_ok=True)

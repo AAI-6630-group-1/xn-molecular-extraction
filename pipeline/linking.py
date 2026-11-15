@@ -6,14 +6,21 @@ readings.csv) and writes links.jsonl, as set out in pipeline/INTERFACES.md
 
 1. A label is a text block whose whole text is one compound label, such as
    12a, 7, NR-7h or (3). The text can come from the PDF or from OCR.
-2. A table row links to the table's scaffold: the front end's
-   scaffold_box_id if it is set, otherwise the closest scaffold above the
-   table on the same page. A drawing inside a table cell links to its row.
+2. A row of an R-group table (one with an R column) links to the table's
+   scaffold: the front end's scaffold_box_id if it is set, otherwise the
+   closest scaffold above the table on the same page. A drawing inside a
+   table cell links to its row.
 3. Every other drawing takes the closest label just below it, or just above
    it if there is none below. No label, two equally close labels, or a label
    that a closer drawing already took give an abstention.
-4. Non-molecule regions get no link, and text inside a table is never used
+4. A row of an activity table (no R column, such as an IC50 table) names a
+   compound shown elsewhere. It links to the drawing that got the same label
+   in step 3, or abstains.
+5. Non-molecule regions get no link, and text inside a table is never used
    as a drawing's label.
+
+If the paper folder also holds ocr_text.jsonl (text.jsonl records with
+source=ocr, from pipeline/ocr_text.py), those lines are used as labels too.
 
     python -m pipeline.linking data/pipeline_runs/<run_id>/papers/<paper_id>
 
@@ -28,10 +35,20 @@ import json
 import re
 from pathlib import Path
 
+from pipeline.substituents import column_position
+
 LINK_COLUMNS = "paper_id link_id box_id label table_id row_id evidence_block_ids status reason".split()
 # One compound label, optionally in brackets: 12a, 7, NR-7h, S3, (14b).
 LABEL = re.compile(r"[(\[]?([A-Za-z]{0,4}[-_]?\d{1,4}[a-z]{0,2}'?)[)\]]?")
-MAX_GAP = 0.6      # farthest a label may sit from its drawing, in drawing heights
+# Text shaped like a label that names something else: a protein or kinase
+# (MKK4, NTRK1: three or more capitals before the number), an amino-acid
+# residue (Glu179) or an atom group drawn in a structure (NH2, CH3, SO2).
+NOT_A_LABEL = re.compile(
+    r"[A-Z]{3,}\d+[a-z]?"
+    r"|(?:Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val)\d+"
+    r"|(?:NH|CH|OH|SH|CF|SO|NO|CO)\d"
+    r"|R\d+[a-z]?")  # an R-group position (R1, R2a), not a compound
+MAX_GAP = 0.6     # farthest a label may sit from its drawing, in drawing heights
 TIE = 0.1          # two labels closer in score than this are a tie
 TABLE_TIE_PT = 10  # two scaffolds closer to a table than this (points) are a tie
 
@@ -55,7 +72,9 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 def as_label(text: str) -> str | None:
     """Return the label if the whole text is one compound label, else None."""
     match = LABEL.fullmatch(text.strip())
-    return match.group(1) if match else None
+    if not match or NOT_A_LABEL.fullmatch(match.group(1)):
+        return None
+    return match.group(1)
 
 
 def bounds(record: dict) -> tuple[float, float, float, float]:
@@ -116,6 +135,36 @@ def find_scaffold(table: dict, drawings: dict[str, dict],
     return found[0][1], "ok", "closest scaffold above the table"
 
 
+ACTIVITY_REASON = "activity table row: no drawing has this label"
+
+
+def is_rgroup_table(table: dict) -> bool:
+    """True if a column heading names an R position (R, R1, Ra), as assembly reads it."""
+    return any(column_position(column.get("heading") or "")[0] for column in table["columns"])
+
+
+def link_activity_rows(links: list[dict]) -> None:
+    """Point each activity-table row at the drawing that has the same label."""
+    by_label = {}
+    for link in links:
+        if link["status"] == "ok" and not link["row_id"]:
+            by_label.setdefault(link["label"], []).append(link)
+    for link in links:
+        if link["reason"] != ACTIVITY_REASON:
+            continue
+        label = as_label((link["label"] or "").split(" (")[0])
+        found = by_label.get(label, []) if label else []
+        if not label:
+            link["reason"] = "row has no compound label"
+        elif len(found) == 1:
+            link.update(box_id=found[0]["box_id"], status="ok",
+                        reason="drawing with the same label",
+                        evidence_block_ids=sorted(set(link["evidence_block_ids"])
+                                                  | set(found[0]["evidence_block_ids"])))
+        elif found:
+            link["reason"] = f"two drawings have label {label}: " + ", ".join(f["box_id"] for f in found)
+
+
 def link_tables(paper_id: str, tables: list[dict], drawings: dict[str, dict],
                 scaffolds: set[str]) -> tuple[list[dict], set[str]]:
     """Link each table row to its scaffold, and drawn substituents to their row.
@@ -127,6 +176,13 @@ def link_tables(paper_id: str, tables: list[dict], drawings: dict[str, dict],
     links, used = [], set()
     for table in tables:
         if table["status"] != "ok":
+            continue
+        if not is_rgroup_table(table):
+            # Activity table: link_paper links its rows once drawings have labels.
+            for row in table["rows"]:
+                evidence = sorted({block for cell in row["cells"] for block in cell["evidence_block_ids"]})
+                links.append(new_link(paper_id, None, row["label"], evidence, "abstain",
+                                      ACTIVITY_REASON, table_id=table["table_id"], row_id=row["row_id"]))
             continue
         scaffold, status, reason = find_scaffold(table, drawings, scaffolds)
         if scaffold:
@@ -188,6 +244,11 @@ def link_paper(paper_dir: Path) -> list[dict]:
     """
     paper_id = paper_dir.name
     blocks = read_jsonl(paper_dir / "text.jsonl")
+    if (paper_dir / "ocr_text.jsonl").is_file():
+        for block in read_jsonl(paper_dir / "ocr_text.jsonl"):
+            # OCR often reads the digit 1 as l or I next to other digits (1la for 11a).
+            block["text"] = re.sub(r"(?<=\d)[lI]|[lI](?=\d)", "1", block["text"])
+            blocks.append(block)
     regions = read_csv(paper_dir / "regions.csv")
     tables = read_jsonl(paper_dir / "tables.jsonl")
     readings = read_csv(paper_dir / "readings.csv")
@@ -202,6 +263,7 @@ def link_paper(paper_dir: Path) -> list[dict]:
               if block["block_id"] not in table_text and as_label(block["text"])]
     free = {box_id: region for box_id, region in drawings.items() if box_id not in used}
     links = link_drawings(paper_id, free, labels) + table_links
+    link_activity_rows(links)
     for number, link in enumerate(links, start=1):
         link["link_id"] = f"{paper_id}-link{number}"
     return links

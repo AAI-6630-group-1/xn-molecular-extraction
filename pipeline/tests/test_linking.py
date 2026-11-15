@@ -103,6 +103,32 @@ def test_missing_input_file_is_an_error(paper):
 @pytest.mark.parametrize("text, label", [
     ("12a\n", "12a"), ("7", "7"), ("NR-7h", "NR-7h"), ("(14b)", "14b"), ("S3", "S3"),
     ("Figure 2", None), ("1 2 3", None), ("12a-12f, 13", None), ("R", None), ("Me", None),
+    ("MKK4", None), ("NTRK1", None), ("Glu179", None), ("NH2", None), ("A4", "A4"), ("B9", "B9"), ("R2", None),
 ])
 def test_label_pattern(text, label):
     assert as_label(text) == label
+
+
+def add_activity_table(paper, labels):
+    """Append an IC50 table (no R column) whose rows name the given compounds."""
+    rows = [{"row_id": f"fixture-p2-tab0-r{n}", "label": label,
+             "cells": [{"cell_id": f"fixture-p2-tab0-r{n}c0", "column_id": "c0", "text": label,
+                        "box_id": None, "bbox": [50, 300 + 10 * n, 90, 308 + 10 * n],
+                        "evidence_block_ids": []}]}
+            for n, label in enumerate(labels)]
+    tables = read_jsonl(paper / "tables.jsonl")
+    tables.append({"paper_id": "fixture", "page": 2, "table_id": "fixture-p2-tab0",
+                   "bbox": [50, 290, 300, 400], "scaffold_box_id": None,
+                   "columns": [{"column_id": "c0", "heading": "Compound"},
+                               {"column_id": "c1", "heading": "IC50 (nM)"}],
+                   "rows": rows, "status": "ok", "reason": None})
+    write_jsonl(paper / "tables.jsonl", tables)
+
+
+def test_activity_row_links_to_the_drawing_with_its_label(paper):
+    add_activity_table(paper, ["12a", "99", "BLK"])
+    rows = {link["label"]: link for link in row_links(link_paper(paper))
+            if link["table_id"] == "fixture-p2-tab0"}
+    assert (rows["12a"]["box_id"], rows["12a"]["status"]) == ("fixture-p1-0", "ok")
+    assert (rows["99"]["status"], rows["99"]["box_id"]) == ("abstain", None)
+    assert rows["BLK"]["reason"] == "row has no compound label"

@@ -64,12 +64,37 @@ label the rules missed.
 environment (`requirements-ocr.txt`, about 120 MB to download), and writes
 `text.jsonl` records with `source=ocr` to `data/liba-jin/ocr_text/`.
 
+## Update (Nov 14): fake labels, activity tables, paper 19
+
+- **Fake labels.** Text shaped like a label but naming something else is skipped:
+  proteins and kinases (`MKK4`, `NTRK1`), residues (`Glu179`), atom groups (`NH2`)
+  and R positions (`R2`). OCR's `l` for the digit 1 is fixed (`1la` → `11a`).
+  On the six papers with OCR this gives 50 links: 24 confirmed, 2 wrong (before:
+  59, 27 and 5). Three right links were lost with the wrong ones.
+- **Activity tables.** A table with no R column (IC50, ADME) lists compounds shown
+  elsewhere. Its rows now link to the drawing with the same label, or abstain.
+  Before, they were wrongly tied to the nearest scaffold above the table.
+- **OCR on a run.** `ocr_text.py --paper-dir <run>/papers/<id>` writes
+  `ocr_text.jsonl` into the paper folder, and `linking.py` uses it if present.
+
+**Paper 19 with Peter's front end** (`--table-strategy captions`, Will's
+readings from `2026-11-13_p19-linkers-labels_internal`): 48 R-group rows link to
+the front end's scaffold, and 12 drawings get a label from OCR (`7`, `8`, `11a`,
+`A2`–`A4`, `B1`–`B9`). Assembly and export then give the same score as with an
+empty `links.jsonl`: 59 correct of 62 (recall 56.7%).
+
+The 45 missed compounds are not a linking problem. The activity rows name
+compounds `13`–`19`, `20f`–`25` and `36`–`47`, and their structures are drawn in
+Tables 2, 7 and 11 (pages 4, 7 and 9), which the front end abstains on (no closing
+rule found). Table 5's 20 rows are kinases, not compounds. So no drawing in the
+run carries those labels, and the activity rows abstain. Reading those three
+tables in the front end is the step that would add them; once it does, the same
+linking rules apply.
+
 ## Next steps
 
-- Skip label-like text that is an atom group (`NH2`) or a protein or residue name.
-- Link the scaffolds and fragments through R-group tables, once `tables.jsonl` is
-  available.
-- Look at the 30 complete molecules whose label was missed, for example labels
+- Front end: Tables 2, 7 and 11 of paper 19 (largest gain on this paper).
+- Look at the complete molecules whose label was missed, for example labels
   beside the drawing rather than below it.
 
 ## Open questions
