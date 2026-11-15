@@ -7,8 +7,7 @@ uploaded by Peter on 2026-11-10. Per paper: `pages.jsonl`, `text.jsonl`,
 The page images (`pages/`, about 120 MB) and molecule crops (`crops/`) were left
 out, following CONTRIBUTING.md: they are rendered from the papers, and papers 1,
 2 and 6 are CC BY-NC-ND. `image_path` in `pages.jsonl` and `crop_path` in
-`regions.csv` therefore point at files that are not here. The upload had no
-`run.json`. To get the images and run metadata back, rerun the front end:
+`regions.csv` therefore point at files that are not here. 'run.json' was added afterwards, from a fresh run of the same command and code. The four text files per paper in this folder are byte-identical to that run’s output (checked file by file). To get the images back, rerun the front end:
 
 ```bash
 uv run python -m pipeline.frontend --table-strategy captions --out data/pipeline_runs/frontend-all
