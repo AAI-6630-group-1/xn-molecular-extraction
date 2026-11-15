@@ -23,6 +23,7 @@ It runs on three datasets that go from clean to messy: **BioVista**'s 8,861 mole
 | [`../score.py`](../score.py), [`../score_boxes.py`](../score_boxes.py), [`../score_biovista.py`](../score_biovista.py) | score | Shared scorers (rules in [`../README.md`](../README.md)) |
 | [`analyze_track3.py`](analyze_track3.py) | analysis | Breaks an internal-paper run down by error type |
 | [`compare.py`](compare.py) | analysis | Writes the MolScribe vs MolGlyph table, `comparison.md` and `comparison.csv` |
+| [`detector_sweep/`](detector_sweep/README.md) | detect | November 2026 detector checks: input size, confidence, and tiling on the six papers, and scores on labeled journal pages |
 | [`reproduce.sh`](reproduce.sh) | all | Every step above, in order |
 | [`../results/willdaly/<run_id>/`](../results/willdaly) | output | `run.json` (command, versions, git commit, hardware, runtime), `predictions.csv` (every SMILES with its confidence), `scores.csv`, `matches.csv` |
 | [`../../reports/willdaly/figures_1_3.py`](../../reports/willdaly/figures_1_3.py) | report | Figures for the 1.3 report |

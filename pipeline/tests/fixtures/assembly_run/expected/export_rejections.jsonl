@@ -1,0 +1,5 @@
+{"paper_id": "fx", "evidence_id": "fx-p1-1:molglyph", "reason": "unresolved_wildcard", "raw": "*c1ccc(C(N)=O)cc1"}
+{"paper_id": "fx", "evidence_id": "fx-p1-4:molglyph", "reason": "unresolved_wildcard", "raw": "*OCC"}
+{"paper_id": "fx", "evidence_id": "fx-p1-6:molglyph", "reason": "parse_failure", "raw": "C1CC("}
+{"paper_id": "fx", "evidence_id": "fx-p2-0:molglyph", "reason": "unresolved_wildcard", "raw": "[1*]c1ccc([2*])c(C(=O)O)c1"}
+{"paper_id": "fx", "evidence_id": "fx-p2-1:molglyph", "reason": "unresolved_wildcard", "raw": "*c1cc(*)ccn1"}

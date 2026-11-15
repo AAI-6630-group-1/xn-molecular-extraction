@@ -39,9 +39,10 @@ ${box(250,525,600,95,'Canonicalization, export and scoring',['Will | willdaly','
 
 </g></svg>`;
 
-// A string starting with "[" is a placeholder: highlight it so it cannot slip into the submission unnoticed.
-const runs = text => text.split(/(\[[^\]]*\])/).filter(Boolean)
-  .map(part => new TextRun({text:part, ...(part.startsWith('[') ? {highlight:'yellow'} : {})}));
+// Bracketed text starting with a letter is a placeholder: highlight it so it cannot slip into the submission unnoticed.
+// (R-group labels such as [1*] start with a digit and stay plain.)
+const runs = text => text.split(/(\[[A-Za-z][^\]]*\])/).filter(Boolean)
+  .map(part => new TextRun({text:part, ...(/^\[[A-Za-z]/.test(part) ? {highlight:'yellow'} : {})}));
 const p = text => new Paragraph({children:runs(text), spacing:{after:130,line:276}});
 const h = text => new Paragraph({text,heading:'Heading1',spacing:{before:180,after:120},keepNext:true});
 const rule = {style:BorderStyle.SINGLE,size:4,color:'000000'};

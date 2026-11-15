@@ -1,0 +1,11 @@
+paper_id,page,box_id,x0,y0,x1,y1,crop_path,role,gate,confidence,reason
+fx,1,fx-p1-0,100,100,200,180,crops/fx-p1-0.png,molecule,molecule,0.95,
+fx,1,fx-p1-1,300,100,420,180,crops/fx-p1-1.png,scaffold,molecule,0.93,
+fx,1,fx-p1-2,100,400,250,500,,unknown,non_molecule,0.88,plot with axes
+fx,1,fx-p1-3,300,400,400,480,crops/fx-p1-3.png,molecule,uncertain,0.55,
+fx,1,fx-p1-4,440,276,470,294,crops/fx-p1-4.png,substituent,molecule,0.8,
+fx,1,fx-p1-5,100,520,200,600,crops/fx-p1-5.png,molecule,molecule,0.9,
+fx,1,fx-p1-6,300,520,400,600,crops/fx-p1-6.png,molecule,molecule,0.9,
+fx,2,fx-p2-0,100,100,220,180,crops/fx-p2-0.png,scaffold,molecule,0.94,
+fx,2,fx-p2-1,100,400,220,480,crops/fx-p2-1.png,scaffold,molecule,0.92,
+fx,2,fx-p2-2,400,100,500,180,crops/fx-p2-2.png,molecule,molecule,0.97,

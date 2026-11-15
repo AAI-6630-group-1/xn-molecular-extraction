@@ -1,0 +1,9 @@
+run_id,handle,tool,dataset,paper_id,n_gt,n_output_raw,n_output,n_invalid,tp,precision,recall,f1,recall_stereo_blind,n_gt_local,recall_local_names,mean_best_tanimoto,rdkit_version
+2026-11-13_p19-linkers-labels_internal,willdaly,phase2-frontend,internal,1,17,0,0,0,0,0.0000,0.0000,0.0000,0.0000,0,,0.0000,2026.03.2
+2026-11-13_p19-linkers-labels_internal,willdaly,phase2-frontend,internal,2,34,0,0,0,0,0.0000,0.0000,0.0000,0.0000,31,0.0000,0.0000,2026.03.2
+2026-11-13_p19-linkers-labels_internal,willdaly,phase2-frontend,internal,4,60,0,0,0,0,0.0000,0.0000,0.0000,0.0000,52,0.0000,0.0000,2026.03.2
+2026-11-13_p19-linkers-labels_internal,willdaly,phase2-frontend,internal,6,1,0,0,0,0,0.0000,0.0000,0.0000,0.0000,0,,0.0000,2026.03.2
+2026-11-13_p19-linkers-labels_internal,willdaly,phase2-frontend,internal,16,4,0,0,0,0,0.0000,0.0000,0.0000,0.0000,4,0.0000,0.0000,2026.03.2
+2026-11-13_p19-linkers-labels_internal,willdaly,phase2-frontend,internal,19,104,65,62,0,59,0.9516,0.5673,0.7108,0.5673,103,0.5631,0.8882,2026.03.2
+2026-11-13_p19-linkers-labels_internal,willdaly,phase2-frontend,internal,macro,220,65,62,0,59,0.1586,0.0946,0.1185,0.0946,190,0.1408,0.1480,2026.03.2
+2026-11-13_p19-linkers-labels_internal,willdaly,phase2-frontend,internal,pooled,220,65,62,0,59,0.9516,0.2682,0.4184,0.2682,190,0.3053,0.4199,2026.03.2

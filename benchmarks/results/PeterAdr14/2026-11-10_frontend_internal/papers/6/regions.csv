@@ -1,0 +1,3 @@
+paper_id,page,box_id,x0,y0,x1,y1,crop_path,role,gate,confidence,reason,crop_x0,crop_y0,crop_x1,crop_y1
+6,19,6-p19-0,227.38,75.34,337.83,215.96,papers/6/crops/6-p19-0.png,unknown,molecule,0.8708,,224.88,72.72,340.08,218.16
+6,19,6-p19-1,281.12,75.41,337.37,218.06,papers/6/crops/6-p19-1.png,unknown,molecule,0.503,,278.64,72.96,339.6,220.32
