@@ -1,0 +1,164 @@
+{
+  "schema_version": "0.1",
+  "task": "frontend",
+  "dataset": "internal",
+  "tool": "phase2-frontend",
+  "paper_ids": [
+    "1",
+    "2",
+    "4",
+    "6",
+    "16",
+    "19"
+  ],
+  "inputs": {
+    "1": {
+      "file": "1.pdf",
+      "sha256": "fb8049c38e0ece9b60b3ea40f651053983b6baa78f1320d175d4106863191462"
+    },
+    "2": {
+      "file": "2.pdf",
+      "sha256": "310720624d3f924c1ba5d9a662f9647eeca4081d77f3f60fcdc9740c9de992a9"
+    },
+    "4": {
+      "file": "4.pdf",
+      "sha256": "7bd231b9eb6fe88afe3584e51de22f5be403782d1fcc7a4feb414020527c00dd"
+    },
+    "6": {
+      "file": "6.pdf",
+      "sha256": "3a3e20e0229c641281f657d16320d9d678f1eb9466494d0cb797b074c3ffece6"
+    },
+    "16": {
+      "file": "16.pdf",
+      "sha256": "e84746548327b3b2c5aca9457501863835a5efb92a433b2ac1b1997e75d1e3a9"
+    },
+    "19": {
+      "file": "19.pdf",
+      "sha256": "ea5f5e9aa155869ba436659cee85e6eaeb3ee5ed0322f0e8f073fef5dd75395b"
+    }
+  },
+  "git_commit": "d7caeb1d345fec471be7ec5b80f822796a0e7b04",
+  "hardware": "arm64 Darwin 25.6.0, cpu",
+  "versions": {
+    "python": "3.11.6",
+    "pymupdf": "1.28.2",
+    "ultralytics": "8.4.165",
+    "torch": "2.14.0",
+    "numpy": "1.26.4",
+    "pillow": "12.3.0",
+    "moldetv2_weights": "UniParser/MolDetv2/moldet_v2_yolo11n_960_doc.pt"
+  },
+  "settings": {
+    "dpi": 300,
+    "accept_conf": 0.5,
+    "detector_floor": 0.5,
+    "pad_px": 10,
+    "device": "cpu",
+    "table_strategy": "captions",
+    "vertical_strategy": null,
+    "horizontal_strategy": null,
+    "skip_detection": false,
+    "min_side_px": 16,
+    "max_aspect": 15.0
+  },
+  "command": [
+    "python",
+    "-m",
+    "pipeline.frontend",
+    "--table-strategy",
+    "captions",
+    "--out",
+    "data/pipeline_runs/frontend-internal-final"
+  ],
+  "status": "frontend_complete",
+  "stages": {
+    "render_text": {
+      "status": "complete",
+      "pages": 104,
+      "text_blocks": 1904
+    },
+    "detect_gate_tables": {
+      "status": "complete",
+      "regions": 233,
+      "tables": 25
+    }
+  },
+  "notes": "Front-end stage only: reading, linking, assembly and export are not run, so there is no predictions.csv.",
+  "papers": {
+    "1": {
+      "pages": 13,
+      "text_blocks": 188,
+      "regions": 18,
+      "by_gate": {
+        "molecule": 18
+      },
+      "tables": 2,
+      "tables_by_status": {
+        "abstain": 1,
+        "ok": 1
+      }
+    },
+    "2": {
+      "pages": 19,
+      "text_blocks": 281,
+      "regions": 74,
+      "by_gate": {
+        "molecule": 74
+      },
+      "tables": 2,
+      "tables_by_status": {
+        "abstain": 1,
+        "ok": 1
+      }
+    },
+    "4": {
+      "pages": 16,
+      "text_blocks": 249,
+      "regions": 77,
+      "by_gate": {
+        "molecule": 77
+      },
+      "tables": 6,
+      "tables_by_status": {
+        "abstain": 2,
+        "ok": 4
+      }
+    },
+    "6": {
+      "pages": 25,
+      "text_blocks": 600,
+      "regions": 2,
+      "by_gate": {
+        "molecule": 2
+      },
+      "tables": 0,
+      "tables_by_status": {}
+    },
+    "16": {
+      "pages": 13,
+      "text_blocks": 324,
+      "regions": 8,
+      "by_gate": {
+        "molecule": 8
+      },
+      "tables": 2,
+      "tables_by_status": {
+        "ok": 2
+      }
+    },
+    "19": {
+      "pages": 18,
+      "text_blocks": 262,
+      "regions": 54,
+      "by_gate": {
+        "molecule": 54
+      },
+      "tables": 13,
+      "tables_by_status": {
+        "ok": 10,
+        "abstain": 3
+      }
+    }
+  },
+  "runtime_s": 40.273
+}
