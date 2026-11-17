@@ -15,6 +15,9 @@ For every row of every R-group table:
    there is one point and one column.
 4. Set ring atoms, bond the pieces with RDKit's `molzip` and write the canonical SMILES.
 
+Steps 1 and 2 (which drawing and which cells belong to a row) are in this file.
+Steps 3 and 4 (the RDKit work) are in join.py.
+
 Any step that cannot be done with certainty makes the row an abstention with a
 reason, and no SMILES. Joining pieces on a guess is the main risk of this
 stage: on the six internal papers, blind same-page pairing gives 582 candidate
@@ -22,7 +25,8 @@ molecules for 17 right ones (reports/1.4-group-report/assembly_example.py).
 
     python -m pipeline.assembly data/pipeline_runs/<run_id>
 
-AI disclosure: Claude Code wrote this file at Will's request, for his review.
+AI disclosure: Claude Code wrote this file at Will's request, for his review,
+and on Nov 17 split its long functions into the smaller helpers below.
 """
 from __future__ import annotations
 
@@ -30,150 +34,15 @@ import argparse
 from collections import Counter
 from pathlib import Path
 
-from rdkit import Chem
-
 from pipeline.stage_io import (DEFAULT_READERS, attachment_points, labelled_scaffold, paper_dirs,
                                parse_smiles,
                                read_jsonl, readings_by_box, select_reading, update_stage,
                                write_jsonl)
+from pipeline.join import RING, Abstain, join
 from pipeline.substituents import (column_position, linker_fragment, ring_atom, same_label,
                                    text_fragment)
 
 METHOD = "r_group_assembly"
-
-
-class Abstain(Exception):
-    """This row cannot be assembled with certainty; the message is the recorded reason."""
-
-
-def match_positions(scaffold: Chem.Mol, positions: list[int | None],
-                    headings: list[str] | None = None, labels: dict[int, str] | None = None) -> list[int]:
-    """Choose the scaffold `*` atom for each table column, or abstain.
-
-    `positions` holds each R column's number (1 for R1) or None for an
-    unnumbered heading such as R or Ra. Returns one atom index per column.
-    When the reader kept each `*`'s drawn label (`labels`, atom index to label),
-    columns are matched to stars by name (`Ra` to `R[a]`, `A` to `A`) first.
-    """
-    points = attachment_points(scaffold)
-    if labels and headings:
-        matched = []
-        for heading in headings:
-            hits = [atom.GetIdx() for atom in points if same_label(heading, labels.get(atom.GetIdx(), ""))]
-            if len(hits) != 1:
-                break
-            matched.append(hits[0])
-        else:
-            if len(set(matched)) == len(matched):
-                return matched
-    numbers = [atom.GetIsotope() for atom in points]  # readers write R1 as [1*]
-    numbered = all(numbers) and len(set(numbers)) == len(numbers)
-    if numbered and all(position is not None for position in positions):
-        if len(set(positions)) != len(positions):
-            raise Abstain("two table columns name the same R position")
-        missing = [f"R{p}" for p in positions if p not in numbers]
-        if missing:
-            raise Abstain(f"scaffold reading has no {', '.join(missing)}")
-        return [points[numbers.index(p)].GetIdx() for p in positions]
-    if len(points) == 1 and len(positions) == 1:
-        return [points[0].GetIdx()]
-    raise Abstain(f"cannot tell which column fills which attachment point "
-                  f"({len(points)} points, {len(positions)} R columns, numbers do not match)")
-
-
-RING = "ring:"  # a piece that replaces an in-ring `*` with an atom: "ring:N" or "ring:C:*Cl"
-
-
-def _split_linker_point(mol: Chem.RWMol, index: int) -> int:
-    """Give a two-neighbour `*` a twin, one per neighbour, so a linker can bond to both.
-
-    Returns the twin's index. The star must not be in a ring (that would be a
-    ring atom, not a linker) and both bonds must be single.
-    """
-    star = mol.GetAtomWithIdx(index)
-    bonds = list(star.GetBonds())
-    if star.IsInRing() or len(bonds) != 2 or any(b.GetBondType() != Chem.BondType.SINGLE for b in bonds):
-        raise Abstain("linker position is not a two-neighbour chain atom")
-    other = bonds[1].GetOtherAtomIdx(index)
-    twin = mol.AddAtom(Chem.Atom(0))
-    mol.RemoveBond(index, other)
-    mol.AddBond(twin, other, Chem.BondType.SINGLE)
-    return twin
-
-
-def join(scaffold_smiles: str, pieces: list[tuple[int | None, str]],
-         headings: list[str] | None = None, labels: dict[int, str] | None = None) -> str:
-    """Fill a scaffold's `*` atoms from the table and return canonical SMILES.
-
-    `pieces` is a list of (R number or None, piece), where a piece is a fragment
-    SMILES with one `*` (a substituent), two `*` (a linker; its scaffold `*`
-    must sit between two atoms) or `ring:<element>[:<fragment>]` (a ring atom
-    replacing an in-ring `*`). `headings` and `labels` let columns be matched to
-    stars by their drawn labels (see match_positions). Each pair of `*` atoms
-    that should meet gets the same atom-map number, and `molzip` replaces the
-    pair with a bond. Raises Abstain if the result is not one complete, valid molecule.
-    """
-    scaffold = parse_smiles(scaffold_smiles)
-    if scaffold is None:
-        raise Abstain("scaffold reading is not valid SMILES")
-    if not attachment_points(scaffold):
-        raise Abstain("scaffold reading has no attachment point")
-    targets = match_positions(scaffold, [position for position, _ in pieces], headings, labels)
-
-    combined = Chem.RWMol(scaffold)
-    for atom in attachment_points(combined):
-        atom.SetAtomMapNum(0)
-    bonds: list[tuple[list[int], str]] = []  # (scaffold star indices, fragment) pairs to zip
-    # Ring atoms and linker twins only change or append atoms, so `targets` stays valid.
-    for index, (_, piece) in zip(targets, pieces):
-        star = combined.GetAtomWithIdx(index)
-        if piece.startswith(RING):
-            element, _, fragment = piece[len(RING):].partition(":")
-            if not star.IsInRing():
-                raise Abstain("ring-atom column fills a star that is not in a ring")
-            star.SetAtomicNum(Chem.GetPeriodicTable().GetAtomicNumber(element))
-            star.SetIsotope(0)
-            star.SetNumExplicitHs(0)
-            star.SetNoImplicit(False)
-            if fragment:
-                handle = combined.AddAtom(Chem.Atom(0))
-                combined.AddBond(index, handle, Chem.BondType.SINGLE)
-                bonds.append(([handle], fragment))
-            continue
-        fragment = parse_smiles(piece)
-        points = len(attachment_points(fragment)) if fragment is not None else 0
-        if points == 2 and star.GetDegree() == 2:
-            bonds.append(([index, _split_linker_point(combined, index)], piece))
-        elif points == 1 and star.GetDegree() == 1:
-            bonds.append(([index], piece))
-        elif points == 2:
-            raise Abstain(f"linker {piece!r} fills an end position")
-        else:
-            raise Abstain(f"substituent {piece!r} is not a one-point fragment"
-                          if star.GetDegree() == 1 else
-                          f"substituent {piece!r} fills a position between two atoms")
-    number = 0
-    for stars, piece in bonds:
-        fragment = parse_smiles(piece)
-        ends = attachment_points(fragment)
-        for star_index, end in zip(stars, ends):
-            number += 1
-            for atom in (combined.GetAtomWithIdx(star_index), end):
-                atom.SetAtomMapNum(number)
-                atom.SetIsotope(0)
-        combined = Chem.RWMol(Chem.CombineMols(combined, fragment))
-    try:
-        zipped = Chem.molzip(combined)
-        # Re-parsing folds an explicit [H] substituent back into its neighbour.
-        product = parse_smiles(Chem.MolToSmiles(zipped))
-    except Exception as error:  # molzip and sanitization raise on impossible valences
-        raise Abstain(f"joined pieces are not a valid molecule ({type(error).__name__})") from error
-    if product is None:
-        raise Abstain("joined pieces are not a valid molecule")
-    unfilled = len(attachment_points(product))
-    if unfilled:
-        raise Abstain(f"{unfilled} attachment point(s) of the scaffold have no table column")
-    return Chem.MolToSmiles(product)
 
 
 def _unique(values) -> list:
@@ -195,6 +64,45 @@ def find_scaffold(table: dict, row: dict, row_links: list[dict]) -> str:
     raise Abstain(("link abstained: " + reasons[0]) if reasons else "no scaffold is linked to this row")
 
 
+def _read_ring_cell(record: dict, cell: dict, heading: str) -> str | None:
+    """A ring-atom cell (paper 19's A and B columns) names the atom itself, such as `-N=`."""
+    record["kind"] = "ring_atom"
+    atom = ring_atom(cell.get("text") or "")
+    if atom is None:
+        return f"ring-atom text {cell.get('text')!r} in column {heading} is not recognised"
+    record["fragment"] = RING + atom[0] + (":" + atom[1] if atom[1] else "")
+    return None
+
+
+def _read_drawn_cell(record: dict, cell: dict, heading: str, readings: dict[str, list[dict]],
+                     readers: tuple[str, ...]) -> str | None:
+    """A drawn substituent: use its reading, which must have exactly one `*`."""
+    record["kind"] = "drawing"
+    reading = select_reading(readings.get(cell["box_id"], []), readers)
+    if reading is None or reading["status"] != "ok":
+        return f"drawn substituent in column {heading} has no reading"
+    fragment = parse_smiles(reading["smiles"])
+    points = len(attachment_points(fragment)) if fragment is not None else 0
+    if points != 1:
+        return f"drawn substituent in column {heading} has {points} attachment points, not 1"
+    record["fragment"] = reading["smiles"]
+    return None
+
+
+def _read_text_cell(record: dict, cell: dict, heading: str) -> str | None:
+    """A text cell: a one-point group (`OMe`) or a two-point linker (`SO2`), from substituents.py."""
+    if not (cell.get("text") or "").strip():
+        return f"empty cell in column {heading}"
+    record["kind"] = "text"
+    record["fragment"] = text_fragment(cell["text"])
+    if record["fragment"] is None:
+        record["fragment"] = linker_fragment(cell["text"])
+        record["kind"] = "linker" if record["fragment"] else "text"
+    if record["fragment"] is None:
+        return f"substituent text {cell['text']!r} in column {heading} is not in the abbreviation table"
+    return None
+
+
 def read_cell(cell: dict | None, heading: str, readings: dict[str, list[dict]],
               readers: tuple[str, ...], ring_column: bool = False) -> tuple[dict, str | None]:
     """Interpret one table cell that fills a scaffold position. Returns its record and a problem, if any.
@@ -211,82 +119,101 @@ def read_cell(cell: dict | None, heading: str, readings: dict[str, list[dict]],
     if cell is None:
         return record, f"row has no cell in column {heading}"
     if ring_column:
-        record["kind"] = "ring_atom"
-        atom = ring_atom(cell.get("text") or "")
-        if atom is None:
-            return record, f"ring-atom text {cell.get('text')!r} in column {heading} is not recognised"
-        record["fragment"] = RING + atom[0] + (":" + atom[1] if atom[1] else "")
-        return record, None
+        return record, _read_ring_cell(record, cell, heading)
     if cell.get("box_id"):
-        record["kind"] = "drawing"
-        reading = select_reading(readings.get(cell["box_id"], []), readers)
-        if reading is None or reading["status"] != "ok":
-            return record, f"drawn substituent in column {heading} has no reading"
-        fragment = parse_smiles(reading["smiles"])
-        points = len(attachment_points(fragment)) if fragment is not None else 0
-        if points != 1:
-            return record, f"drawn substituent in column {heading} has {points} attachment points, not 1"
-        record["fragment"] = reading["smiles"]
-        return record, None
-    if not (cell.get("text") or "").strip():
-        return record, f"empty cell in column {heading}"
-    record["kind"] = "text"
-    record["fragment"] = text_fragment(cell["text"])
-    if record["fragment"] is None:
-        record["fragment"] = linker_fragment(cell["text"])
-        record["kind"] = "linker" if record["fragment"] else "text"
-    if record["fragment"] is None:
-        return record, f"substituent text {cell['text']!r} in column {heading} is not in the abbreviation table"
-    return record, None
+        return record, _read_drawn_cell(record, cell, heading, readings, readers)
+    return record, _read_text_cell(record, cell, heading)
 
 
-def assemble_row(table: dict, row: dict, row_links: list[dict], readings: dict[str, list[dict]],
-                 readers: tuple[str, ...] = DEFAULT_READERS) -> dict:
-    """Assemble one table row into an `assemblies.jsonl` record (without its ID)."""
-    record = {
+def _empty_record(table: dict, row: dict, row_links: list[dict]) -> dict:
+    """A new `assemblies.jsonl` record for one row, marked as an abstention until assembly succeeds."""
+    return {
         "paper_id": table["paper_id"], "assembly_id": None, "scaffold_box_id": None,
         "table_id": table["table_id"], "row_id": row["row_id"],
         "label": row.get("label") or next((l["label"] for l in row_links if l.get("label")), None),
         "smiles": None, "source_box_ids": [], "evidence_block_ids": [],
         "method": METHOD, "status": "abstain", "reason": None, "substituents": [],
     }
+
+
+def _scaffold_for_row(table: dict, row: dict, row_links: list[dict], readings: dict[str, list[dict]],
+                      readers: tuple[str, ...]) -> tuple[str | None, str | None, dict[int, str], str | None]:
+    """Find the row's scaffold and its reading.
+
+    Returns (box_id, SMILES, star labels, problem). A missing scaffold is
+    returned as a problem rather than raised, so the row's cells are still read
+    and recorded before the row abstains. SMILES is None when the scaffold has
+    no usable reading.
+    """
     try:
-        cells = {cell["column_id"]: cell for cell in row["cells"]}
-        scaffold_box = None
-        reading, scaffold_smiles, labels = None, None, {}
-        try:
-            scaffold_box = find_scaffold(table, row, row_links)
-        except Abstain as no_scaffold:
-            scaffold_problem = str(no_scaffold)
-        else:
-            scaffold_problem = None
-            reading = select_reading(readings.get(scaffold_box, []), readers)
-            if reading is not None and reading["status"] == "ok":
-                scaffold_smiles, labels = labelled_scaffold(reading)
-        # R columns always fill a position. Any other column fills one only when
-        # the scaffold reading labels a star with its heading (A, B): a ring atom.
-        columns = []
-        for column in table["columns"]:
-            heading = column.get("heading") or ""
-            is_r, position = column_position(heading)
-            if is_r:
-                columns.append((column, position, False))
-            elif any(same_label(heading, label) for label in labels.values()):
-                columns.append((column, None, True))
-        # Evidence is the label cell, the filling cells and whatever linking used;
-        # activity columns (IC50 and so on) played no part in the molecule.
+        scaffold_box = find_scaffold(table, row, row_links)
+    except Abstain as no_scaffold:
+        return None, None, {}, str(no_scaffold)
+    reading = select_reading(readings.get(scaffold_box, []), readers)
+    if reading is None or reading["status"] != "ok":
+        return scaffold_box, None, {}, None
+    scaffold_smiles, labels = labelled_scaffold(reading)
+    return scaffold_box, scaffold_smiles, labels, None
+
+
+def _filling_columns(table: dict, labels: dict[int, str]) -> list[tuple[dict, int | None, bool]]:
+    """The columns that fill a scaffold position, as (column, R number or None, is a ring-atom column).
+
+    R columns always fill a position. Any other column fills one only when the
+    scaffold reading labels a star with its heading (A, B): a ring atom.
+    """
+    columns = []
+    for column in table["columns"]:
+        heading = column.get("heading") or ""
+        is_r, position = column_position(heading)
+        if is_r:
+            columns.append((column, position, False))
+        elif any(same_label(heading, label) for label in labels.values()):
+            columns.append((column, None, True))
+    return columns
+
+
+def _evidence_ids(row: dict, row_links: list[dict], used: set[str], label: str | None) -> list[str]:
+    """Text blocks behind the row: the label cell, the filling cells and whatever linking used.
+
+    Activity columns (IC50 and so on) played no part in the molecule, so they are left out.
+    """
+    return _unique(
+        [b for cell in row["cells"] for b in cell.get("evidence_block_ids") or []
+         if cell["column_id"] in used or (cell.get("text") or "").strip() == label]
+        + [b for link in row_links for b in link.get("evidence_block_ids") or []])
+
+
+def _read_columns(row: dict, columns: list[tuple[dict, int | None, bool]], readings: dict[str, list[dict]],
+                  readers: tuple[str, ...], entries: list[dict]) -> list[str]:
+    """Read each filling cell, appending its record to `entries`; returns the problems found."""
+    cells = {cell["column_id"]: cell for cell in row["cells"]}
+    problems = []
+    for column, _, ring_column in columns:
+        entry, problem = read_cell(cells.get(column["column_id"]), column["heading"], readings, readers,
+                                   ring_column)
+        entries.append(entry)
+        if problem:
+            problems.append(problem)
+    return problems
+
+
+def assemble_row(table: dict, row: dict, row_links: list[dict], readings: dict[str, list[dict]],
+                 readers: tuple[str, ...] = DEFAULT_READERS) -> dict:
+    """Assemble one table row into an `assemblies.jsonl` record (without its ID).
+
+    The cells are read and recorded even when the row will abstain, so every
+    abstention shows what the table held. The checks then run in a fixed order
+    and the first one that fails becomes the recorded reason.
+    """
+    record = _empty_record(table, row, row_links)
+    try:
+        scaffold_box, scaffold_smiles, labels, scaffold_problem = _scaffold_for_row(
+            table, row, row_links, readings, readers)
+        columns = _filling_columns(table, labels)
         used = {column["column_id"] for column, _, _ in columns}
-        record["evidence_block_ids"] = _unique(
-            [b for cell in row["cells"] for b in cell.get("evidence_block_ids") or []
-             if cell["column_id"] in used or (cell.get("text") or "").strip() == record["label"]]
-            + [b for link in row_links for b in link.get("evidence_block_ids") or []])
-        problems = []
-        for column, _, ring_column in columns:
-            entry, problem = read_cell(cells.get(column["column_id"]), column["heading"], readings, readers,
-                                       ring_column)
-            record["substituents"].append(entry)
-            if problem:
-                problems.append(problem)
+        record["evidence_block_ids"] = _evidence_ids(row, row_links, used, record["label"])
+        problems = _read_columns(row, columns, readings, readers, record["substituents"])
 
         if scaffold_problem:
             raise Abstain(scaffold_problem)
