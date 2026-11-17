@@ -1,0 +1,163 @@
+paper_id,box_id,reader,smiles,confidence,raw,status,reason
+19,19-p1-0,molglyph,c1(C)c(C)c(C)c(-c2c(C)cc3c(c2C)C(C(C)C2C(C)=C(C)C(=C)C(C(C)C(C)C(C)C(C)C)=C2C)=C(C)C3=O)c(C)c1C,0.807817280292511,C1(C)C(C)=C(C)C(C2C(C)=CC3C(=O)C(C)=C(C(C)C4C(C)=C(C)C(=C)C(C(C)C(C)C(C)C(C)C)=C4C)C=3C=2C)=C(C)C=1C<sep>,ok,
+19,19-p3-0,molglyph,*N(*)c1ccc(F)c(NS(=O)(=O)CCC)c1F.CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,0.8398088216781616,CCCS(NC1C(F)=C(C(C2C3C(=NC=C(C=3)C3C=CC(Cl)=CC=3)NC=2)=O)C(F)=CC=1)(=O)=O.C1(NS(=O)(=O)CCC)C(F)=C(N(*)*)C=CC=1F<sep><a>43:R</a><a>44:Asp</a>,ok,
+19,19-p3-1,molglyph,*C(=O)[C@H](*)N*,0.8606736660003662,*C(=O)[C@H](*)N*<sep><a>0:R</a><a>4:Met</a><a>6:R</a>,ok,
+19,19-p3-2,molglyph,*N[C@H](*)C(*)=O,0.8521930575370789,*N[C@@H](C(=O)*)*<sep><a>0:R</a><a>5:R</a><a>6:Glu7</a>,ok,
+19,19-p3-3,molglyph,*C(=O)[C@H](*)N*,0.8629893064498901,*C(=O)[C@H](*)N*<sep><a>0:R</a><a>4:Phe</a><a>6:R</a>,ok,
+19,19-p3-4,molglyph,Cc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,0.9192667007446289,Cc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F<sep>,ok,
+19,19-p3-5,molglyph,*C(=O)CN(*)*,0.8669953942298889,*C(CN(*)*)=O<sep><a>0:R</a><a>4:<dum></a><a>5:R</a>,ok,
+19,19-p4-0,molglyph,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2ccc3[nH]c4ncc(-c5ccccc5)cc4c3c2)c1F,0.9188979268074036,CCCS(NC1C(F)=C(C(C2C=C3C(NC4C3=CC(C3C=CC=CC=3)=CN=4)=CC=2)=O)C(F)=CC=1)(=O)=O<sep><r>4:R</r>,ok,
+19,19-p4-1,molglyph,COc1ccc(-c2ncnc3[nH]c4ccc(O)cc4c23)cc1,0.9234662055969238,COc1ccc(-c2ncnc3[nH]c4ccc(O)cc4c23)cc1<sep>,ok,
+19,19-p4-2,molglyph,*c1nc2[nH]*c(C(=O)c3c(F)ccc(NS(=O)(=O)CCC)c3F)c2*c1-c1ccc(Cl)cc1,0.9171388745307922,*c1nc2[nH]*c(C(=O)c3c(F)ccc(NS(=O)(=O)CCC)c3F)c2*c1-c1ccc(Cl)cc1<sep><a>0:R</a><a>5:A</a><a>25:B</a>,ok,
+19,19-p4-3,molglyph,CC(CO)Nc1ncnc2[nH]c3ccc(O)cc3c12,0.9233382344245911,CC(CO)Nc1ncnc2[nH]c3ccc(O)cc3c12<sep>,ok,
+19,19-p5-0,molglyph,CCCS(=O)(=O)Nc1ccc(F)c(*c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,0.9091324806213379,CCCS(NC1C(F)=C(*C2C3C(=NC=C(C=3)C3C=CC(Cl)=CC=3)NC=2)C(F)=CC=1)(=O)=O<sep><a>9:R</a>,ok,
+19,19-p5-1,molglyph,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2*[nH]c3ncc(-c4ccc(OC)cc4Cl)cc23)c1F,0.9184715747833252,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2*[nH]c3ncc(-c4ccc(OC)cc4Cl)cc23)c1F<sep><a>16:A</a>,ok,
+19,19-p6-0,molglyph,O=C(c1c(F)ccc(NS(*)(=O)=O)c1F)c1c[nH]c2ncc(-c3ccc(Cl)cc3)cc12,0.9142804741859436,O=C(C1C(F)=C(NS(=O)(=O)*)C=CC=1F)C1C2C(=NC=C(C=2)C2C=CC(Cl)=CC=2)NC=1<sep><a>10:R</a>,ok,
+19,19-p7-0,molglyph,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2ccc3[nH]c4ncc(*)cc4c3c2)c1F,0.9209167957305908,CCCS(NC1C(F)=C(C(C2C=C3C(NC4C3=CC(*)=CN=4)=CC=2)=O)C(F)=CC=1)(=O)=O<sep><a>19:R</a>,ok,
+19,19-p7-1,molglyph,O=C(c1c(F)ccc(NS(=O)(=O)Cc2ccccc2)c1F)c1*[nH]c2ncc(*)cc12,0.9167528748512268,O=C(C1C2C(=NC=C(C=2)*)N*=1)C1C(F)=C(NS(CC2C=CC=CC=2)(=O)=O)C=CC=1F<sep><a>9:R</a><a>11:A</a>,ok,
+19,19-p7-2,molglyph,*c1ccc(S(N)(=O)=O)cc1,0.9117200970649719,*c1ccc(S(N)(=O)=O)cc1<sep>,ok,
+19,19-p7-3,molglyph,*c1ccc(S(N)(=O)=O)cc1,0.9152209758758545,*c1ccc(S(N)(=O)=O)cc1<sep>,ok,
+19,19-p7-4,molglyph,*c1ccc(N)cc1,0.9146758317947388,*c1ccc(N)cc1<sep>,ok,
+19,19-p7-5,molglyph,*c1cnc(C2CC2)nc1,0.9089678525924683,*c1cnc(C2CC2)nc1<sep>,ok,
+19,19-p7-6,molglyph,*c1cnc(OC)nc1,0.8803461194038391,*c1cnc(OC)nc1<sep>,ok,
+19,19-p7-7,molglyph,*c1ccnnc1,0.9023712873458862,*c1ccnnc1<sep>,ok,
+19,19-p7-8,molglyph,*c1cccnc1,0.9019244313240051,*c1cccnc1<sep>,ok,
+19,19-p8-0,molglyph,*c1c(*)c(*)c(C(=O)c2*[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c(*)c1NS(=O)(=O)CCC,0.9169149398803711,*c1c(*)c(*)c(C(=O)c2*[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c(*)c1NS(=O)(=O)CCC<sep><a>0:R[b]</a><a>3:R[C]</a><a>5:R[d]</a><a>10:A</a><a>26:R[a]</a>,ok,
+19,19-p9-0,molglyph,*c1cnc2[nH]*c(C(=O)c3cccc(NS(*)(=O)=O)c3F)c2c1,0.9192315340042114,*c1cnc2[nH]*c(C(=O)c3cccc(NS(*)(=O)=O)c3F)c2c1<sep><a>0:R[2]</a><a>6:X</a><a>17:R[1]</a><r>2:F</r>,ok,
+19,19-p9-1,molglyph,*c1ccncc1,0.9162700176239014,*c1ccncc1<sep>,ok,
+19,19-p9-2,molglyph,*c1cnc(C2CC2)nc1,0.9191851019859314,*c1cnc(C2CC2)nc1<sep>,ok,
+19,19-p9-3,molglyph,*c1cnc(SC)nc1C,0.8941358923912048,*c1cnc(SC)nc1C<sep>,ok,
+19,19-p9-4,molglyph,*c1cnc(OC)nc1,0.8946702480316162,*c1cnc(OC)nc1<sep>,ok,
+19,19-p9-5,molglyph,*c1ccc(F)cc1C,0.9089345932006836,*c1ccc(F)cc1C<sep>,ok,
+19,19-p9-6,molglyph,*c1ccc(OC)cc1Cl,0.8979604244232178,*c1ccc(OC)cc1Cl<sep>,ok,
+19,19-p11-0,molglyph,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(-c4cccnn4)cc23)c1F,0.8776127696037292,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2c[nH]c3nc([H])c(-c4cccnn4)cc23)c1F<sep>,ok,
+19,19-p12-0,molglyph,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(*)cc23)c1F,0.8778154253959656,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(*)cc23)c1F<sep><a>0:SO2H7</a><a>27:Hinyl</a>,ok,
+19,19-p12-1,molglyph,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F,0.9128137826919556,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F<sep><a>0:SO2H7</a>,ok,
+19,19-p12-2,molglyph,Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F,0.9241020679473877,Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F<sep>,ok,
+19,19-p12-3,molglyph,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F,0.9080564379692078,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F<sep><a>0:SO2H7</a>,ok,
+19,19-p12-4,molglyph,Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F,0.9236326217651367,Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F<sep>,ok,
+19,19-p12-5,molglyph,c1([N+](=O)[O-])c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F,0.9232859015464783,*c1c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F<sep><a>0:NO2</a>,ok,
+19,19-p12-6,molglyph,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(Br)cc23)c1F,0.9227996468544006,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(Br)cc23)c1F<sep>,ok,
+19,19-p12-7,molglyph,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F,0.9183816313743591,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F<sep>,ok,
+19,19-p12-8,molglyph,*c1cnc2c(c1)c(C(=O)c1ccc(F)c(NS(=O)(=O)CCC)c1F)nn2C1CCCCO1,0.8814427852630615,*C1C=C2C(=NN(C3OCCCC3)C2=NC=1)C(C1C(F)=C(NS(CCC)(=O)=O)C(F)=CC=1)=O<sep><a>0:<dum></a>,ok,
+19,19-p12-9,molglyph,*Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(*)cc23)c1F,0.8887339234352112,*Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(*)cc23)c1F<sep><a>0:SO2H7</a><a>17:<dum></a>,ok,
+19,19-p12-10,molglyph,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F,0.923757791519165,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F<sep>,ok,
+19,19-p12-11,molglyph,Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F,0.9237182140350342,Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F<sep>,ok,
+19,19-p12-12,molglyph,O=C(c1n[nH]c2ncc(Br)cc12)n1ccnc1,0.9241186380386353,O=C(c1n[nH]c2ncc(Br)cc12)n1ccnc1<sep>,ok,
+19,19-p12-13,molglyph,*c1cnc2[nH]nc(C(=O)c3ccc(F)c(NS(=O)(=O)CCC)c3F)c2c1,0.8817342519760132,*C1C=C2C(NN=C2C(C2C(F)=C(NS(CCC)(=O)=O)C(F)=CC=2)=O)=NC=1<sep><a>0:Aryl</a>,ok,
+19,19-p12-14,molglyph,O=C(O)c1n[nH]c2ncc(Br)cc12,0.9240682721138,O=C(O)c1n[nH]c2ncc(Br)cc12<sep>,ok,
+19,19-p12-15,molglyph,c1([N+](=O)[O-])c(F)ccc(C(=O)O)c1F,0.917370080947876,*c1c(F)ccc(C(=O)O)c1F<sep><a>0:NO2</a>,ok,
+19,19-p12-16,molglyph,Brc1cnc2[nH]nc(I)c2c1,0.925815224647522,Brc1cnc2[nH]nc(I)c2c1<sep>,ok,
+19,19-p12-17,molglyph,c1([N+](=O)[O-])c(F)ccc(C(=O)Cl)c1F,0.9086332321166992,*c1c(F)ccc(C(=O)Cl)c1F<sep><a>0:NO2</a>,ok,
+19,19-p12-18,molglyph,Brc1cnc2[nH]ccc2c1,0.92525315284729,Brc1cnc2[nH]ccc2c1<sep>,ok,
+19,19-p12-19,molglyph,Brc1cnc2[nH]ncc2c1,0.9253049492835999,Brc1cnc2[nH]ncc2c1<sep>,ok,
+19,19-p12-20,molglyph,CON(C)C(=O)c1n[nH]c2ncc(Br)cc12,0.9229427576065063,CON(C)C(=O)c1n[nH]c2ncc(Br)cc12<sep>,ok,
+19,19-p12-21,molglyph,Nc1c(F)ccc(Br)c1F,0.9243112802505493,Nc1c(F)ccc(Br)c1F<sep>,ok,
+19,19-p1-0,molscribe,CC.CC.CC.CC.CC1=CC(C)=C2C34=C5(C)C=CC(C)=C367C389=C%10(C)C%11%12=C%13%14(C)C%10%15%16%17=C%11%10%18C%11(O)=C%19%20(C)C%21(C)=C%11%15C%10%11%15%22=C3%10%23%24%25O3C%11%26%27%28=C%18%15%10%11%29%30%31=C%12%16=C%10%12%15C%19%11%16=C%21%11%18(C)=C%10%29%19=C(C%11)C%20%12%18%30%10%11=C%12%18%20(C)C(=C%16%19%26%23%10C38%15%22%31%10(O)=C6%13%27%243C19(=C257C4)C%14%28%253%10=C%17C)C%1112(C)=C%1234567C8=C1%1839C41(C)=C34%10C(=O)C%11=C395(C)C12%206=C7C812=C3C(C41=O)C=23%11%10,2.7482110378578803e-19,CC.CC.CC.CC.CC1=CC(C)=C2C34=C5(C)C=CC(C)=C367C389=C%10(C)C%11%12=C%13%14(C)C%10%15%16%17=C%11%10%18C%11(O)=C%19%20(C)C%21(C)=C%11%15C%10%11%15%22=C3%10%23%24%25O3C%11%26%27%28=C%18%15%10%11%29%30%31=C%12%16=C%10%12%15C%19%11%16=C%21%11%18(C)=C%10%29%19=C(C%11)C%20%12%18%30%10%11=C%12%18%20(C)C(=C%16%19%26%23%10C38%15%22%31%10(O)=C6%13%27%243C19(=C257C4)C%14%28%253%10=C%17C)C%1112(C)=C%1234567C8=C1%1839C41(C)=C34%10C(=O)C%11=C395(C)C12%206=C7C812=C3C(C41=O)C=23%11%10,ok,
+19,19-p3-0,molscribe,,0.032589555488325594,<invalid>,abstain,reader returned no valid SMILES
+19,19-p3-1,molscribe,*C(=O)C(C)N(*)[H]C,0.45333544312990837,*C(=O)C(C)N(*)[H]C,ok,
+19,19-p3-2,molscribe,*N[C@@H](*)C(*)=O,0.7866343207813971,*N[C@@H](*)C(*)=O,ok,
+19,19-p3-3,molscribe,*C(=O)C(C)N(*)[H]C,0.7953878872335006,*C(=O)C(C)N(*)[H]C,ok,
+19,19-p3-4,molscribe,Cc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,0.6777363162286234,Cc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,ok,
+19,19-p3-5,molscribe,*C(=O)CN(*)[H]C,0.8404545363855098,*C(=O)CN(*)[H]C,ok,
+19,19-p4-0,molscribe,*C(*)(C)C=CC12=C3=C4(C=CC=C3)C135=C1=C4267=C3=C2(=C56)(C7)C(=N1)NC1=C2C=C(C(=O)C2=C(F)C=CC(NS(=O)(=O)CCC)=C2F)C=C1,0.23991170707340143,*C(*)(C)C=CC12=C3=C4(C=CC=C3)C135=C1=C4267=C3=C2(=C56)(C7)C(=N1)NC1=C2C=C(C(=O)C2=C(F)C=CC(NS(=O)(=O)CCC)=C2F)C=C1,ok,
+19,19-p4-1,molscribe,COc1ccc(-c2ncnc3[nH]c4ccc(O)cc4c23)cc1,0.916208300352137,COc1ccc(-c2ncnc3[nH]c4ccc(O)cc4c23)cc1,ok,
+19,19-p4-2,molscribe,*c1nc2[nH]*c(C(=O)c3c(F)ccc(NS(=O)(=O)CCC)c3F)c2bc1-c1ccc(Cl)cc1,0.8944877251782376,*c1nc2[nH]*c(C(=O)c3c(F)ccc(NS(=O)(=O)CCC)c3F)c2bc1-c1ccc(Cl)cc1,ok,
+19,19-p4-3,molscribe,CC(CO)Nc1ncnc2[nH]c3ccc(O)cc3c12,0.9024606748660675,CC(CO)Nc1ncnc2[nH]c3ccc(O)cc3c12,ok,
+19,19-p5-0,molscribe,CCCS(=O)(=O)Nc1ccc(F)c(*c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,0.8712578143648883,CCCS(=O)(=O)Nc1ccc(F)c(*c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,ok,
+19,19-p5-1,molscribe,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2*[nH]c3ncc(-c4ccc(OC)cc4Cl)cc23)c1F,0.9030060000287967,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2*[nH]c3ncc(-c4ccc(OC)cc4Cl)cc23)c1F,ok,
+19,19-p6-0,molscribe,*S(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,0.9107609461264843,*S(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,ok,
+19,19-p7-0,molscribe,*c1ccc(NS(=O)(=O)CCC)c(F)c1C(=O)c1ccc2[nH]c3ncc(P)cc3c2c1,0.8870347672303075,*c1ccc(NS(=O)(=O)CCC)c(F)c1C(=O)c1ccc2[nH]c3ncc(P)cc3c2c1,ok,
+19,19-p7-1,molscribe,*c1cnc2[nH]*c(C(=O)c3c(F)ccc(NS(=O)(=O)Cc4ccccc4)c3F)c2c1,0.8628863323265433,*c1cnc2[nH]*c(C(=O)c3c(F)ccc(NS(=O)(=O)Cc4ccccc4)c3F)c2c1,ok,
+19,19-p7-2,molscribe,CC.CC.Cc1ccc(S(N)(=O)=O)cc1,0.806557474419384,CC.CC.Cc1ccc(S(N)(=O)=O)cc1,ok,
+19,19-p7-3,molscribe,CC.CC.Cc1ccc(S(N)(=O)=O)cc1,0.7462721916436285,CC.CC.Cc1ccc(S(N)(=O)=O)cc1,ok,
+19,19-p7-4,molscribe,CC.CC.Cc1ccc(N)cc1,0.7670888768211377,CC.CC.Cc1ccc(N)cc1,ok,
+19,19-p7-5,molscribe,CC.CC.CC.CC.Cc1cnc(C2CC2)nc1,0.5337524933744635,CC.CC.CC.CC.Cc1cnc(C2CC2)nc1,ok,
+19,19-p7-6,molscribe,CC.COc1ncc(C)cn1,0.7975047256539626,CC.COc1ncc(C)cn1,ok,
+19,19-p7-7,molscribe,CC.Cc1ccnnc1,0.7288788390427227,CC.Cc1ccnnc1,ok,
+19,19-p7-8,molscribe,CC.CC.Cc1cccnc1,0.732199608452899,CC.CC.Cc1cccnc1,ok,
+19,19-p8-0,molscribe,*c1c(*)c(NS(=O)(=O)CCC)c(*)c(C(=O)c2*[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1*,0.8980933556408065,*c1c(*)c(NS(=O)(=O)CCC)c(*)c(C(=O)c2*[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1*,ok,
+19,19-p9-0,molscribe,*C.CF.[1*]S(=O)(=O)Nc1cccc(C(=O)c2*[nH]c3ncc([2*])cc23)c1F,0.8385406466466119,*C.CF.[1*]S(=O)(=O)Nc1cccc(C(=O)c2*[nH]c3ncc([2*])cc23)c1F,ok,
+19,19-p9-1,molscribe,CC.Cc1ccncc1,0.7235894884864102,CC.Cc1ccncc1,ok,
+19,19-p9-2,molscribe,CC.Cc1cnc(C2CC2)nc1,0.7989651970171932,CC.Cc1cnc(C2CC2)nc1,ok,
+19,19-p9-3,molscribe,CC.CSc1ncc(C)c(C)n1,0.8015589376533558,CC.CSc1ncc(C)c(C)n1,ok,
+19,19-p9-4,molscribe,CC.COc1ncc(C)cn1,0.7702665296935055,CC.COc1ncc(C)cn1,ok,
+19,19-p9-5,molscribe,CC.Cc1ccc(F)cc1C,0.8407164673596373,CC.Cc1ccc(F)cc1C,ok,
+19,19-p9-6,molscribe,CC.COc1ccc(C)c(Cl)c1,0.8493809298235474,CC.COc1ccc(C)c(Cl)c1,ok,
+19,19-p11-0,molscribe,*N([H])(C1=C(F)C=CC(C(=O)CCC=C(C2=NN=CC=C2)C([H])=N2*[NH]2C)=C1F)S(=O)(CCC)=OC.[H].[H].[H]O[H].[H]O[H],0.23786818597404558,*N([H])(C1=C(F)C=CC(C(=O)CCC=C(C2=NN=CC=C2)C([H])=N2*[NH]2C)=C1F)S(=O)(CCC)=OC.[H].[H].[H]O[H].[H]O[H],ok,
+19,19-p12-0,molscribe,*c1cnc2c(c1)c(C(=O)c1ccc(F)c(NS(=O)(=O)CC)c1F)cn2C(=O)c1c(Cl)cccc1Cl,0.8408987101146745,*c1cnc2c(c1)c(C(=O)c1ccc(F)c(NS(=O)(=O)CC)c1F)cn2C(=O)c1c(Cl)cccc1Cl,ok,
+19,19-p12-1,molscribe,CCS(=O)(=O)Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F,0.8983699669894695,CCS(=O)(=O)Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F,ok,
+19,19-p12-2,molscribe,Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F,0.8849813673467934,Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F,ok,
+19,19-p12-3,molscribe,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F,0.9087363067287845,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F,ok,
+19,19-p12-4,molscribe,Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F,0.9007940559386397,Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F,ok,
+19,19-p12-5,molscribe,O=C(c1ccc(F)c([N+](=O)[O-])c1F)c1c[nH]c2ncc(Br)cc12,0.9037072448661642,O=C(c1ccc(F)c([N+](=O)[O-])c1F)c1c[nH]c2ncc(Br)cc12,ok,
+19,19-p12-6,molscribe,CCCS(S)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(Br)cc23)c1F,0.9040690131478496,CCCS(S)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(Br)cc23)c1F,ok,
+19,19-p12-7,molscribe,CC.CCCS(S)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F,0.9085816974383948,CC.CCCS(S)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F,ok,
+19,19-p12-8,molscribe,*c1cnc2c(c1)c(C(=O)c1ccc(F)c(NS(=O)(=O)CCC)c1F)nn2C1CCCCO1.[I-],0.8516230129021248,*c1cnc2c(c1)c(C(=O)c1ccc(F)c(NS(=O)(=O)CCC)c1F)nn2C1CCCCO1.[I-],ok,
+19,19-p12-9,molscribe,*Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(*)cc23)c1F,0.817454528199344,*Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(*)cc23)c1F,ok,
+19,19-p12-10,molscribe,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F,0.8878619160413529,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F,ok,
+19,19-p12-11,molscribe,Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F,0.9086055316579693,Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F,ok,
+19,19-p12-12,molscribe,O=C(c1n[nH]c2ncc(Br)cc12)n1ccnc1,0.8838607061377699,O=C(c1n[nH]c2ncc(Br)cc12)n1ccnc1,ok,
+19,19-p12-13,molscribe,*c1cnc2[nH]nc(C(=O)c3ccc(F)c(NS(=O)(=O)CCC)c3F)c2c1,0.8285982365309861,*c1cnc2[nH]nc(C(=O)c3ccc(F)c(NS(=O)(=O)CCC)c3F)c2c1,ok,
+19,19-p12-14,molscribe,CC.O=C(O)c1n[nH]c2ncc(Br)cc12,0.8896700529206665,CC.O=C(O)c1n[nH]c2ncc(Br)cc12,ok,
+19,19-p12-15,molscribe,O=C(O)c1ccc(F)c([N+](=O)[O-])c1F,0.8997876601778971,O=C(O)c1ccc(F)c([N+](=O)[O-])c1F,ok,
+19,19-p12-16,molscribe,Brc1cnc2[nH]nc(I)c2c1,0.8995455659013665,Brc1cnc2[nH]nc(I)c2c1,ok,
+19,19-p12-17,molscribe,O=C(Cl)c1ccc(F)c([N+](=O)[O-])c1F,0.9024669260281478,O=C(Cl)c1ccc(F)c([N+](=O)[O-])c1F,ok,
+19,19-p12-18,molscribe,Brc1cnc2[nH]ccc2c1,0.9134118645108545,Brc1cnc2[nH]ccc2c1,ok,
+19,19-p12-19,molscribe,Brc1cnc2[nH]ncc2c1,0.9060719735443259,Brc1cnc2[nH]ncc2c1,ok,
+19,19-p12-20,molscribe,CON(C)C(=O)c1n[nH]c2ncc(Br)cc12,0.8812952104986982,CON(C)C(=O)c1n[nH]c2ncc(Br)cc12,ok,
+19,19-p12-21,molscribe,I.Nc1c(F)ccc(Br)c1F,0.872132009233672,I.Nc1c(F)ccc(Br)c1F,ok,
+19,19-p1-0,consensus,c1(C)c(C)c(C)c(-c2c(C)cc3c(c2C)C(C(C)C2C(C)=C(C)C(=C)C(C(C)C(C)C(C)C(C)C)=C2C)=C(C)C3=O)c(C)c1C,0.807817280292511,C1(C)C(C)=C(C)C(C2C(C)=CC3C(=O)C(C)=C(C(C)C4C(C)=C(C)C(=C)C(C(C)C(C)C(C)C(C)C)=C4C)C=3C=2C)=C(C)C=1C<sep>,ok,molglyph only: molscribe unparsable
+19,19-p3-0,consensus,*N(*)c1ccc(F)c(NS(=O)(=O)CCC)c1F.CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,0.8398088216781616,CCCS(NC1C(F)=C(C(C2C3C(=NC=C(C=3)C3C=CC(Cl)=CC=3)NC=2)=O)C(F)=CC=1)(=O)=O.C1(NS(=O)(=O)CCC)C(F)=C(N(*)*)C=CC=1F<sep><a>43:R</a><a>44:Asp</a>,ok,molglyph only: molscribe abstain
+19,19-p3-1,consensus,*C(=O)[C@H](*)N*,0.8606736660003662,*C(=O)[C@H](*)N*<sep><a>0:R</a><a>4:Met</a><a>6:R</a>,ok,molglyph only: molscribe unparsable
+19,19-p3-2,consensus,*N[C@H](*)C(*)=O,0.8521930575370789,*N[C@@H](C(=O)*)*<sep><a>0:R</a><a>5:R</a><a>6:Glu7</a>,ok,disagree: molglyph kept
+19,19-p3-3,consensus,*C(=O)[C@H](*)N*,0.8629893064498901,*C(=O)[C@H](*)N*<sep><a>0:R</a><a>4:Phe</a><a>6:R</a>,ok,molglyph only: molscribe unparsable
+19,19-p3-4,consensus,Cc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,0.9192667007446289,Cc1ccc(F)c(C(=O)c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F<sep>,ok,agree
+19,19-p3-5,consensus,*C(=O)CN(*)*,0.8669953942298889,*C(CN(*)*)=O<sep><a>0:R</a><a>4:<dum></a><a>5:R</a>,ok,molglyph only: molscribe unparsable
+19,19-p4-0,consensus,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2ccc3[nH]c4ncc(-c5ccccc5)cc4c3c2)c1F,0.9188979268074036,CCCS(NC1C(F)=C(C(C2C=C3C(NC4C3=CC(C3C=CC=CC=3)=CN=4)=CC=2)=O)C(F)=CC=1)(=O)=O<sep><r>4:R</r>,ok,molglyph only: molscribe unparsable
+19,19-p4-1,consensus,COc1ccc(-c2ncnc3[nH]c4ccc(O)cc4c23)cc1,0.9234662055969238,COc1ccc(-c2ncnc3[nH]c4ccc(O)cc4c23)cc1<sep>,ok,agree
+19,19-p4-2,consensus,*c1nc2[nH]*c(C(=O)c3c(F)ccc(NS(=O)(=O)CCC)c3F)c2*c1-c1ccc(Cl)cc1,0.9171388745307922,*c1nc2[nH]*c(C(=O)c3c(F)ccc(NS(=O)(=O)CCC)c3F)c2*c1-c1ccc(Cl)cc1<sep><a>0:R</a><a>5:A</a><a>25:B</a>,ok,disagree: molglyph kept
+19,19-p4-3,consensus,CC(CO)Nc1ncnc2[nH]c3ccc(O)cc3c12,0.9233382344245911,CC(CO)Nc1ncnc2[nH]c3ccc(O)cc3c12<sep>,ok,agree
+19,19-p5-0,consensus,CCCS(=O)(=O)Nc1ccc(F)c(*c2c[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c1F,0.9091324806213379,CCCS(NC1C(F)=C(*C2C3C(=NC=C(C=3)C3C=CC(Cl)=CC=3)NC=2)C(F)=CC=1)(=O)=O<sep><a>9:R</a>,ok,agree
+19,19-p5-1,consensus,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2*[nH]c3ncc(-c4ccc(OC)cc4Cl)cc23)c1F,0.9184715747833252,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2*[nH]c3ncc(-c4ccc(OC)cc4Cl)cc23)c1F<sep><a>16:A</a>,ok,agree
+19,19-p6-0,consensus,O=C(c1c(F)ccc(NS(*)(=O)=O)c1F)c1c[nH]c2ncc(-c3ccc(Cl)cc3)cc12,0.9142804741859436,O=C(C1C(F)=C(NS(=O)(=O)*)C=CC=1F)C1C2C(=NC=C(C=2)C2C=CC(Cl)=CC=2)NC=1<sep><a>10:R</a>,ok,agree
+19,19-p7-0,consensus,CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2ccc3[nH]c4ncc(*)cc4c3c2)c1F,0.9209167957305908,CCCS(NC1C(F)=C(C(C2C=C3C(NC4C3=CC(*)=CN=4)=CC=2)=O)C(F)=CC=1)(=O)=O<sep><a>19:R</a>,ok,disagree: molglyph kept
+19,19-p7-1,consensus,O=C(c1c(F)ccc(NS(=O)(=O)Cc2ccccc2)c1F)c1*[nH]c2ncc(*)cc12,0.9167528748512268,O=C(C1C2C(=NC=C(C=2)*)N*=1)C1C(F)=C(NS(CC2C=CC=CC=2)(=O)=O)C=CC=1F<sep><a>9:R</a><a>11:A</a>,ok,agree
+19,19-p7-2,consensus,*c1ccc(S(N)(=O)=O)cc1,0.9117200970649719,*c1ccc(S(N)(=O)=O)cc1<sep>,ok,disagree: molglyph kept
+19,19-p7-3,consensus,*c1ccc(S(N)(=O)=O)cc1,0.9152209758758545,*c1ccc(S(N)(=O)=O)cc1<sep>,ok,disagree: molglyph kept
+19,19-p7-4,consensus,*c1ccc(N)cc1,0.9146758317947388,*c1ccc(N)cc1<sep>,ok,disagree: molglyph kept
+19,19-p7-5,consensus,*c1cnc(C2CC2)nc1,0.9089678525924683,*c1cnc(C2CC2)nc1<sep>,ok,disagree: molglyph kept
+19,19-p7-6,consensus,*c1cnc(OC)nc1,0.8803461194038391,*c1cnc(OC)nc1<sep>,ok,disagree: molglyph kept
+19,19-p7-7,consensus,*c1ccnnc1,0.9023712873458862,*c1ccnnc1<sep>,ok,disagree: molglyph kept
+19,19-p7-8,consensus,*c1cccnc1,0.9019244313240051,*c1cccnc1<sep>,ok,disagree: molglyph kept
+19,19-p8-0,consensus,*c1c(*)c(*)c(C(=O)c2*[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c(*)c1NS(=O)(=O)CCC,0.9169149398803711,*c1c(*)c(*)c(C(=O)c2*[nH]c3ncc(-c4ccc(Cl)cc4)cc23)c(*)c1NS(=O)(=O)CCC<sep><a>0:R[b]</a><a>3:R[C]</a><a>5:R[d]</a><a>10:A</a><a>26:R[a]</a>,ok,agree
+19,19-p9-0,consensus,*c1cnc2[nH]*c(C(=O)c3cccc(NS(*)(=O)=O)c3F)c2c1,0.9192315340042114,*c1cnc2[nH]*c(C(=O)c3cccc(NS(*)(=O)=O)c3F)c2c1<sep><a>0:R[2]</a><a>6:X</a><a>17:R[1]</a><r>2:F</r>,ok,disagree: molglyph kept
+19,19-p9-1,consensus,*c1ccncc1,0.9162700176239014,*c1ccncc1<sep>,ok,disagree: molglyph kept
+19,19-p9-2,consensus,*c1cnc(C2CC2)nc1,0.9191851019859314,*c1cnc(C2CC2)nc1<sep>,ok,disagree: molglyph kept
+19,19-p9-3,consensus,*c1cnc(SC)nc1C,0.8941358923912048,*c1cnc(SC)nc1C<sep>,ok,disagree: molglyph kept
+19,19-p9-4,consensus,*c1cnc(OC)nc1,0.8946702480316162,*c1cnc(OC)nc1<sep>,ok,disagree: molglyph kept
+19,19-p9-5,consensus,*c1ccc(F)cc1C,0.9089345932006836,*c1ccc(F)cc1C<sep>,ok,disagree: molglyph kept
+19,19-p9-6,consensus,*c1ccc(OC)cc1Cl,0.8979604244232178,*c1ccc(OC)cc1Cl<sep>,ok,disagree: molglyph kept
+19,19-p11-0,consensus,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(-c4cccnn4)cc23)c1F,0.8776127696037292,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2c[nH]c3nc([H])c(-c4cccnn4)cc23)c1F<sep>,ok,molglyph only: molscribe unparsable
+19,19-p12-0,consensus,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(*)cc23)c1F,0.8778154253959656,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(*)cc23)c1F<sep><a>0:SO2H7</a><a>27:Hinyl</a>,ok,disagree: molglyph kept
+19,19-p12-1,consensus,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F,0.9128137826919556,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F<sep><a>0:SO2H7</a>,ok,disagree: molglyph kept
+19,19-p12-2,consensus,Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F,0.9241020679473877,Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(Br)cc23)c1F<sep>,ok,agree
+19,19-p12-3,consensus,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F,0.9080564379692078,*Nc1c(F)ccc(C(=O)c2cn(C(=O)c3c(Cl)cccc3Cl)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F<sep><a>0:SO2H7</a>,ok,agree
+19,19-p12-4,consensus,Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F,0.9236326217651367,Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F<sep>,ok,agree
+19,19-p12-5,consensus,c1([N+](=O)[O-])c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F,0.9232859015464783,*c1c(F)ccc(C(=O)c2c[nH]c3ncc(Br)cc23)c1F<sep><a>0:NO2</a>,ok,agree
+19,19-p12-6,consensus,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(Br)cc23)c1F,0.9227996468544006,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(Br)cc23)c1F<sep>,ok,disagree: molglyph kept
+19,19-p12-7,consensus,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F,0.9183816313743591,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2nn(C3CCCCO3)c3ncc(B4OC(C)(C)C(C)(C)O4)cc23)c1F<sep>,ok,disagree: molglyph kept
+19,19-p12-8,consensus,*c1cnc2c(c1)c(C(=O)c1ccc(F)c(NS(=O)(=O)CCC)c1F)nn2C1CCCCO1,0.8814427852630615,*C1C=C2C(=NN(C3OCCCC3)C2=NC=1)C(C1C(F)=C(NS(CCC)(=O)=O)C(F)=CC=1)=O<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+19,19-p12-9,consensus,*Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(*)cc23)c1F,0.8887339234352112,*Nc1c(F)ccc(C(=O)c2c[nH]c3ncc(*)cc23)c1F<sep><a>0:SO2H7</a><a>17:<dum></a>,ok,agree
+19,19-p12-10,consensus,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F,0.923757791519165,CCCS(=O)(=O)Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F<sep>,ok,agree
+19,19-p12-11,consensus,Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F,0.9237182140350342,Nc1c(F)ccc(C(=O)c2n[nH]c3ncc(Br)cc23)c1F<sep>,ok,agree
+19,19-p12-12,consensus,O=C(c1n[nH]c2ncc(Br)cc12)n1ccnc1,0.9241186380386353,O=C(c1n[nH]c2ncc(Br)cc12)n1ccnc1<sep>,ok,agree
+19,19-p12-13,consensus,*c1cnc2[nH]nc(C(=O)c3ccc(F)c(NS(=O)(=O)CCC)c3F)c2c1,0.8817342519760132,*C1C=C2C(NN=C2C(C2C(F)=C(NS(CCC)(=O)=O)C(F)=CC=2)=O)=NC=1<sep><a>0:Aryl</a>,ok,agree
+19,19-p12-14,consensus,O=C(O)c1n[nH]c2ncc(Br)cc12,0.9240682721138,O=C(O)c1n[nH]c2ncc(Br)cc12<sep>,ok,disagree: molglyph kept
+19,19-p12-15,consensus,c1([N+](=O)[O-])c(F)ccc(C(=O)O)c1F,0.917370080947876,*c1c(F)ccc(C(=O)O)c1F<sep><a>0:NO2</a>,ok,agree
+19,19-p12-16,consensus,Brc1cnc2[nH]nc(I)c2c1,0.925815224647522,Brc1cnc2[nH]nc(I)c2c1<sep>,ok,agree
+19,19-p12-17,consensus,c1([N+](=O)[O-])c(F)ccc(C(=O)Cl)c1F,0.9086332321166992,*c1c(F)ccc(C(=O)Cl)c1F<sep><a>0:NO2</a>,ok,agree
+19,19-p12-18,consensus,Brc1cnc2[nH]ccc2c1,0.92525315284729,Brc1cnc2[nH]ccc2c1<sep>,ok,agree
+19,19-p12-19,consensus,Brc1cnc2[nH]ncc2c1,0.9253049492835999,Brc1cnc2[nH]ncc2c1<sep>,ok,agree
+19,19-p12-20,consensus,CON(C)C(=O)c1n[nH]c2ncc(Br)cc12,0.9229427576065063,CON(C)C(=O)c1n[nH]c2ncc(Br)cc12<sep>,ok,agree
+19,19-p12-21,consensus,Nc1c(F)ccc(Br)c1F,0.9243112802505493,Nc1c(F)ccc(Br)c1F<sep>,ok,disagree: molglyph kept

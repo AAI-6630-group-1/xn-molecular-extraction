@@ -41,7 +41,8 @@ records.
 
 | File | What it holds |
 |---|---|
-| `assembly.py` | `join` bonds the pieces; `match_positions` decides which substituent goes where; `find_scaffold` and `read_cell` read one row's inputs; `assemble_row`, `assemble_paper` and `assemble_run` write the records |
+| `assembly.py` | The table side. `find_scaffold` and `_scaffold_for_row` find the row's scaffold and its reading; `_filling_columns` picks the columns that fill a position; `read_cell` reads one cell (`_read_text_cell`, `_read_drawn_cell` or `_read_ring_cell`); `assemble_row`, `assemble_paper` and `assemble_run` write the records |
+| `join.py` | The chemistry side. `match_positions` decides which `*` each column fills (by drawn label, by R number, or one-to-one); `_place_piece` prepares each `*` as a substituent, linker or ring atom; `_add_fragments` numbers the pairs and `_zip` bonds them with RDKit `molzip`. `join` runs these steps in order |
 | `substituents.py` | The two text lookups: table heading to R position (`R1` is position 1), and cell text to a fragment (`OMe` is `*OC`). 111 spellings of 53 groups, plus straight chains written as `nC<n>H<2n+1>` |
 | `export.py` | `export_drawings` and `export_assemblies` pick the predictions; `export_run` writes the three files |
 | `stage_io.py` | Reading and writing the stage files, and `select_reading`, the rule for choosing one reading per box |
@@ -258,5 +259,9 @@ Specific contribution: Claude Code wrote `assembly.py`, `export.py`,
 `substituents.py`, `stage_io.py`, `phase1_run.py`, the fixture, the tests and
 this page on 2026-11-10 at Will's request, following the interface contract and
 the design in #74, and ran the tests and the six-paper export reported above.
+On 2026-11-17, at Will's request, Claude Code moved `join` and its helpers
+into `join.py` and split `join`, `assemble_row` and `read_cell` into smaller
+functions. The tests pass, and the six-paper outputs are byte-identical before
+and after.
 Will's review of the code and of the design choices listed under "Limits and
 open questions" is pending; this section is updated when it is done.
