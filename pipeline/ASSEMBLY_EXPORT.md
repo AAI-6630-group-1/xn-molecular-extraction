@@ -263,5 +263,5 @@ On 2026-11-17, at Will's request, Claude Code moved `join` and its helpers
 into `join.py` and split `join`, `assemble_row` and `read_cell` into smaller
 functions. The tests pass, and the six-paper outputs are byte-identical before
 and after.
-Will's review of the code and of the design choices listed under "Limits and
-open questions" is pending; this section is updated when it is done.
+Will reviewed the code, including `join.py`, and the design choices listed
+under "Limits and open questions" on 2026-11-17.
