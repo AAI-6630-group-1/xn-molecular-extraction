@@ -17,7 +17,9 @@ R group is a linker with two attachment points (Table 3), the scaffold has more
 lists compounds drawn elsewhere and has no scaffold (activity tables). The
 reasons are in `papers/19/assemblies.jsonl`.
 
-Page images, crops and `text.jsonl` are not committed. To reproduce:
+Page images, crops and `text.jsonl` are not committed. To reproduce, check
+out `cbf90f4` first: `pipeline/read_crops.py` was removed from `main` on
+2026-11-17 (replaced by `pipeline/reading.py`, which adds a consensus row).
 
 ```bash
 R=data/pipeline_runs/2026-11-13_p19-assembly

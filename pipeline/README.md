@@ -35,6 +35,8 @@ records include the pixel-to-PDF matrix, rotation, dimensions and DPI.
 
 Module pages: [READING.md](READING.md) (reading and consensus; Bijay, #48),
 [ASSEMBLY_EXPORT.md](ASSEMBLY_EXPORT.md) (R-group assembly, export and scoring; Will, #45).
+Each owner's XN 2.3 landing page is `pipeline/<handle>/README.md`. The code
+stays in `pipeline/` so `python -m pipeline.<stage>` and the shared imports work.
 
 ## Empty output is different from failure
 

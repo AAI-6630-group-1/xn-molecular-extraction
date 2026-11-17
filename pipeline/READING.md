@@ -93,8 +93,9 @@ uv run python -m pipeline.export $R
 uv run python benchmarks/score.py $R
 ```
 
-`pipeline/read_crops.py` is Will's earlier stand-in. It writes the two reader
-rows only, with no consensus row, and this module replaces it.
+`pipeline/read_crops.py` was Will's earlier stand-in. It wrote the two reader
+rows only, with no consensus row. This module replaced it, and the stand-in was
+removed on 2026-11-17 (still in git history at `cbf90f4`).
 
 ## Where the code is
 

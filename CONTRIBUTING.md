@@ -20,6 +20,7 @@ Everything lives in this one repo, in a subfolder named after your GitHub handle
 | Benchmark code the team shares (scorers, readers) | `benchmarks/` |
 | 1.3 and other individual reports | `reports/<handle>/` |
 | Pipeline modules (Part 2) | `pipeline/` |
+| XN 2.3 module landing page (the link each person submits) | `pipeline/<handle>/README.md` |
 
 Share files through GitHub, not Slack. Slack is for discussion; a file in the repo is versioned, and everyone (and their AI tools) can find it.
 
