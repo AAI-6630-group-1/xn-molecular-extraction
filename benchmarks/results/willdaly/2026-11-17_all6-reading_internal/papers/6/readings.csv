@@ -1,0 +1,7 @@
+paper_id,box_id,reader,smiles,confidence,raw,status,reason
+6,6-p19-0,molglyph,Cc1ccc(C(=O)NCCCCc2cn(CCC(=O)NCCCCNc3cccc4c3C(=O)N(C3CCC(=O)NC3=O)C4=O)nn2)cc1-n1c(C)cc(OCc2ccc(F)cc2F)c(Br)c1=O,0.9167076945304871,Cc1ccc(C(=O)NCCCCc2cn(CCC(=O)NCCCCNc3cccc4c3C(=O)N(C3CCC(=O)NC3=O)C4=O)nn2)cc1-n1c(C)cc(OCc2ccc(F)cc2F)c(Br)c1=O<sep>,ok,
+6,6-p19-1,molglyph,CCCCc1cn(CCCC(=O)NCCCCNc2cccc3c2C(=O)N(C2CCC(=O)NC2=O)C3=O)nn1,0.9223830699920654,CCCCc1cn(CCCC(=O)NCCCCNc2cccc3c2C(=O)N(C2CCC(=O)NC2=O)C3=O)nn1<sep>,ok,
+6,6-p19-0,molscribe,Cc1ccc(COc2cc(C)n(-c3cc(C(=O)NCCCCc4cn(CCCC(=O)NCCCCNc5cccc6c5C(=O)N(C5CCC(=O)NC5=O)C6=O)nn4)ccc3C)c(=O)c2Br)c(F)c1,0.7676475659656936,Cc1ccc(COc2cc(C)n(-c3cc(C(=O)NCCCCc4cn(CCCC(=O)NCCCCNc5cccc6c5C(=O)N(C5CCC(=O)NC5=O)C6=O)nn4)ccc3C)c(=O)c2Br)c(F)c1,ok,
+6,6-p19-1,molscribe,CCCCc1cn(CCCC(=O)NCCCCNc2cccc3c2C(=O)N(C2CCC(=O)NC2=O)C3=O)nn1,0.582306461136032,CCCCc1cn(CCCC(=O)NCCCCNc2cccc3c2C(=O)N(C2CCC(=O)NC2=O)C3=O)nn1,ok,
+6,6-p19-0,consensus,Cc1ccc(C(=O)NCCCCc2cn(CCC(=O)NCCCCNc3cccc4c3C(=O)N(C3CCC(=O)NC3=O)C4=O)nn2)cc1-n1c(C)cc(OCc2ccc(F)cc2F)c(Br)c1=O,0.9167076945304871,Cc1ccc(C(=O)NCCCCc2cn(CCC(=O)NCCCCNc3cccc4c3C(=O)N(C3CCC(=O)NC3=O)C4=O)nn2)cc1-n1c(C)cc(OCc2ccc(F)cc2F)c(Br)c1=O<sep>,ok,disagree: molglyph kept
+6,6-p19-1,consensus,CCCCc1cn(CCCC(=O)NCCCCNc2cccc3c2C(=O)N(C2CCC(=O)NC2=O)C3=O)nn1,0.9223830699920654,CCCCc1cn(CCCC(=O)NCCCCNc2cccc3c2C(=O)N(C2CCC(=O)NC2=O)C3=O)nn1<sep>,ok,agree
