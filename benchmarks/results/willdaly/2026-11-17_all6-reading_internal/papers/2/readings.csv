@@ -1,0 +1,223 @@
+paper_id,box_id,reader,smiles,confidence,raw,status,reason
+2,2-p2-0,molglyph,COc1cnc(COc2ccc(F)c(F)c2)cc1-c1cc2c([nH]1)CCNC2=O,0.923499584197998,COc1cnc(COc2ccc(F)c(F)c2)cc1-c1cc2c([nH]1)CCNC2=O<sep>,ok,
+2,2-p2-1,molglyph,CN(C)CC(=O)Nc1n[nH]c2ccc(-c3cn(Cc4ccccc4)nn3)cc12,0.9231075644493103,CN(C)CC(=O)Nc1n[nH]c2ccc(-c3cn(Cc4ccccc4)nn3)cc12<sep>,ok,
+2,2-p2-2,molglyph,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,0.9231331944465637,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1<sep>,ok,
+2,2-p2-3,molglyph,NC(=O)c1ccc(-c2nc(-c3ccc4c(c3)OCCO4)c(-c3ccccn3)[nH]2)cc1,0.9235033988952637,NC(=O)c1ccc(-c2nc(-c3ccc4c(c3)OCCO4)c(-c3ccccn3)[nH]2)cc1<sep>,ok,
+2,2-p3-0,molglyph,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,0.9231728911399841,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1<sep>,ok,
+2,2-p3-1,molglyph,COC(=O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,0.9228452444076538,COC(=O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1<sep>,ok,
+2,2-p3-2,molglyph,*c1c(*)c(*)c(Nc2nc3ccc(C#N)cc3[nH]2)c(*)c1*,0.9212652444839478,*c1c(*)c(*)c(Nc2nc3ccc(C#N)cc3[nH]2)c(*)c1*<sep><a>0:R[3]</a><a>3:R[2]</a><a>5:R[1]</a><a>20:R[5]</a><a>22:R[4]</a>,ok,
+2,2-p3-3,molglyph,*c1c(*)c(*)c(N)c(*)c1*,0.9144107103347778,*c1c(*)c(*)c(N)c(*)c1*<sep><a>0:R[3]</a><a>3:R[2]</a><a>5:R[1]</a><a>9:R[5]</a><a>11:R[4]</a>,ok,
+2,2-p3-4,molglyph,N#Cc1ccc2nc(Cl)[nH]c2c1,0.9243438839912415,N#Cc1ccc2nc(Cl)[nH]c2c1<sep>,ok,
+2,2-p4-0,molglyph,CC(C)(C)OC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1,0.9223340749740601,CC(C)(C)OC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1<sep>,ok,
+2,2-p4-1,molglyph,CC(C)(C)OC(=O)NCCC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1,0.9217832088470459,CC(C)(C)OC(=O)NCCC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1<sep>,ok,
+2,2-p4-2,molglyph,,0.8657867312431335,N#CC1C=C2C(N=C(NC3C=C(Cl)C(N4CCN(C(CCNC(CCC5N6[B-](F)(F)[N+]7C(C8NC=CC=8C=C8)=CC=C7C=C6C=C5)=O)=O)CC4)=CC=3)N2)=CC=1<sep>,abstain,reader returned no valid SMILES
+2,2-p4-3,molglyph,N#Cc1ccc2nc(Nc3ccc(N4CCNCC4)c(Cl)c3)[nH]c2c1,0.9233455657958984,N#Cc1ccc2nc(Nc3ccc(N4CCNCC4)c(Cl)c3)[nH]c2c1<sep>,ok,
+2,2-p4-4,molglyph,N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCN)CC4)c(Cl)c3)[nH]c2c1,0.9228408932685852,N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCN)CC4)c(Cl)c3)[nH]c2c1<sep>,ok,
+2,2-p4-5,molglyph,CC(C)(C)OC(=O)N1CCN(c2ccc(N)cc2Cl)CC1,0.921786367893219,CC(C)(C)OC(=O)N1CCN(c2ccc(N)cc2Cl)CC1<sep>,ok,
+2,2-p4-6,molglyph,N#Cc1ccc2nc(Cl)[nH]c2c1,0.9244210124015808,N#Cc1ccc2nc(Cl)[nH]c2c1<sep>,ok,
+2,2-p5-0,molglyph,**1c(*)c(*)cc(Nc2nc3cc(C#N)ccc3[nH]2)c1*,0.9202375411987305,**1c(*)c(*)cc(Nc2nc3cc(C#N)ccc3[nH]2)c1*<sep><a>0:R[2]</a><a>1:X</a><a>3:R[4]</a><a>5:R[3]</a><a>21:R[1]</a>,ok,
+2,2-p5-1,molglyph,*N1CCN(C)CC1,0.9184747934341431,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,
+2,2-p5-2,molglyph,*N1CCN(C)CC1,0.9187280535697937,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,
+2,2-p5-3,molglyph,*N1CCN(C)CC1,0.9182863235473633,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,
+2,2-p5-4,molglyph,*N1CCNCC1,0.9191107153892517,*N1CCNCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-5,molglyph,*OC(F)F,0.9225198030471802,*OC(F)F<sep><a>0:<dum></a>,ok,
+2,2-p5-6,molglyph,*C(=O)OC,0.9217236638069153,*C(OC)=O<sep><a>0:<dum></a>,ok,
+2,2-p5-7,molglyph,*N1CCN(C)CC1,0.9184955358505249,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,
+2,2-p5-8,molglyph,*N1CCOCC1,0.9172307252883911,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-9,molglyph,*N1CCCCC1,0.9141671061515808,*N1CCCCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-10,molglyph,*N1CCOCC1,0.9176266193389893,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-11,molglyph,*C(=O)OC,0.9216541647911072,*C(OC)=O<sep><a>0:<dum></a>,ok,
+2,2-p5-12,molglyph,*N1CCOCC1,0.9176380634307861,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-13,molglyph,*N1CCOCC1,0.9180550575256348,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-14,molglyph,*N1CCOCC1,0.9181889891624451,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-15,molglyph,*N1CCOCC1,0.918209969997406,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-16,molglyph,*N1CCOCC1,0.917811930179596,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-17,molglyph,*N1CCN(C)CC1,0.9181110262870789,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,
+2,2-p5-18,molglyph,*N1CCOCC1,0.9178552627563477,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-19,molglyph,*N1CCOCC1,0.9177985191345215,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-20,molglyph,*N1CCOCC1,0.9177283048629761,*N1CCOCC1<sep><a>0:<dum></a>,ok,
+2,2-p5-21,molglyph,*Cl,0.9234424829483032,*Cl<sep><a>0:<dum></a>,ok,
+2,2-p5-22,molglyph,*F,0.9204738736152649,*F<sep><a>0:<dum></a>,ok,
+2,2-p5-23,molglyph,*Cl,0.9234699010848999,*Cl<sep><a>0:<dum></a>,ok,
+2,2-p5-24,molglyph,*OC(F)(F)F,0.9191363453865051,*OC(F)(F)F<sep><a>0:<dum></a>,ok,
+2,2-p5-25,molglyph,*[H],0.9210979342460632,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-26,molglyph,*Cl,0.9234869480133057,*Cl<sep><a>0:<dum></a>,ok,
+2,2-p5-27,molglyph,*[H],0.921177089214325,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-28,molglyph,*[H],0.9212339520454407,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-29,molglyph,*[H],0.9210424423217773,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-30,molglyph,*F,0.9207815527915955,*F<sep><a>0:<dum></a>,ok,
+2,2-p5-31,molglyph,*[H],0.9211437106132507,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-32,molglyph,*Cl,0.9234490394592285,*Cl<sep><a>0:<dum></a>,ok,
+2,2-p5-33,molglyph,*[H],0.9212139844894409,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-34,molglyph,*OC,0.9211863279342651,*OC<sep><a>0:<dum></a>,ok,
+2,2-p5-35,molglyph,*[H],0.9206780791282654,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-36,molglyph,*F,0.920634388923645,*F<sep><a>0:<dum></a>,ok,
+2,2-p5-37,molglyph,*OC,0.9211304783821106,*OC<sep><a>0:<dum></a>,ok,
+2,2-p5-38,molglyph,*[H],0.921139657497406,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-39,molglyph,*C(F)(F)F,0.9095808863639832,*C(F)(F)F<sep><a>0:<dum></a>,ok,
+2,2-p5-40,molglyph,*[H],0.921531617641449,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-41,molglyph,*[H],0.9209779500961304,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-42,molglyph,*[H],0.9210331439971924,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-43,molglyph,*[H],0.9215841889381409,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-44,molglyph,*[H],0.9214001297950745,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-45,molglyph,*Cl,0.9237300157546997,*Cl<sep><a>0:<dum></a>,ok,
+2,2-p5-46,molglyph,*OC,0.9211435914039612,*OC<sep><a>0:<dum></a>,ok,
+2,2-p5-47,molglyph,*C,0.9198319315910339,*C<sep><a>0:<dum></a>,ok,
+2,2-p5-48,molglyph,*[H],0.920845091342926,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-49,molglyph,*[H],0.9206839799880981,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-50,molglyph,*Br,0.9156729578971863,*Br<sep><a>0:<dum></a>,ok,
+2,2-p5-51,molglyph,*[H],0.9214423298835754,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-52,molglyph,*[H],0.9210359454154968,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-53,molglyph,*CO,0.921000599861145,*CO<sep><a>0:<dum></a>,ok,
+2,2-p5-54,molglyph,*[H],0.9211193323135376,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-55,molglyph,*[H],0.9210822582244873,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p5-56,molglyph,*[H],0.9210437536239624,*[H]<sep><a>0:<dum></a>,ok,
+2,2-p7-0,molglyph,,0.885884702205658,N#Cc1ccc2[nH]c(Nc3ccc(N4CCN(C(=O)CCNC(=O)CCc5ccc6n5[B-](F)(F)N5C6C=CC(c7ccc[nH]7)N5[B-]6(F)F)CC4)c(Cl)c3)nc2c1<sep>,abstain,reader returned no valid SMILES
+2,2-p2-0,molscribe,COc1cnc(COc2ccc(F)c(F)c2)cc1-c1cc2c([nH]1)CCNC2=O,0.9095358567878674,COc1cnc(COc2ccc(F)c(F)c2)cc1-c1cc2c([nH]1)CCNC2=O,ok,
+2,2-p2-1,molscribe,CN(C)CC(=O)Nc1n[nH]c2ccc(-c3cn(Cc4ccccc4)nn3)cc12,0.9025013862125699,CN(C)CC(=O)Nc1n[nH]c2ccc(-c3cn(Cc4ccccc4)nn3)cc12,ok,
+2,2-p2-2,molscribe,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,0.9208192112138474,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,ok,
+2,2-p2-3,molscribe,NC(=O)c1ccc(-c2nc(-c3ccc4c(c3)OCCO4)c(-c3ccccn3)[nH]2)cc1,0.8965693603445407,NC(=O)c1ccc(-c2nc(-c3ccc4c(c3)OCCO4)c(-c3ccccn3)[nH]2)cc1,ok,
+2,2-p3-0,molscribe,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,0.898830882561828,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,ok,
+2,2-p3-1,molscribe,CC.COC(=O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,0.9121536672760405,CC.COC(=O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,ok,
+2,2-p3-2,molscribe,[2*]c1c([3*])c([4*])c([5*])c(Nc2nc3ccc(C#N)cc3[nH]2)c1[7*],0.8914175986882347,[2*]c1c([3*])c([4*])c([5*])c(Nc2nc3ccc(C#N)cc3[nH]2)c1[7*],ok,
+2,2-p3-3,molscribe,[1*]c1c([2*])c([3*])c([4*])c([5*])c1N,0.8846554468127708,[1*]c1c([2*])c([3*])c([4*])c([5*])c1N,ok,
+2,2-p3-4,molscribe,N#Cc1ccc2nc(Cl)[nH]c2c1,0.900201745951081,N#Cc1ccc2nc(Cl)[nH]c2c1,ok,
+2,2-p4-0,molscribe,CC(C)(C)OC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1,0.9176220496228353,CC(C)(C)OC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1,ok,
+2,2-p4-1,molscribe,CC.CC(C)(C)OC(=O)NCCC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1,0.9176083107449781,CC.CC(C)(C)OC(=O)NCCC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1,ok,
+2,2-p4-2,molscribe,N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCNC(=O)CCc5ccc6n5[B-](F)(F)[N+]5=C(c7ccc[nH]7)C=CC5=C6)CC4)c(Cl)c3)[nH]c2c1,0.8722924252988945,N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCNC(=O)CCc5ccc6n5[B-](F)(F)[N+]5=C(c7ccc[nH]7)C=CC5=C6)CC4)c(Cl)c3)[nH]c2c1,ok,
+2,2-p4-3,molscribe,N#Cc1ccc2nc(Nc3ccc(N4CCNCC4)c(Cl)c3)[nH]c2c1,0.9227754365032861,N#Cc1ccc2nc(Nc3ccc(N4CCNCC4)c(Cl)c3)[nH]c2c1,ok,
+2,2-p4-4,molscribe,ClI.N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCN)CC4)c(Cl)c3)[nH]c2c1,0.8998258435340183,ClI.N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCN)CC4)c(Cl)c3)[nH]c2c1,ok,
+2,2-p4-5,molscribe,CC(C)(C)OC(=O)N1CCN(c2ccc(N)cc2Cl)CC1,0.9123483423339921,CC(C)(C)OC(=O)N1CCN(c2ccc(N)cc2Cl)CC1,ok,
+2,2-p4-6,molscribe,N#Cc1ccc2nc(Cl)[nH]c2c1,0.9000157336518158,N#Cc1ccc2nc(Cl)[nH]c2c1,ok,
+2,2-p5-0,molscribe,[1*]c1*([2*])c([4*])c([3*])cc1Nc1nc2cc(C#N)ccc2[nH]1,0.9029317725332243,[1*]c1*([2*])c([4*])c([3*])cc1Nc1nc2cc(C#N)ccc2[nH]1,ok,
+2,2-p5-1,molscribe,CCN1CCN(C)CC1,0.8585192904783497,CCN1CCN(C)CC1,ok,
+2,2-p5-2,molscribe,CC(C)N1CCN(C)CC1,0.8329101013788567,CC(C)N1CCN(C)CC1,ok,
+2,2-p5-3,molscribe,CCN1CCN(C)CC1,0.8319722052185361,CCN1CCN(C)CC1,ok,
+2,2-p5-4,molscribe,CC(C)N1CCNCC1,0.8324774494176513,CC(C)N1CCNCC1,ok,
+2,2-p5-5,molscribe,CC(C)OC(F)F,0.8063098025765741,CC(C)OC(F)F,ok,
+2,2-p5-6,molscribe,COC(=O)C(C)C,0.7909890346032272,COC(=O)C(C)C,ok,
+2,2-p5-7,molscribe,CC.CN1CCN(C)CC1,0.7211086866094748,CC.CN1CCN(C)CC1,ok,
+2,2-p5-8,molscribe,CC(C)N1CCOCC1,0.8244751074160535,CC(C)N1CCOCC1,ok,
+2,2-p5-9,molscribe,CC(C)N1CCCCC1,0.8808833836947095,CC(C)N1CCCCC1,ok,
+2,2-p5-10,molscribe,CC(C)N1CCOCC1,0.8306495335919348,CC(C)N1CCOCC1,ok,
+2,2-p5-11,molscribe,CC.CC,0.4166652489051133,CC.CC,ok,
+2,2-p5-12,molscribe,CC(C)N1CCOCC1,0.8246318009020929,CC(C)N1CCOCC1,ok,
+2,2-p5-13,molscribe,CC(C)N1CCOCC1,0.8252303479023146,CC(C)N1CCOCC1,ok,
+2,2-p5-14,molscribe,CC(C)N1CCOCC1,0.8284666725881612,CC(C)N1CCOCC1,ok,
+2,2-p5-15,molscribe,CC(C)N1CCOCC1,0.8253756512126428,CC(C)N1CCOCC1,ok,
+2,2-p5-16,molscribe,CC(C)N1CCOCC1,0.8303292631188481,CC(C)N1CCOCC1,ok,
+2,2-p5-17,molscribe,CC.CCN1CCN(C)CC1,0.7258921760742992,CC.CCN1CCN(C)CC1,ok,
+2,2-p5-18,molscribe,CC(C)N1CCOCC1,0.8311974965358273,CC(C)N1CCOCC1,ok,
+2,2-p5-19,molscribe,CC(C)N1CCOCC1,0.8228853474950826,CC(C)N1CCOCC1,ok,
+2,2-p5-20,molscribe,CC(C)N1CCOCC1,0.8437253513298905,CC(C)N1CCOCC1,ok,
+2,2-p5-21,molscribe,CC(C)Cl,0.5827500836814666,CC(C)Cl,ok,
+2,2-p5-22,molscribe,CC(C)F,0.6271869558639148,CC(C)F,ok,
+2,2-p5-23,molscribe,CC(C)Cl,0.6157354696086261,CC(C)Cl,ok,
+2,2-p5-24,molscribe,CC(C)OC(F)(F)F,0.764346491720612,CC(C)OC(F)(F)F,ok,
+2,2-p5-25,molscribe,[H]C(C)C,0.5573529612314561,[H]C(C)C,ok,
+2,2-p5-26,molscribe,CC(C)Cl,0.5492622727458555,CC(C)Cl,ok,
+2,2-p5-27,molscribe,[H]C(C)C,0.5714890954281338,[H]C(C)C,ok,
+2,2-p5-28,molscribe,[H]C(C)C,0.6589295840641949,[H]C(C)C,ok,
+2,2-p5-29,molscribe,[H]C(C)C,0.6676871156787507,[H]C(C)C,ok,
+2,2-p5-30,molscribe,CC(C)F,0.6977809068773957,CC(C)F,ok,
+2,2-p5-31,molscribe,[H]C(C)C,0.5695431311048192,[H]C(C)C,ok,
+2,2-p5-32,molscribe,CC(C)Cl,0.5504569247247055,CC(C)Cl,ok,
+2,2-p5-33,molscribe,[H]C(C)C,0.5514376874847086,[H]C(C)C,ok,
+2,2-p5-34,molscribe,COC(C)C,0.5923227973735695,COC(C)C,ok,
+2,2-p5-35,molscribe,[H]C(C)C,0.5080435628164485,[H]C(C)C,ok,
+2,2-p5-36,molscribe,CC(C)F,0.6353236954852837,CC(C)F,ok,
+2,2-p5-37,molscribe,COC(C)C,0.5403770629397208,COC(C)C,ok,
+2,2-p5-38,molscribe,[H]C(C)C,0.537599597815417,[H]C(C)C,ok,
+2,2-p5-39,molscribe,CC(C)C(F)(F)F,0.7211899234372348,CC(C)C(F)(F)F,ok,
+2,2-p5-40,molscribe,[H]C(C)C,0.5698471572233059,[H]C(C)C,ok,
+2,2-p5-41,molscribe,[H]C(C)C,0.5561148700900763,[H]C(C)C,ok,
+2,2-p5-42,molscribe,[H]C(C)C,0.5963083763401523,[H]C(C)C,ok,
+2,2-p5-43,molscribe,[H]C(C)C,0.697091104091788,[H]C(C)C,ok,
+2,2-p5-44,molscribe,[H]C(C)C,0.5655217909524883,[H]C(C)C,ok,
+2,2-p5-45,molscribe,CC(C)Cl,0.5901772780082241,CC(C)Cl,ok,
+2,2-p5-46,molscribe,COC(C)C,0.6000001787842014,COC(C)C,ok,
+2,2-p5-47,molscribe,CC(C)C,0.6367081040910589,CC(C)C,ok,
+2,2-p5-48,molscribe,[H]C(C)C,0.5949755422314618,[H]C(C)C,ok,
+2,2-p5-49,molscribe,[H]C(C)C,0.4918558050858216,[H]C(C)C,ok,
+2,2-p5-50,molscribe,CC(C)Br,0.5017367738669609,CC(C)Br,ok,
+2,2-p5-51,molscribe,[H]C(C)C,0.7027589306704168,[H]C(C)C,ok,
+2,2-p5-52,molscribe,[H]C(C)C,0.5951775769209534,[H]C(C)C,ok,
+2,2-p5-53,molscribe,CC(C)CO,0.5696291479428396,CC(C)CO,ok,
+2,2-p5-54,molscribe,[H]C(C)C,0.5850375545749982,[H]C(C)C,ok,
+2,2-p5-55,molscribe,[H]C(C)C,0.6999645353258633,[H]C(C)C,ok,
+2,2-p5-56,molscribe,[H]C(C)C,0.5874589378519289,[H]C(C)C,ok,
+2,2-p7-0,molscribe,**1(*)N2C(=CC=C2CCC(=O)NCCC(=O)N2C=CN(C3=CC=C(NC4=NC5=C(C=CC(C#N)=C5)N4)C=C3Cl)C=C2)C=C2C=CC(C3=CC=CN3)=N21,0.6415012221288067,**1(*)N2C(=CC=C2CCC(=O)NCCC(=O)N2C=CN(C3=CC=C(NC4=NC5=C(C=CC(C#N)=C5)N4)C=C3Cl)C=C2)C=C2C=CC(C3=CC=CN3)=N21,ok,
+2,2-p2-0,consensus,COc1cnc(COc2ccc(F)c(F)c2)cc1-c1cc2c([nH]1)CCNC2=O,0.923499584197998,COc1cnc(COc2ccc(F)c(F)c2)cc1-c1cc2c([nH]1)CCNC2=O<sep>,ok,agree
+2,2-p2-1,consensus,CN(C)CC(=O)Nc1n[nH]c2ccc(-c3cn(Cc4ccccc4)nn3)cc12,0.9231075644493103,CN(C)CC(=O)Nc1n[nH]c2ccc(-c3cn(Cc4ccccc4)nn3)cc12<sep>,ok,agree
+2,2-p2-2,consensus,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,0.9231331944465637,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1<sep>,ok,agree
+2,2-p2-3,consensus,NC(=O)c1ccc(-c2nc(-c3ccc4c(c3)OCCO4)c(-c3ccccn3)[nH]2)cc1,0.9235033988952637,NC(=O)c1ccc(-c2nc(-c3ccc4c(c3)OCCO4)c(-c3ccccn3)[nH]2)cc1<sep>,ok,agree
+2,2-p3-0,consensus,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,0.9231728911399841,CC(C)(O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1<sep>,ok,agree
+2,2-p3-1,consensus,COC(=O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1,0.9228452444076538,COC(=O)c1ccc(Nc2nc3ccc(C#N)cc3[nH]2)cc1<sep>,ok,disagree: molglyph kept
+2,2-p3-2,consensus,*c1c(*)c(*)c(Nc2nc3ccc(C#N)cc3[nH]2)c(*)c1*,0.9212652444839478,*c1c(*)c(*)c(Nc2nc3ccc(C#N)cc3[nH]2)c(*)c1*<sep><a>0:R[3]</a><a>3:R[2]</a><a>5:R[1]</a><a>20:R[5]</a><a>22:R[4]</a>,ok,disagree: molglyph kept
+2,2-p3-3,consensus,*c1c(*)c(*)c(N)c(*)c1*,0.9144107103347778,*c1c(*)c(*)c(N)c(*)c1*<sep><a>0:R[3]</a><a>3:R[2]</a><a>5:R[1]</a><a>9:R[5]</a><a>11:R[4]</a>,ok,disagree: molglyph kept
+2,2-p3-4,consensus,N#Cc1ccc2nc(Cl)[nH]c2c1,0.9243438839912415,N#Cc1ccc2nc(Cl)[nH]c2c1<sep>,ok,agree
+2,2-p4-0,consensus,CC(C)(C)OC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1,0.9223340749740601,CC(C)(C)OC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1<sep>,ok,agree
+2,2-p4-1,consensus,CC(C)(C)OC(=O)NCCC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1,0.9217832088470459,CC(C)(C)OC(=O)NCCC(=O)N1CCN(c2ccc(Nc3nc4ccc(C#N)cc4[nH]3)cc2Cl)CC1<sep>,ok,disagree: molglyph kept
+2,2-p4-2,consensus,N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCNC(=O)CCc5ccc6n5[B-](F)(F)[N+]5=C(c7ccc[nH]7)C=CC5=C6)CC4)c(Cl)c3)[nH]c2c1,0.8722924252988945,N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCNC(=O)CCc5ccc6n5[B-](F)(F)[N+]5=C(c7ccc[nH]7)C=CC5=C6)CC4)c(Cl)c3)[nH]c2c1,ok,molscribe only: molglyph abstain
+2,2-p4-3,consensus,N#Cc1ccc2nc(Nc3ccc(N4CCNCC4)c(Cl)c3)[nH]c2c1,0.9233455657958984,N#Cc1ccc2nc(Nc3ccc(N4CCNCC4)c(Cl)c3)[nH]c2c1<sep>,ok,agree
+2,2-p4-4,consensus,N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCN)CC4)c(Cl)c3)[nH]c2c1,0.9228408932685852,N#Cc1ccc2nc(Nc3ccc(N4CCN(C(=O)CCN)CC4)c(Cl)c3)[nH]c2c1<sep>,ok,disagree: molglyph kept
+2,2-p4-5,consensus,CC(C)(C)OC(=O)N1CCN(c2ccc(N)cc2Cl)CC1,0.921786367893219,CC(C)(C)OC(=O)N1CCN(c2ccc(N)cc2Cl)CC1<sep>,ok,agree
+2,2-p4-6,consensus,N#Cc1ccc2nc(Cl)[nH]c2c1,0.9244210124015808,N#Cc1ccc2nc(Cl)[nH]c2c1<sep>,ok,agree
+2,2-p5-0,consensus,**1c(*)c(*)cc(Nc2nc3cc(C#N)ccc3[nH]2)c1*,0.9202375411987305,**1c(*)c(*)cc(Nc2nc3cc(C#N)ccc3[nH]2)c1*<sep><a>0:R[2]</a><a>1:X</a><a>3:R[4]</a><a>5:R[3]</a><a>21:R[1]</a>,ok,disagree: molglyph kept
+2,2-p5-1,consensus,*N1CCN(C)CC1,0.9184747934341431,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-2,consensus,*N1CCN(C)CC1,0.9187280535697937,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-3,consensus,*N1CCN(C)CC1,0.9182863235473633,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-4,consensus,*N1CCNCC1,0.9191107153892517,*N1CCNCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-5,consensus,*OC(F)F,0.9225198030471802,*OC(F)F<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-6,consensus,*C(=O)OC,0.9217236638069153,*C(OC)=O<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-7,consensus,*N1CCN(C)CC1,0.9184955358505249,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-8,consensus,*N1CCOCC1,0.9172307252883911,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-9,consensus,*N1CCCCC1,0.9141671061515808,*N1CCCCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-10,consensus,*N1CCOCC1,0.9176266193389893,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-11,consensus,*C(=O)OC,0.9216541647911072,*C(OC)=O<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-12,consensus,*N1CCOCC1,0.9176380634307861,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-13,consensus,*N1CCOCC1,0.9180550575256348,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-14,consensus,*N1CCOCC1,0.9181889891624451,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-15,consensus,*N1CCOCC1,0.918209969997406,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-16,consensus,*N1CCOCC1,0.917811930179596,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-17,consensus,*N1CCN(C)CC1,0.9181110262870789,*N1CCN(C)CC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-18,consensus,*N1CCOCC1,0.9178552627563477,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-19,consensus,*N1CCOCC1,0.9177985191345215,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-20,consensus,*N1CCOCC1,0.9177283048629761,*N1CCOCC1<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-21,consensus,*Cl,0.9234424829483032,*Cl<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-22,consensus,*F,0.9204738736152649,*F<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-23,consensus,*Cl,0.9234699010848999,*Cl<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-24,consensus,*OC(F)(F)F,0.9191363453865051,*OC(F)(F)F<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-25,consensus,*[H],0.9210979342460632,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-26,consensus,*Cl,0.9234869480133057,*Cl<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-27,consensus,*[H],0.921177089214325,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-28,consensus,*[H],0.9212339520454407,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-29,consensus,*[H],0.9210424423217773,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-30,consensus,*F,0.9207815527915955,*F<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-31,consensus,*[H],0.9211437106132507,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-32,consensus,*Cl,0.9234490394592285,*Cl<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-33,consensus,*[H],0.9212139844894409,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-34,consensus,*OC,0.9211863279342651,*OC<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-35,consensus,*[H],0.9206780791282654,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-36,consensus,*F,0.920634388923645,*F<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-37,consensus,*OC,0.9211304783821106,*OC<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-38,consensus,*[H],0.921139657497406,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-39,consensus,*C(F)(F)F,0.9095808863639832,*C(F)(F)F<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-40,consensus,*[H],0.921531617641449,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-41,consensus,*[H],0.9209779500961304,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-42,consensus,*[H],0.9210331439971924,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-43,consensus,*[H],0.9215841889381409,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-44,consensus,*[H],0.9214001297950745,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-45,consensus,*Cl,0.9237300157546997,*Cl<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-46,consensus,*OC,0.9211435914039612,*OC<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-47,consensus,*C,0.9198319315910339,*C<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-48,consensus,*[H],0.920845091342926,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-49,consensus,*[H],0.9206839799880981,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-50,consensus,*Br,0.9156729578971863,*Br<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-51,consensus,*[H],0.9214423298835754,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-52,consensus,*[H],0.9210359454154968,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-53,consensus,*CO,0.921000599861145,*CO<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-54,consensus,*[H],0.9211193323135376,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-55,consensus,*[H],0.9210822582244873,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p5-56,consensus,*[H],0.9210437536239624,*[H]<sep><a>0:<dum></a>,ok,disagree: molglyph kept
+2,2-p7-0,consensus,,,,abstain,no reader gave a valid SMILES
