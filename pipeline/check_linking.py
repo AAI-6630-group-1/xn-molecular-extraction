@@ -14,6 +14,7 @@ AI disclosure: Claude Code wrote this check at Jin's request.
 """
 from __future__ import annotations
 
+import argparse
 import csv
 import re
 import tempfile
@@ -26,8 +27,9 @@ from rdkit import Chem, RDLogger
 from pipeline.linking import link_paper, read_jsonl, write_jsonl
 from pipeline.smoke import READING_COLUMNS, REGION_COLUMNS
 
+# Defaults, relative to the repo root; each can be changed on the command line.
 ROOT = Path(__file__).resolve().parents[1]
-RUN = ROOT / "benchmarks/results/willdaly/2026-10-06_moldetv2-molglyph-pad0_internal/predictions.csv"
+RUN =ROOT / "benchmarks/results/willdaly/2026-10-06_moldetv2-molglyph-pad0_internal/predictions.csv"
 KEY = ROOT / "data/internal/ground_truth_SMILES_confirmed_1,2,4,6,16,19.csv"
 OCR_TEXT = ROOT / "data/liba-jin/ocr_text"
 PAPERS = ["1", "2", "4", "6", "16", "19"]
@@ -40,10 +42,10 @@ def canonical(smiles: str) -> str | None:
     return Chem.MolToSmiles(mol) if mol else None
 
 
-def text_records(pdf: Path, paper_id: str, unit: str) -> list[dict]:
+def text_records(pdf: Path, paper_id: str, unit: str, ocr_dir: Path) -> list[dict]:
     """Text records: the PDF text layer by block, line or word, or saved OCR lines."""
     if unit == "ocr":
-        return read_jsonl(OCR_TEXT / f"{paper_id}.jsonl")
+        return read_jsonl(ocr_dir / f"{paper_id}.jsonl")
     records = []
     with pymupdf.open(pdf) as doc:
         for number, page in enumerate(doc, start=1):
@@ -109,11 +111,17 @@ def check_paper(folder: Path, boxes: list[dict], answers: dict[str, set]) -> Cou
 
 
 def main() -> None:
-    with RUN.open(encoding="utf-8") as stream:
+    parser = argparse.ArgumentParser(description="Check label linking on the internal papers.")
+    parser.add_argument("--boxes", type=Path, default=RUN, help="Phase 1 predictions.csv (boxes and readings)")
+    parser.add_argument("--key", type=Path, default=KEY, help="answer-key CSV")
+    parser.add_argument("--pdfs", type=Path, default=ROOT / "data/internal", help="folder with <paper_id>.pdf")
+    parser.add_argument("--ocr", type=Path, default=OCR_TEXT, help="folder with ocr_text.py output")
+    args = parser.parse_args()
+    with args.boxes.open(encoding="utf-8") as stream:
         boxes = list(csv.DictReader(stream))
-    with KEY.open(encoding="utf-8") as stream:
+    with args.key.open(encoding="utf-8") as stream:
         key = list(csv.DictReader(stream))
-    units = ["block", "line", "word"] + (["ocr"] if OCR_TEXT.exists() else [])
+    units = ["block", "line", "word"] + (["ocr"] if args.ocr.exists() else [])
     for unit in units:
         print(f"\nText: {'OCR lines' if unit == 'ocr' else 'one record per PDF ' + unit}")
         print(f"{'paper':>6}" + "".join(f"{name:>11}" for name in COLUMNS))
@@ -128,7 +136,7 @@ def main() -> None:
                         name = re.sub(r"(?i)^(compound|cmpd)\s+", "", row["name of molecule"].strip())
                         answers.setdefault(name, set()).add(canonical(row["canonical_SMILES"]))
                 folder = Path(tmp) / "papers" / paper_id
-                text = text_records(ROOT / "data/internal" / f"{paper_id}.pdf", paper_id, unit)
+                text = text_records(args.pdfs / f"{paper_id}.pdf", paper_id, unit, args.ocr)
                 write_inputs(folder, paper_id, mine, text)
                 counts = check_paper(folder, mine, answers)
                 total.update(counts)
