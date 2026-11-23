@@ -1,0 +1,6 @@
+paper_id,box_id,reader,smiles,confidence,raw,status,reason
+fixture,fixture-p1-0,molglyph,CC(=O)Nc1ccccc1,,,ok,
+fixture,fixture-p1-1,molglyph,*c1ccc(C(N)=O)cc1,,,ok,
+fixture,fixture-p1-3,molglyph,c1ccncc1,,,ok,
+fixture,fixture-p1-4,molglyph,*OC,,,ok,
+fixture,fixture-p2-0,molglyph,,,,abstain,no valid SMILES

@@ -1,0 +1,5 @@
+# Separate environment for the OCR experiment (pipeline/ocr_text.py), not the shared one.
+# PyMuPDF matches the shared environment so page coordinates are computed the same way.
+rapidocr_onnxruntime==1.4.4
+opencv-python<5
+pymupdf==1.28.2
